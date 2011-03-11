@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Nepomuk TVNamer
+Comment=Tool to lookup and store TV Show metadata in Nepomuk
+Icon=nepomuk
+Exec=nepomuktvnamer
+Type=Application
+Categories=Qt;KDE;Multimedia;
