@@ -24,6 +24,11 @@ public:
       : NFO::Image(res), m_res(res)
     {}
 
+    virtual ~RasterImage() {}
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RasterImage", QUrl::StrictMode); }
+
 private:
     Nepomuk::SimpleResource* m_res;
 };

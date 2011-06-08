@@ -25,6 +25,8 @@ public:
       : NAO::Symbol(res), m_res(res)
     {}
 
+    virtual ~FreeDesktopIcon() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/08/15/nao#iconName. 
      * Defines a name for a FreeDesktop Icon as defined in the FreeDesktop 
@@ -43,7 +45,7 @@ public:
      * Icon Naming Standard 
      */
     void setIconNames(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/08/15/nao#FreeDesktopIcon", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
@@ -56,9 +58,12 @@ public:
      * Icon Naming Standard 
      */
     void addIconName(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/08/15/nao#FreeDesktopIcon", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/08/15/nao#iconName", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/08/15/nao#FreeDesktopIcon", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

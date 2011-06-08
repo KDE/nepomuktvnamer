@@ -24,6 +24,8 @@ public:
       : NFO::Media(res), m_res(res)
     {}
 
+    virtual ~Audio() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels. 
      * Number of channels. This property is to be used directly if no 
@@ -44,7 +46,7 @@ public:
      * subproperties. 
      */
     void setChannelses(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const qint64& v, value)
             values << v;
@@ -58,7 +60,7 @@ public:
      * subproperties. 
      */
     void addChannels(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode), value);
     }
 
@@ -78,7 +80,7 @@ public:
      * Amount of bits in each audio sample. 
      */
     void setBitsPerSamples(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const qint64& v, value)
             values << v;
@@ -90,7 +92,7 @@ public:
      * Amount of bits in each audio sample. 
      */
     void addBitsPerSample(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitsPerSample", QUrl::StrictMode), value);
     }
 
@@ -110,7 +112,7 @@ public:
      * The amount of samples in an audio clip. 
      */
     void setSampleCounts(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const qint64& v, value)
             values << v;
@@ -122,7 +124,7 @@ public:
      * The amount of samples in an audio clip. 
      */
     void addSampleCount(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#sampleCount", QUrl::StrictMode), value);
     }
 
@@ -142,7 +144,7 @@ public:
      * The amount of audio samples per second. 
      */
     void setSampleRates(const QList<double>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const double& v, value)
             values << v;
@@ -154,9 +156,12 @@ public:
      * The amount of audio samples per second. 
      */
     void addSampleRate(const double& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#sampleRate", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Audio", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

@@ -25,6 +25,8 @@ public:
       : NFO::MediaList(res), m_res(res)
     {}
 
+    virtual ~MusicAlbum() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzAlbumID. 
      * MusicBrainz album ID 
@@ -41,7 +43,7 @@ public:
      * MusicBrainz album ID 
      */
     void setMusicBrainzAlbumIDs(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicAlbum", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
@@ -53,7 +55,7 @@ public:
      * MusicBrainz album ID 
      */
     void addMusicBrainzAlbumID(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicAlbum", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzAlbumID", QUrl::StrictMode), value);
     }
 
@@ -73,7 +75,7 @@ public:
      * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
      */
     void setInternationalStandardRecordingCodes(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicAlbum", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
@@ -85,7 +87,7 @@ public:
      * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
      */
     void addInternationalStandardRecordingCode(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicAlbum", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode), value);
     }
 
@@ -109,7 +111,7 @@ public:
      * CD can be identified in external databases. 
      */
     void setMusicCDIdentifiers(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicAlbum", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
@@ -123,9 +125,12 @@ public:
      * CD can be identified in external databases. 
      */
     void addMusicCDIdentifier(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicAlbum", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicCDIdentifier", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicAlbum", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

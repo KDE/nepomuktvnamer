@@ -25,37 +25,7 @@ public:
       : NFO::Media(res), m_res(res)
     {}
 
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID. 
-     * MusicBrainz track ID 
-     */
-    QList<qint64> musicBrainzTrackIDs() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID", QUrl::StrictMode)))
-            value << v.value<qint64>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID. 
-     * MusicBrainz track ID 
-     */
-    void setMusicBrainzTrackIDs(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
-        QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID. 
-     * MusicBrainz track ID 
-     */
-    void addMusicBrainzTrackID(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID", QUrl::StrictMode), value);
-    }
+    virtual ~MusicPiece() {}
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#trackNumber. 
@@ -73,7 +43,7 @@ public:
      * Track number of the music in its album 
      */
     void setTrackNumbers(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const qint64& v, value)
             values << v;
@@ -85,71 +55,8 @@ public:
      * Track number of the music in its album 
      */
     void addTrackNumber(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#trackNumber", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist. 
-     * Lyricist 
-     */
-    QList<QUrl> lyricists() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist. 
-     * Lyricist 
-     */
-    void setLyricists(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist. 
-     * Lyricist 
-     */
-    void addLyricist(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum. 
-     * Album the music belongs to 
-     */
-    QUrl musicAlbum() const {
-        QUrl value;
-        if(m_res->contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode)))
-            value = m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode)).first().value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum. 
-     * Album the music belongs to 
-     */
-    void setMusicAlbum(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
-        QVariantList values;
-        values << value;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum. 
-     * Album the music belongs to 
-     */
-    void addMusicAlbum(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode), value);
     }
 
     /**
@@ -168,7 +75,7 @@ public:
      * Performer 
      */
     void setPerformers(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
@@ -180,7 +87,7 @@ public:
      * Performer 
      */
     void addPerformer(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#performer", QUrl::StrictMode), value);
     }
 
@@ -200,7 +107,7 @@ public:
      * beats per minute 
      */
     void setBeatsPerMinutes(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const qint64& v, value)
             values << v;
@@ -212,8 +119,40 @@ public:
      * beats per minute 
      */
     void addBeatsPerMinute(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#beatsPerMinute", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist. 
+     * Lyricist 
+     */
+    QList<QUrl> lyricists() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist. 
+     * Lyricist 
+     */
+    void setLyricists(const QList<QUrl>& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist. 
+     * Lyricist 
+     */
+    void addLyricist(const QUrl& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#lyricist", QUrl::StrictMode), value);
     }
 
     /**
@@ -232,7 +171,7 @@ public:
      * Composer 
      */
     void setComposers(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
@@ -244,9 +183,75 @@ public:
      * Composer 
      */
     void addComposer(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#composer", QUrl::StrictMode), value);
     }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID. 
+     * MusicBrainz track ID 
+     */
+    QList<qint64> musicBrainzTrackIDs() const {
+        QList<qint64> value;
+        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID", QUrl::StrictMode)))
+            value << v.value<qint64>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID. 
+     * MusicBrainz track ID 
+     */
+    void setMusicBrainzTrackIDs(const QList<qint64>& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        foreach(const qint64& v, value)
+            values << v;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID. 
+     * MusicBrainz track ID 
+     */
+    void addMusicBrainzTrackID(const qint64& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicBrainzTrackID", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum. 
+     * Album the music belongs to 
+     */
+    QUrl musicAlbum() const {
+        QUrl value;
+        if(m_res->contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode)))
+            value = m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode)).first().value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum. 
+     * Album the music belongs to 
+     */
+    void setMusicAlbum(const QUrl& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        values << value;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum. 
+     * Album the music belongs to 
+     */
+    void addMusicAlbum(const QUrl& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#musicAlbum", QUrl::StrictMode), value);
+    }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#MusicPiece", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

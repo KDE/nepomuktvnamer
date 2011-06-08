@@ -25,6 +25,11 @@ public:
       : NFO::EmbeddedFileDataObject(res), m_res(res)
     {}
 
+    virtual ~Attachment() {}
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode); }
+
 private:
     Nepomuk::SimpleResource* m_res;
 };

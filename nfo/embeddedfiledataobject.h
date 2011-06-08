@@ -27,6 +27,8 @@ public:
       : NFO::FileDataObject(res), m_res(res)
     {}
 
+    virtual ~EmbeddedFileDataObject() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding. 
      * The encoding used for the Embedded File. Examples might include 
@@ -45,7 +47,7 @@ public:
      * BASE64 or UUEncode 
      */
     void setEncodings(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
@@ -58,9 +60,12 @@ public:
      * BASE64 or UUEncode 
      */
     void addEncoding(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

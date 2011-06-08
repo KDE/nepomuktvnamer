@@ -24,6 +24,11 @@ public:
       : NFO::PlainTextDocument(res), m_res(res)
     {}
 
+    virtual ~HtmlDocument() {}
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#HtmlDocument", QUrl::StrictMode); }
+
 private:
     Nepomuk::SimpleResource* m_res;
 };

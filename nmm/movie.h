@@ -24,6 +24,11 @@ public:
       : NFO::Video(res), m_res(res)
     {}
 
+    virtual ~Movie() {}
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#Movie", QUrl::StrictMode); }
+
 private:
     Nepomuk::SimpleResource* m_res;
 };

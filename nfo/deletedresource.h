@@ -26,6 +26,8 @@ public:
       : NFO::FileDataObject(res), m_res(res)
     {}
 
+    virtual ~DeletedResource() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#originalLocation. 
      * The original location of the deleted resource. 
@@ -42,7 +44,7 @@ public:
      * The original location of the deleted resource. 
      */
     void setOriginalLocations(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DeletedResource", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
@@ -54,7 +56,7 @@ public:
      * The original location of the deleted resource. 
      */
     void addOriginalLocation(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DeletedResource", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#originalLocation", QUrl::StrictMode), value);
     }
 
@@ -74,7 +76,7 @@ public:
      * The date and time of the deletion. 
      */
     void setDeletionDates(const QList<QDateTime>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DeletedResource", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QDateTime& v, value)
             values << v;
@@ -86,9 +88,12 @@ public:
      * The date and time of the deletion. 
      */
     void addDeletionDate(const QDateTime& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DeletedResource", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#deletionDate", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DeletedResource", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

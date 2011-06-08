@@ -26,6 +26,11 @@ public:
       : NFO::Image(res), m_res(res)
     {}
 
+    virtual ~Icon() {}
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Icon", QUrl::StrictMode); }
+
 private:
     Nepomuk::SimpleResource* m_res;
 };

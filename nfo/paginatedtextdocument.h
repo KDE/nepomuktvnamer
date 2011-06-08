@@ -25,6 +25,8 @@ public:
       : NFO::TextDocument(res), m_res(res)
     {}
 
+    virtual ~PaginatedTextDocument() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount. 
      * Number of pages. 
@@ -41,7 +43,7 @@ public:
      * Number of pages. 
      */
     void setPageCounts(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const qint64& v, value)
             values << v;
@@ -53,9 +55,12 @@ public:
      * Number of pages. 
      */
     void addPageCount(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

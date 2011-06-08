@@ -161,18 +161,23 @@ void TVNamer::saveToNepomuk(const Tvdb::Series &series)
 {
     kDebug() << "saving to nepomuk...";
 
+    Nepomuk::SimpleResourceGraph graph;
+
     Nepomuk::SimpleResource episodeRes(m_url);
     Nepomuk::NMM::TVShow(&episodeRes).setEpisodeNumber(m_fileNameResult.episode);
     Nepomuk::NMM::TVShow(&episodeRes).setSeason(m_fileNameResult.season);
     Nepomuk::NMM::TVShow(&episodeRes).addTitle(series[m_fileNameResult.season][m_fileNameResult.episode].name());
     Nepomuk::NMM::TVShow(&episodeRes).setSynopsis(series[m_fileNameResult.season][m_fileNameResult.episode].overview());
+    Nepomuk::NMM::TVShow(&episodeRes).addReleaseDate(QDateTime(series[m_fileNameResult.season][m_fileNameResult.episode].firstAired(), QTime(), Qt::UTC));
+    Nepomuk::NMM::TVShow(&episodeRes).setGenres(series.genres());
 
-    Nepomuk::SimpleResource seriesRes;
+    Nepomuk::SimpleResource seriesRes(graph.createBlankNode());
     Nepomuk::NMM::TVSeries(&seriesRes).addTitle(series.name());
     Nepomuk::NMM::TVSeries(&seriesRes).addNieDescription(series.overview());
-    Nepomuk::NMM::TVSeries(&seriesRes).addHasEpisode(episodeRes.uri());
+    //Nepomuk::NMM::TVSeries(&seriesRes).addHasEpisode(episodeRes.uri());
 
-    Nepomuk::SimpleResourceGraph graph;
+    Nepomuk::NMM::TVShow(&episodeRes).setSeries(seriesRes.uri());
+
     graph << seriesRes << episodeRes;
 
     kDebug() << "Merging" << graph;

@@ -26,6 +26,8 @@ public:
       : NIE::InformationElement(res), m_res(res)
     {}
 
+    virtual ~BookmarkFolder() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmark. 
      * The folder contains a bookmark. 
@@ -42,7 +44,7 @@ public:
      * The folder contains a bookmark. 
      */
     void setContainsBookmarks(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#BookmarkFolder", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
@@ -54,7 +56,7 @@ public:
      * The folder contains a bookmark. 
      */
     void addContainsBookmark(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#BookmarkFolder", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmark", QUrl::StrictMode), value);
     }
 
@@ -74,7 +76,7 @@ public:
      * The folder contains a bookmark folder. 
      */
     void setContainsBookmarkFolders(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#BookmarkFolder", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
@@ -86,9 +88,12 @@ public:
      * The folder contains a bookmark folder. 
      */
     void addContainsBookmarkFolder(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#BookmarkFolder", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#BookmarkFolder", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

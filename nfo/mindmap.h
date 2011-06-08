@@ -25,6 +25,11 @@ public:
       : NFO::Document(res), m_res(res)
     {}
 
+    virtual ~MindMap() {}
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#MindMap", QUrl::StrictMode); }
+
 private:
     Nepomuk::SimpleResource* m_res;
 };

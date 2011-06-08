@@ -24,6 +24,8 @@ public:
       : NIE::InformationElement(res), m_res(res)
     {}
 
+    virtual ~MediaList() {}
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaFileListEntry. 
      * This property is intended to point to an RDF list of MediaFiles. 
@@ -40,7 +42,7 @@ public:
      * This property is intended to point to an RDF list of MediaFiles. 
      */
     void setHasMediaFileListEntrys(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#MediaList", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
@@ -52,9 +54,12 @@ public:
      * This property is intended to point to an RDF list of MediaFiles. 
      */
     void addHasMediaFileListEntry(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#MediaList", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaFileListEntry", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#MediaList", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

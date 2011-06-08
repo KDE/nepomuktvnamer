@@ -28,6 +28,170 @@ public:
       : NIE::DataObject(res), m_res(res)
     {}
 
+    virtual ~FileDataObject() {}
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash. 
+     * Links the file with it's hash value. 
+     */
+    QList<QUrl> hasHashs() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash. 
+     * Links the file with it's hash value. 
+     */
+    void setHasHashs(const QList<QUrl>& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash. 
+     * Links the file with it's hash value. 
+     */
+    void addHasHash(const QUrl& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified. 
+     * last modification date 
+     */
+    QList<QDateTime> fileLastModifieds() const {
+        QList<QDateTime> value;
+        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified", QUrl::StrictMode)))
+            value << v.value<QDateTime>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified. 
+     * last modification date 
+     */
+    void setFileLastModifieds(const QList<QDateTime>& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        foreach(const QDateTime& v, value)
+            values << v;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified. 
+     * last modification date 
+     */
+    void addFileLastModified(const QDateTime& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName. 
+     * Name of the file, together with the extension 
+     */
+    QString fileName() const {
+        QString value;
+        if(m_res->contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode)))
+            value = m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode)).first().value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName. 
+     * Name of the file, together with the extension 
+     */
+    void setFileName(const QString& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        values << value;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName. 
+     * Name of the file, together with the extension 
+     */
+    void addFileName(const QString& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
+     * The owner of the file as defined by the file system access rights 
+     * feature. 
+     */
+    QList<QUrl> fileOwners() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
+     * The owner of the file as defined by the file system access rights 
+     * feature. 
+     */
+    void setFileOwners(const QList<QUrl>& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
+     * The owner of the file as defined by the file system access rights 
+     * feature. 
+     */
+    void addFileOwner(const QUrl& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
+     * File creation date 
+     */
+    QList<QDateTime> fileCreateds() const {
+        QList<QDateTime> value;
+        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode)))
+            value << v.value<QDateTime>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
+     * File creation date 
+     */
+    void setFileCreateds(const QList<QDateTime>& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        QVariantList values;
+        foreach(const QDateTime& v, value)
+            values << v;
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
+     * File creation date 
+     */
+    void addFileCreated(const QDateTime& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), value);
+    }
+
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileSize. 
      * The size of the file in bytes. For compressed files it means the 
@@ -48,7 +212,7 @@ public:
      * the aggregated size of all contained files and folders 
      */
     void setFileSizes(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const qint64& v, value)
             values << v;
@@ -62,136 +226,8 @@ public:
      * the aggregated size of all contained files and folders 
      */
     void addFileSize(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileSize", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash. 
-     * Links the file with it's hash value. 
-     */
-    QList<QUrl> hasHashs() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash. 
-     * Links the file with it's hash value. 
-     */
-    void setHasHashs(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash. 
-     * Links the file with it's hash value. 
-     */
-    void addHasHash(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasHash", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
-     * File creation date 
-     */
-    QList<QDateTime> fileCreateds() const {
-        QList<QDateTime> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode)))
-            value << v.value<QDateTime>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
-     * File creation date 
-     */
-    void setFileCreateds(const QList<QDateTime>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        QVariantList values;
-        foreach(const QDateTime& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
-     * File creation date 
-     */
-    void addFileCreated(const QDateTime& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified. 
-     * last modification date 
-     */
-    QList<QDateTime> fileLastModifieds() const {
-        QList<QDateTime> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified", QUrl::StrictMode)))
-            value << v.value<QDateTime>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified. 
-     * last modification date 
-     */
-    void setFileLastModifieds(const QList<QDateTime>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        QVariantList values;
-        foreach(const QDateTime& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified. 
-     * last modification date 
-     */
-    void addFileLastModified(const QDateTime& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed. 
-     * Time when the file was last accessed. 
-     */
-    QList<QDateTime> fileLastAccesseds() const {
-        QList<QDateTime> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed", QUrl::StrictMode)))
-            value << v.value<QDateTime>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed. 
-     * Time when the file was last accessed. 
-     */
-    void setFileLastAccesseds(const QList<QDateTime>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        QVariantList values;
-        foreach(const QDateTime& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed. 
-     * Time when the file was last accessed. 
-     */
-    void addFileLastAccessed(const QDateTime& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed", QUrl::StrictMode), value);
     }
 
     /**
@@ -212,7 +248,7 @@ public:
      * in many UNIX-like operating systems. 
      */
     void setPermissionses(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
@@ -225,39 +261,8 @@ public:
      * in many UNIX-like operating systems. 
      */
     void addPermissions(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#permissions", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName. 
-     * Name of the file, together with the extension 
-     */
-    QString fileName() const {
-        QString value;
-        if(m_res->contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode)))
-            value = m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode)).first().value<QString>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName. 
-     * Name of the file, together with the extension 
-     */
-    void setFileName(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        QVariantList values;
-        values << value;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName. 
-     * Name of the file, together with the extension 
-     */
-    void addFileName(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode), value);
     }
 
     /**
@@ -286,7 +291,7 @@ public:
      * filesystems.html. 
      */
     void setFileUrls(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
@@ -303,44 +308,44 @@ public:
      * filesystems.html. 
      */
     void addFileUrl(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl", QUrl::StrictMode), value);
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
-     * The owner of the file as defined by the file system access rights 
-     * feature. 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed. 
+     * Time when the file was last accessed. 
      */
-    QList<QUrl> fileOwners() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode)))
-            value << v.value<QUrl>();
+    QList<QDateTime> fileLastAccesseds() const {
+        QList<QDateTime> value;
+        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed", QUrl::StrictMode)))
+            value << v.value<QDateTime>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
-     * The owner of the file as defined by the file system access rights 
-     * feature. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed. 
+     * Time when the file was last accessed. 
      */
-    void setFileOwners(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
+    void setFileLastAccesseds(const QList<QDateTime>& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
-        foreach(const QUrl& v, value)
+        foreach(const QDateTime& v, value)
             values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), values);
+        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
-     * The owner of the file as defined by the file system access rights 
-     * feature. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed. 
+     * Time when the file was last accessed. 
      */
-    void addFileOwner(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode));
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), value);
+    void addFileLastAccessed(const QDateTime& value) {
+        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed", QUrl::StrictMode), value);
     }
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FileDataObject", QUrl::StrictMode); }
 
 private:
     Nepomuk::SimpleResource* m_res;

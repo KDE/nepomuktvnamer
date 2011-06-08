@@ -25,6 +25,11 @@ public:
       : NIE::InformationElement(res), m_res(res)
     {}
 
+    virtual ~Website() {}
+
+protected:
+    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Website", QUrl::StrictMode); }
+
 private:
     Nepomuk::SimpleResource* m_res;
 };
