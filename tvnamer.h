@@ -1,6 +1,6 @@
 /*
    This file is part of the Nepomuk KDE project.
-   Copyright (C) 2011 Sebastian Trueg <trueg@kde.org>
+   Copyright (C) 2011-2012 Sebastian Trueg <trueg@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
@@ -31,6 +31,8 @@
 
 #include <tvdb/series.h>
 
+#include <nepomuk/simpleresource.h>
+
 class KJob;
 namespace Tvdb {
 class Client;
@@ -45,12 +47,16 @@ public:
 
 public Q_SLOTS:
     void lookupFile(const KUrl& url);
+    void lookupFolder(const KUrl& folder);
 
 private Q_SLOTS:
     void slotFinished( const Tvdb::Series& series );
     void slotMultipleResultsFound( const QList<Tvdb::Series>& series );
-    void lookupNextSeries();
+    void decideFinalSeries();
     void slotSaveToNepomukDone(KJob*);
+    /// look up the series in m_fileNameResults
+    void lookupSeries();
+    void saveToNepomuk();
 
 private:
     /**
@@ -58,22 +64,20 @@ private:
      */
     bool checkSeries(const Tvdb::Series& series) const;
 
-    /**
-     * Saves the information to Nepomuk. Uses m_url, the episode
-     * number from m_fileNameResult and the details in \p series.
-     *
-     * Shows a wait dialog and quits once done.
-     */
-    void saveToNepomuk(const Tvdb::Series& series);
+    Nepomuk::SimpleResource createNepomukResource(const KUrl& url, int season, int episode, const Tvdb::Series& series);
 
     Tvdb::Client* m_client;
-    TVShowFilenameAnalyzer::AnalysisResult m_fileNameResult;
+
+    /// maps tv show names to a map of paths to results
+    QHash<QString, QHash<QString, TVShowFilenameAnalyzer::AnalysisResult> > m_fileNameResults;
+
+    /// maps names from m_fileNameResults to actual shows
+    QHash<QString, Tvdb::Series> m_nameSeriesHash;
+
+    QString m_currentlyLookedUpSeriesName;
 
     // the url we are looking up
     KUrl m_url;
-
-    /// ids to lookup in multi result mode
-    QList<int> m_seriesIds;
 
     /// the final candidates that will be proposed to the user
     QList<Tvdb::Series> m_series;

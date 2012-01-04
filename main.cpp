@@ -32,9 +32,9 @@ int main( int argc, char *argv[] )
                           "nepomuktvnamer",
                           ki18n("Nepomuk Shell"),
                           NEPOMUKTVNAMER_VERSION,
-                          ki18n("NepSak - The Nepomuk Shell"),
+                          ki18n("The Nepomuk TV Namer"),
                           KAboutData::License_GPL,
-                          ki18n("(c) 2011, Sebastian Trüg"),
+                          ki18n("(c) 2011-2012, Sebastian Trüg"),
                           KLocalizedString(),
                           "http://nepomuk.kde.org" );
     aboutData.addAuthor(ki18n("Sebastian Trüg"), ki18n("Maintainer"), "trueg@kde.org");
@@ -43,7 +43,7 @@ int main( int argc, char *argv[] )
 
     KCmdLineArgs::init( argc, argv, &aboutData );
     KCmdLineOptions options;
-	options.add("+uri", ki18n("The URL to the video file to annotate."));
+	options.add("+uri", ki18n("The URL to the video file(s) to annotate."));
     KCmdLineArgs::addCmdLineOptions( options );
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
@@ -52,7 +52,7 @@ int main( int argc, char *argv[] )
 
     TVNamer tvnamer;
     if ( args->count() ) {
-        QMetaObject::invokeMethod(&tvnamer, "lookupFile", Q_ARG(KUrl, args->url( 0 )));
+        QMetaObject::invokeMethod(&tvnamer, "lookupFile", Qt::QueuedConnection, Q_ARG(KUrl, args->url( 0 )));
         return app.exec();
     }
     else {
