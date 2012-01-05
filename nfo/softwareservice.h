@@ -7,11 +7,11 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nie/dataobject.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
@@ -24,20 +24,29 @@ namespace NFO {
  * case both DataObjects would receive a similar interpretation 
  * (e.g. a Mailbox) and wouldn't differ on the content level. 
  */
-class SoftwareService : public NIE::DataObject
+class SoftwareService : public virtual NIE::DataObject
 {
 public:
-    SoftwareService(Nepomuk::SimpleResource* res)
-      : NIE::DataObject(res), m_res(res)
-    {}
+    SoftwareService(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::DataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SoftwareService", QUrl::StrictMode)) {
+    }
 
-    virtual ~SoftwareService() {}
+    SoftwareService(const SimpleResource& res)
+      : SimpleResource(res), NIE::DataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SoftwareService", QUrl::StrictMode)) {
+    }
+
+    SoftwareService& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SoftwareService", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SoftwareService", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    SoftwareService(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type) {
+    }
+    SoftwareService(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::DataObject(res, type) {
+    }
 };
 }
 }

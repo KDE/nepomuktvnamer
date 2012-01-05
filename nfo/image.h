@@ -7,34 +7,42 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/visual.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * A file containing an image. 
  */
-class Image : public NFO::Visual
+class Image : public virtual NFO::Visual
 {
 public:
-    Image(Nepomuk::SimpleResource* res)
-      : NFO::Visual(res), m_res(res)
-    {}
+    Image(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode)), NFO::Media(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode)), NFO::Visual(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode)) {
+    }
 
-    virtual ~Image() {}
+    Image(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode)), NFO::Media(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode)), NFO::Visual(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode)) {
+    }
+
+    Image& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode));
+        return *this;
+    }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution. 
      * Vertical resolution of an Image (if printed). Expressed in 
      * DPI 
      */
-    QList<qint64> verticalResolutions() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution", QUrl::StrictMode)))
-            value << v.value<qint64>();
+    qint64 verticalResolution() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
@@ -43,12 +51,10 @@ public:
      * Vertical resolution of an Image (if printed). Expressed in 
      * DPI 
      */
-    void setVerticalResolutions(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setVerticalResolution(const qint64& value) {
         QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution", QUrl::StrictMode), values);
     }
 
     /**
@@ -57,8 +63,7 @@ public:
      * DPI 
      */
     void addVerticalResolution(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#verticalResolution", QUrl::StrictMode), value);
     }
 
     /**
@@ -66,10 +71,10 @@ public:
      * Horizontal resolution of an image (if printed). Expressed 
      * in DPI. 
      */
-    QList<qint64> horizontalResolutions() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#horizontalResolution", QUrl::StrictMode)))
-            value << v.value<qint64>();
+    qint64 horizontalResolution() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#horizontalResolution", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#horizontalResolution", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
@@ -78,12 +83,10 @@ public:
      * Horizontal resolution of an image (if printed). Expressed 
      * in DPI. 
      */
-    void setHorizontalResolutions(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setHorizontalResolution(const qint64& value) {
         QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#horizontalResolution", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#horizontalResolution", QUrl::StrictMode), values);
     }
 
     /**
@@ -92,15 +95,45 @@ public:
      * in DPI. 
      */
     void addHorizontalResolution(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#horizontalResolution", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#horizontalResolution", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depicts. 
+     * Relates an image to the information elements it depicts. 
+     */
+    QList<QUrl> depictses() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depicts", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depicts. 
+     * Relates an image to the information elements it depicts. 
+     */
+    void setDepictses(const QList<QUrl>& value) {
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depicts", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depicts. 
+     * Relates an image to the information elements it depicts. 
+     */
+    void addDepicts(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depicts", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Image", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    Image(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Media(uri, type), NFO::Visual(uri, type) {
+    }
+    Image(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::Media(res, type), NFO::Visual(res, type) {
+    }
 };
 }
 }

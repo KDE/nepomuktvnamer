@@ -7,11 +7,11 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nie/informationelement.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
@@ -20,24 +20,119 @@ namespace NFO {
  * the bookmark, and nie:contentLastModified for modifications. 
  * nfo:bookmarks to store the link. 
  */
-class Bookmark : public NIE::InformationElement
+class Bookmark : public virtual NIE::InformationElement
 {
 public:
-    Bookmark(Nepomuk::SimpleResource* res)
-      : NIE::InformationElement(res), m_res(res)
-    {}
+    Bookmark(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark", QUrl::StrictMode)) {
+    }
 
-    virtual ~Bookmark() {}
+    Bookmark(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark", QUrl::StrictMode)) {
+    }
+
+    Bookmark& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark", QUrl::StrictMode));
+        return *this;
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber. 
+     * Page linked by the bookmark. 
+     */
+    qint64 pageNumber() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode)).first().value<qint64>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber. 
+     * Page linked by the bookmark. 
+     */
+    void setPageNumber(const qint64& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber. 
+     * Page linked by the bookmark. 
+     */
+    void addPageNumber(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
+     * The address of the linked object. Usually a web URI. 
+     */
+    QUrl bookmarks() const {
+        QUrl value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode)).first().value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
+     * The address of the linked object. Usually a web URI. 
+     */
+    void setBookmarks(const QUrl& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
+     * The address of the linked object. Usually a web URI. 
+     */
+    void addBookmarks(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition. 
+     * Character position of the bookmark. 
+     */
+    qint64 characterPosition() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition", QUrl::StrictMode)).first().value<qint64>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition. 
+     * Character position of the bookmark. 
+     */
+    void setCharacterPosition(const qint64& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition. 
+     * Character position of the bookmark. 
+     */
+    void addCharacterPosition(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition", QUrl::StrictMode), value);
+    }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition. 
      * Stream position of the bookmark, suitable for e.g. audio books. 
      * Expressed in milliseconds 
      */
-    QList<qint64> streamPositions() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode)))
-            value << v.value<qint64>();
+    qint64 streamPosition() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
@@ -46,12 +141,10 @@ public:
      * Stream position of the bookmark, suitable for e.g. audio books. 
      * Expressed in milliseconds 
      */
-    void setStreamPositions(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setStreamPosition(const qint64& value) {
         QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), values);
     }
 
     /**
@@ -60,111 +153,15 @@ public:
      * Expressed in milliseconds 
      */
     void addStreamPosition(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber. 
-     * Page linked by the bookmark. 
-     */
-    QList<qint64> pageNumbers() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode)))
-            value << v.value<qint64>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber. 
-     * Page linked by the bookmark. 
-     */
-    void setPageNumbers(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber. 
-     * Page linked by the bookmark. 
-     */
-    void addPageNumber(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
-     * The address of the linked object. Usually a web URI. 
-     */
-    QList<QUrl> bookmarkses() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
-     * The address of the linked object. Usually a web URI. 
-     */
-    void setBookmarkses(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
-     * The address of the linked object. Usually a web URI. 
-     */
-    void addBookmarks(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition. 
-     * Character position of the bookmark. 
-     */
-    QList<qint64> characterPositions() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition", QUrl::StrictMode)))
-            value << v.value<qint64>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition. 
-     * Character position of the bookmark. 
-     */
-    void setCharacterPositions(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition. 
-     * Character position of the bookmark. 
-     */
-    void addCharacterPosition(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#characterPosition", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Bookmark", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    Bookmark(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    }
+    Bookmark(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type) {
+    }
 };
 }
 }

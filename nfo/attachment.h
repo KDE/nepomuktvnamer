@@ -7,31 +7,40 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/embeddedfiledataobject.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * A file attached to another data object. Many data formats allow 
  * for attachments: emails, vcards, ical events, id3 and exif... 
  */
-class Attachment : public NFO::EmbeddedFileDataObject
+class Attachment : public virtual NFO::EmbeddedFileDataObject
 {
 public:
-    Attachment(Nepomuk::SimpleResource* res)
-      : NFO::EmbeddedFileDataObject(res), m_res(res)
-    {}
+    Attachment(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::DataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode)), NFO::FileDataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode)), NFO::EmbeddedFileDataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode)) {
+    }
 
-    virtual ~Attachment() {}
+    Attachment(const SimpleResource& res)
+      : SimpleResource(res), NIE::DataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode)), NFO::FileDataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode)), NFO::EmbeddedFileDataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode)) {
+    }
+
+    Attachment& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Attachment", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    Attachment(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type), NFO::EmbeddedFileDataObject(uri, type) {
+    }
+    Attachment(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::DataObject(res, type), NFO::FileDataObject(res, type), NFO::EmbeddedFileDataObject(res, type) {
+    }
 };
 }
 }

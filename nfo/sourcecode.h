@@ -7,55 +7,31 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/plaintextdocument.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * Code in a compilable or interpreted programming language. 
  */
-class SourceCode : public NFO::PlainTextDocument
+class SourceCode : public virtual NFO::PlainTextDocument
 {
 public:
-    SourceCode(Nepomuk::SimpleResource* res)
-      : NFO::PlainTextDocument(res), m_res(res)
-    {}
-
-    virtual ~SourceCode() {}
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass. 
-     * Name of a class defined in the source code file. 
-     */
-    QStringList definesClasses() const {
-        QStringList value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass", QUrl::StrictMode)))
-            value << v.value<QString>();
-        return value;
+    SourceCode(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)), NFO::Document(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)), NFO::TextDocument(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)), NFO::PlainTextDocument(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)) {
     }
 
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass. 
-     * Name of a class defined in the source code file. 
-     */
-    void setDefinesClasses(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        QVariantList values;
-        foreach(const QString& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass", QUrl::StrictMode), values);
+    SourceCode(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)), NFO::Document(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)), NFO::TextDocument(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)), NFO::PlainTextDocument(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode)) {
     }
 
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass. 
-     * Name of a class defined in the source code file. 
-     */
-    void addDefinesClass(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass", QUrl::StrictMode), value);
+    SourceCode& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode));
+        return *this;
     }
 
     /**
@@ -64,7 +40,7 @@ public:
      */
     QStringList definesGlobalVariables() const {
         QStringList value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesGlobalVariable", QUrl::StrictMode)))
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesGlobalVariable", QUrl::StrictMode)))
             value << v.value<QString>();
         return value;
     }
@@ -74,11 +50,10 @@ public:
      * Name of a global variable defined within the source code file. 
      */
     void setDefinesGlobalVariables(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesGlobalVariable", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesGlobalVariable", QUrl::StrictMode), values);
     }
 
     /**
@@ -86,43 +61,7 @@ public:
      * Name of a global variable defined within the source code file. 
      */
     void addDefinesGlobalVariable(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesGlobalVariable", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction. 
-     * A name of a function/method defined in the given source code 
-     * file. 
-     */
-    QStringList definesFunctions() const {
-        QStringList value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction", QUrl::StrictMode)))
-            value << v.value<QString>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction. 
-     * A name of a function/method defined in the given source code 
-     * file. 
-     */
-    void setDefinesFunctions(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        QVariantList values;
-        foreach(const QString& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction. 
-     * A name of a function/method defined in the given source code 
-     * file. 
-     */
-    void addDefinesFunction(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesGlobalVariable", QUrl::StrictMode), value);
     }
 
     /**
@@ -133,7 +72,7 @@ public:
      */
     QStringList programmingLanguages() const {
         QStringList value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode)))
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode)))
             value << v.value<QString>();
         return value;
     }
@@ -145,11 +84,10 @@ public:
      * 'Java' etc. 
      */
     void setProgrammingLanguages(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
         QVariantList values;
         foreach(const QString& v, value)
             values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), values);
     }
 
     /**
@@ -159,8 +97,37 @@ public:
      * 'Java' etc. 
      */
     void addProgrammingLanguage(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass. 
+     * Name of a class defined in the source code file. 
+     */
+    QStringList definesClasses() const {
+        QStringList value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass", QUrl::StrictMode)))
+            value << v.value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass. 
+     * Name of a class defined in the source code file. 
+     */
+    void setDefinesClasses(const QStringList& value) {
+        QVariantList values;
+        foreach(const QString& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass. 
+     * Name of a class defined in the source code file. 
+     */
+    void addDefinesClass(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass", QUrl::StrictMode), value);
     }
 
     /**
@@ -168,10 +135,10 @@ public:
      * The amount of character in comments i.e. characters ignored 
      * by the compiler/interpreter. 
      */
-    QList<qint64> commentCharacterCounts() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#commentCharacterCount", QUrl::StrictMode)))
-            value << v.value<qint64>();
+    qint64 commentCharacterCount() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#commentCharacterCount", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#commentCharacterCount", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
@@ -180,12 +147,10 @@ public:
      * The amount of character in comments i.e. characters ignored 
      * by the compiler/interpreter. 
      */
-    void setCommentCharacterCounts(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setCommentCharacterCount(const qint64& value) {
         QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#commentCharacterCount", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#commentCharacterCount", QUrl::StrictMode), values);
     }
 
     /**
@@ -194,15 +159,48 @@ public:
      * by the compiler/interpreter. 
      */
     void addCommentCharacterCount(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#commentCharacterCount", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#commentCharacterCount", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction. 
+     * A name of a function/method defined in the given source code 
+     * file. 
+     */
+    QStringList definesFunctions() const {
+        QStringList value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction", QUrl::StrictMode)))
+            value << v.value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction. 
+     * A name of a function/method defined in the given source code 
+     * file. 
+     */
+    void setDefinesFunctions(const QStringList& value) {
+        QVariantList values;
+        foreach(const QString& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction. 
+     * A name of a function/method defined in the given source code 
+     * file. 
+     */
+    void addDefinesFunction(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesFunction", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#SourceCode", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    SourceCode(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type), NFO::TextDocument(uri, type), NFO::PlainTextDocument(uri, type) {
+    }
+    SourceCode(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::Document(res, type), NFO::TextDocument(res, type), NFO::PlainTextDocument(res, type) {
+    }
 };
 }
 }

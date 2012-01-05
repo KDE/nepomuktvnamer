@@ -7,11 +7,11 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nie/dataobject.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
@@ -21,20 +21,29 @@ namespace NFO {
  * depending on an interpretation, various kinds of data may be 
  * extracted from such an address. 
  */
-class RemotePortAddress : public NIE::DataObject
+class RemotePortAddress : public virtual NIE::DataObject
 {
 public:
-    RemotePortAddress(Nepomuk::SimpleResource* res)
-      : NIE::DataObject(res), m_res(res)
-    {}
+    RemotePortAddress(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::DataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemotePortAddress", QUrl::StrictMode)) {
+    }
 
-    virtual ~RemotePortAddress() {}
+    RemotePortAddress(const SimpleResource& res)
+      : SimpleResource(res), NIE::DataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemotePortAddress", QUrl::StrictMode)) {
+    }
+
+    RemotePortAddress& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemotePortAddress", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemotePortAddress", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    RemotePortAddress(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type) {
+    }
+    RemotePortAddress(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::DataObject(res, type) {
+    }
 };
 }
 }

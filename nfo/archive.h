@@ -7,33 +7,41 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/datacontainer.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * A compressed file. May contain other files or folder inside. 
  */
-class Archive : public NFO::DataContainer
+class Archive : public virtual NFO::DataContainer
 {
 public:
-    Archive(Nepomuk::SimpleResource* res)
-      : NFO::DataContainer(res), m_res(res)
-    {}
+    Archive(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Archive", QUrl::StrictMode)), NFO::DataContainer(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Archive", QUrl::StrictMode)) {
+    }
 
-    virtual ~Archive() {}
+    Archive(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Archive", QUrl::StrictMode)), NFO::DataContainer(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Archive", QUrl::StrictMode)) {
+    }
+
+    Archive& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Archive", QUrl::StrictMode));
+        return *this;
+    }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize. 
      * Uncompressed size of the content of a compressed file. 
      */
-    QList<qint64> uncompressedSizes() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize", QUrl::StrictMode)))
-            value << v.value<qint64>();
+    qint64 uncompressedSize() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
@@ -41,12 +49,10 @@ public:
      * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize. 
      * Uncompressed size of the content of a compressed file. 
      */
-    void setUncompressedSizes(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setUncompressedSize(const qint64& value) {
         QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize", QUrl::StrictMode), values);
     }
 
     /**
@@ -54,15 +60,15 @@ public:
      * Uncompressed size of the content of a compressed file. 
      */
     void addUncompressedSize(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#uncompressedSize", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Archive", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    Archive(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type) {
+    }
+    Archive(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::DataContainer(res, type) {
+    }
 };
 }
 }

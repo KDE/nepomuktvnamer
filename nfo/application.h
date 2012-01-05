@@ -7,30 +7,39 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/software.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * An application 
  */
-class Application : public NFO::Software
+class Application : public virtual NFO::Software
 {
 public:
-    Application(Nepomuk::SimpleResource* res)
-      : NFO::Software(res), m_res(res)
-    {}
+    Application(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application", QUrl::StrictMode)), NFO::Software(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application", QUrl::StrictMode)) {
+    }
 
-    virtual ~Application() {}
+    Application(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application", QUrl::StrictMode)), NFO::Software(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application", QUrl::StrictMode)) {
+    }
+
+    Application& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Application", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    Application(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Software(uri, type) {
+    }
+    Application(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::Software(res, type) {
+    }
 };
 }
 }

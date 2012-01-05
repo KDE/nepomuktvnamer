@@ -7,34 +7,42 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/textdocument.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * A file containing a text document, that is unambiguously divided 
  * into pages. Examples might include PDF, DOC, PS, DVI etc. 
  */
-class PaginatedTextDocument : public NFO::TextDocument
+class PaginatedTextDocument : public virtual NFO::TextDocument
 {
 public:
-    PaginatedTextDocument(Nepomuk::SimpleResource* res)
-      : NFO::TextDocument(res), m_res(res)
-    {}
+    PaginatedTextDocument(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode)), NFO::Document(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode)), NFO::TextDocument(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode)) {
+    }
 
-    virtual ~PaginatedTextDocument() {}
+    PaginatedTextDocument(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode)), NFO::Document(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode)), NFO::TextDocument(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode)) {
+    }
+
+    PaginatedTextDocument& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode));
+        return *this;
+    }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount. 
      * Number of pages. 
      */
-    QList<qint64> pageCounts() const {
-        QList<qint64> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode)))
-            value << v.value<qint64>();
+    qint64 pageCount() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
@@ -42,12 +50,10 @@ public:
      * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount. 
      * Number of pages. 
      */
-    void setPageCounts(const QList<qint64>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setPageCount(const qint64& value) {
         QVariantList values;
-        foreach(const qint64& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode), values);
     }
 
     /**
@@ -55,15 +61,15 @@ public:
      * Number of pages. 
      */
     void addPageCount(const qint64& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageCount", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PaginatedTextDocument", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    PaginatedTextDocument(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type), NFO::TextDocument(uri, type) {
+    }
+    PaginatedTextDocument(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::Document(res, type), NFO::TextDocument(res, type) {
+    }
 };
 }
 }

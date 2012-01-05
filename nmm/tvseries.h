@@ -7,32 +7,40 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nie/informationelement.h"
+
 namespace Nepomuk {
 namespace NMM {
 /**
  * A TV Series has multiple seasons and episodes 
  */
-class TVSeries : public NIE::InformationElement
+class TVSeries : public virtual NIE::InformationElement
 {
 public:
-    TVSeries(Nepomuk::SimpleResource* res)
-      : NIE::InformationElement(res), m_res(res)
-    {}
+    TVSeries(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#TVSeries", QUrl::StrictMode)) {
+    }
 
-    virtual ~TVSeries() {}
+    TVSeries(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#TVSeries", QUrl::StrictMode)) {
+    }
+
+    TVSeries& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#TVSeries", QUrl::StrictMode));
+        return *this;
+    }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode. 
      * A TVSeries has many episodes 
      */
-    QList<QUrl> hasEpisodes() const {
+    QList<QUrl> episodes() const {
         QList<QUrl> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode", QUrl::StrictMode)))
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode", QUrl::StrictMode)))
             value << v.value<QUrl>();
         return value;
     }
@@ -41,28 +49,27 @@ public:
      * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode. 
      * A TVSeries has many episodes 
      */
-    void setHasEpisodes(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setEpisodes(const QList<QUrl>& value) {
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode", QUrl::StrictMode), values);
     }
 
     /**
      * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode. 
      * A TVSeries has many episodes 
      */
-    void addHasEpisode(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode", QUrl::StrictMode), value);
+    void addEpisode(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasEpisode", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#TVSeries", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    TVSeries(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    }
+    TVSeries(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type) {
+    }
 };
 }
 }

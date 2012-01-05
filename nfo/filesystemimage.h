@@ -7,11 +7,11 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/filesystem.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
@@ -20,20 +20,29 @@ namespace NFO {
  * by various pieces of software (e.g. Norton Ghost). Deprecated 
  * in favor of nfo:Filesystem. 
  */
-class FilesystemImage : public NFO::Filesystem
+class FilesystemImage : public virtual NFO::Filesystem
 {
 public:
-    FilesystemImage(Nepomuk::SimpleResource* res)
-      : NFO::Filesystem(res), m_res(res)
-    {}
+    FilesystemImage(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode)), NFO::DataContainer(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode)), NFO::Filesystem(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode)) {
+    }
 
-    virtual ~FilesystemImage() {}
+    FilesystemImage(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode)), NFO::DataContainer(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode)), NFO::Filesystem(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode)) {
+    }
+
+    FilesystemImage& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#FilesystemImage", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    FilesystemImage(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type), NFO::Filesystem(uri, type) {
+    }
+    FilesystemImage(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::DataContainer(res, type), NFO::Filesystem(res, type) {
+    }
 };
 }
 }

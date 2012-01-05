@@ -7,31 +7,40 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/textdocument.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * A file containing plain text (ASCII, Unicode or other encodings). 
  * Examples may include TXT, HTML, XML, program source code etc. 
  */
-class PlainTextDocument : public NFO::TextDocument
+class PlainTextDocument : public virtual NFO::TextDocument
 {
 public:
-    PlainTextDocument(Nepomuk::SimpleResource* res)
-      : NFO::TextDocument(res), m_res(res)
-    {}
+    PlainTextDocument(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode)), NFO::Document(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode)), NFO::TextDocument(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode)) {
+    }
 
-    virtual ~PlainTextDocument() {}
+    PlainTextDocument(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode)), NFO::Document(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode)), NFO::TextDocument(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode)) {
+    }
+
+    PlainTextDocument& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#PlainTextDocument", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    PlainTextDocument(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type), NFO::TextDocument(uri, type) {
+    }
+    PlainTextDocument(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::Document(res, type), NFO::TextDocument(res, type) {
+    }
 };
 }
 }

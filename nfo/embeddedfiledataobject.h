@@ -7,11 +7,11 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/filedataobject.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
@@ -20,24 +20,32 @@ namespace NFO {
  * only in cases if none of the subclasses gives a better description 
  * of your case. 
  */
-class EmbeddedFileDataObject : public NFO::FileDataObject
+class EmbeddedFileDataObject : public virtual NFO::FileDataObject
 {
 public:
-    EmbeddedFileDataObject(Nepomuk::SimpleResource* res)
-      : NFO::FileDataObject(res), m_res(res)
-    {}
+    EmbeddedFileDataObject(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::DataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode)), NFO::FileDataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode)) {
+    }
 
-    virtual ~EmbeddedFileDataObject() {}
+    EmbeddedFileDataObject(const SimpleResource& res)
+      : SimpleResource(res), NIE::DataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode)), NFO::FileDataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode)) {
+    }
+
+    EmbeddedFileDataObject& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode));
+        return *this;
+    }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding. 
      * The encoding used for the Embedded File. Examples might include 
      * BASE64 or UUEncode 
      */
-    QStringList encodings() const {
-        QStringList value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode)))
-            value << v.value<QString>();
+    QString encoding() const {
+        QString value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode)).first().value<QString>();
         return value;
     }
 
@@ -46,12 +54,10 @@ public:
      * The encoding used for the Embedded File. Examples might include 
      * BASE64 or UUEncode 
      */
-    void setEncodings(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setEncoding(const QString& value) {
         QVariantList values;
-        foreach(const QString& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode), values);
     }
 
     /**
@@ -60,15 +66,15 @@ public:
      * BASE64 or UUEncode 
      */
     void addEncoding(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#encoding", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#EmbeddedFileDataObject", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    EmbeddedFileDataObject(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type) {
+    }
+    EmbeddedFileDataObject(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::DataObject(res, type), NFO::FileDataObject(res, type) {
+    }
 };
 }
 }

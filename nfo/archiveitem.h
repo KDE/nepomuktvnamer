@@ -7,33 +7,41 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/embeddedfiledataobject.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * A file entity inside an archive. 
  */
-class ArchiveItem : public NFO::EmbeddedFileDataObject
+class ArchiveItem : public virtual NFO::EmbeddedFileDataObject
 {
 public:
-    ArchiveItem(Nepomuk::SimpleResource* res)
-      : NFO::EmbeddedFileDataObject(res), m_res(res)
-    {}
+    ArchiveItem(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::DataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode)), NFO::FileDataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode)), NFO::EmbeddedFileDataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode)) {
+    }
 
-    virtual ~ArchiveItem() {}
+    ArchiveItem(const SimpleResource& res)
+      : SimpleResource(res), NIE::DataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode)), NFO::FileDataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode)), NFO::EmbeddedFileDataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode)) {
+    }
+
+    ArchiveItem& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode));
+        return *this;
+    }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected. 
      * States if a given resource is password-protected. 
      */
-    QList<bool> isPasswordProtecteds() const {
-        QList<bool> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected", QUrl::StrictMode)))
-            value << v.value<bool>();
+    bool isPasswordProtected() const {
+        bool value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected", QUrl::StrictMode)).first().value<bool>();
         return value;
     }
 
@@ -41,12 +49,10 @@ public:
      * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected. 
      * States if a given resource is password-protected. 
      */
-    void setIsPasswordProtecteds(const QList<bool>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setIsPasswordProtected(const bool& value) {
         QVariantList values;
-        foreach(const bool& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected", QUrl::StrictMode), values);
     }
 
     /**
@@ -54,15 +60,15 @@ public:
      * States if a given resource is password-protected. 
      */
     void addIsPasswordProtected(const bool& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#isPasswordProtected", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#ArchiveItem", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    ArchiveItem(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type), NFO::EmbeddedFileDataObject(uri, type) {
+    }
+    ArchiveItem(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::DataObject(res, type), NFO::FileDataObject(res, type), NFO::EmbeddedFileDataObject(res, type) {
+    }
 };
 }
 }

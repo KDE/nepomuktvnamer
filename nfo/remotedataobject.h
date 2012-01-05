@@ -7,11 +7,11 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/filedataobject.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
@@ -20,20 +20,29 @@ namespace NFO {
  * resource, RemotePortAddress applies to an address, that can 
  * have various interpretations. 
  */
-class RemoteDataObject : public NFO::FileDataObject
+class RemoteDataObject : public virtual NFO::FileDataObject
 {
 public:
-    RemoteDataObject(Nepomuk::SimpleResource* res)
-      : NFO::FileDataObject(res), m_res(res)
-    {}
+    RemoteDataObject(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::DataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject", QUrl::StrictMode)), NFO::FileDataObject(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject", QUrl::StrictMode)) {
+    }
 
-    virtual ~RemoteDataObject() {}
+    RemoteDataObject(const SimpleResource& res)
+      : SimpleResource(res), NIE::DataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject", QUrl::StrictMode)), NFO::FileDataObject(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject", QUrl::StrictMode)) {
+    }
+
+    RemoteDataObject& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#RemoteDataObject", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    RemoteDataObject(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type) {
+    }
+    RemoteDataObject(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::DataObject(res, type), NFO::FileDataObject(res, type) {
+    }
 };
 }
 }

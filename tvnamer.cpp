@@ -24,6 +24,7 @@
 
 #include "nmm/tvshow.h"
 #include "nmm/tvseries.h"
+#include "nfo/image.h"
 
 #include <tvdb/client.h>
 #include <tvdb/series.h>
@@ -40,6 +41,8 @@
 #include <KLocale>
 #include <KJob>
 #include <KDebug>
+#include <KStandardDirs>
+#include <KIO/CopyJob>
 
 #include <Nepomuk/Vocabulary/NMM>
 #include <nepomuk/simpleresource.h>
@@ -185,13 +188,13 @@ void TVNamer::decideFinalSeries()
 
 Nepomuk::SimpleResource TVNamer::createNepomukResource(const KUrl& url, int season, int episode, const Tvdb::Series &series)
 {
-    Nepomuk::SimpleResource episodeRes(url);
-    Nepomuk::NMM::TVShow(&episodeRes).setEpisodeNumber(episode);
-    Nepomuk::NMM::TVShow(&episodeRes).setSeason(season);
-    Nepomuk::NMM::TVShow(&episodeRes).addTitle(series[season][episode].name());
-    Nepomuk::NMM::TVShow(&episodeRes).setSynopsis(series[season][episode].overview());
-    Nepomuk::NMM::TVShow(&episodeRes).addReleaseDate(QDateTime(series[season][episode].firstAired(), QTime(), Qt::UTC));
-    Nepomuk::NMM::TVShow(&episodeRes).setGenres(series.genres());
+    Nepomuk::NMM::TVShow episodeRes(url);
+    episodeRes.setEpisodeNumber(episode);
+    episodeRes.setSeason(season);
+    episodeRes.setTitle(series[season][episode].name());
+    episodeRes.setSynopsis(series[season][episode].overview());
+    episodeRes.setReleaseDate(QDateTime(series[season][episode].firstAired(), QTime(), Qt::UTC));
+    episodeRes.setGenres(series.genres());
 
     return episodeRes;
 }
@@ -241,18 +244,31 @@ void TVNamer::saveToNepomuk()
             return;
         }
 
-        Nepomuk::SimpleResource seriesRes;
-        Nepomuk::NMM::TVSeries(&seriesRes).addTitle(series.name());
-        Nepomuk::NMM::TVSeries(&seriesRes).addNieDescription(series.overview());
-
         Nepomuk::SimpleResourceGraph graph;
+
+        // get all the series information
+        Nepomuk::NMM::TVSeries seriesRes;
+        seriesRes.setTitle(series.name());
+        seriesRes.addDescription(series.overview());
+        foreach(const QUrl& bannerUrl, series.bannerUrls() + series.posterUrls()) {
+            const KUrl localUrl = KGlobal::dirs()->locateLocal("appdata", QLatin1String("banners/") + series.name() + QLatin1String("/") + KUrl(bannerUrl).fileName(), true);
+            if(!QFile::exists(localUrl.toLocalFile())) {
+                KIO::CopyJob* job = KIO::copy(bannerUrl, localUrl);
+                if(!job->exec()) {
+                    continue;
+                }
+            }
+            Nepomuk::NFO::Image banner(localUrl);
+            seriesRes.addDepiction(banner.uri());
+            graph << banner;
+        }
 
         // add all the episodes to the graph
         for(QHash<QString, TVShowFilenameAnalyzer::AnalysisResult>::const_iterator it = files.constBegin();
             it != files.constEnd(); ++it) {
-            Nepomuk::SimpleResource episodeRes = createNepomukResource(QUrl::fromLocalFile(it.key()), it.value().season, it.value().episode, series);
-            Nepomuk::NMM::TVSeries(&seriesRes).addHasEpisode(episodeRes.uri());
-            Nepomuk::NMM::TVShow(&episodeRes).setSeries(seriesRes.uri());
+            Nepomuk::NMM::TVShow episodeRes = createNepomukResource(QUrl::fromLocalFile(it.key()), it.value().season, it.value().episode, series);
+            seriesRes.addEpisode(episodeRes.uri());
+            episodeRes.setSeries(seriesRes.uri());
             graph << episodeRes;
         }
 

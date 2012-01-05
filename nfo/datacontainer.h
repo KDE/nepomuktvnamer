@@ -7,11 +7,11 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nie/informationelement.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
@@ -20,20 +20,29 @@ namespace NFO {
  * any "meaning" by themselves. Examples include folders, archives 
  * and optical disc images. 
  */
-class DataContainer : public NIE::InformationElement
+class DataContainer : public virtual NIE::InformationElement
 {
 public:
-    DataContainer(Nepomuk::SimpleResource* res)
-      : NIE::InformationElement(res), m_res(res)
-    {}
+    DataContainer(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DataContainer", QUrl::StrictMode)) {
+    }
 
-    virtual ~DataContainer() {}
+    DataContainer(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DataContainer", QUrl::StrictMode)) {
+    }
+
+    DataContainer& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DataContainer", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#DataContainer", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    DataContainer(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    }
+    DataContainer(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type) {
+    }
 };
 }
 }

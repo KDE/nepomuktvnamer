@@ -7,65 +7,41 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nie/informationelement.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * A font. 
  */
-class Font : public NIE::InformationElement
+class Font : public virtual NIE::InformationElement
 {
 public:
-    Font(Nepomuk::SimpleResource* res)
-      : NIE::InformationElement(res), m_res(res)
-    {}
-
-    virtual ~Font() {}
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily. 
-     * The name of the font family. 
-     */
-    QStringList fontFamilys() const {
-        QStringList value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily", QUrl::StrictMode)))
-            value << v.value<QString>();
-        return value;
+    Font(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Font", QUrl::StrictMode)) {
     }
 
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily. 
-     * The name of the font family. 
-     */
-    void setFontFamilys(const QStringList& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        QVariantList values;
-        foreach(const QString& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily", QUrl::StrictMode), values);
+    Font(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Font", QUrl::StrictMode)) {
     }
 
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily. 
-     * The name of the font family. 
-     */
-    void addFontFamily(const QString& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily", QUrl::StrictMode), value);
+    Font& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Font", QUrl::StrictMode));
+        return *this;
     }
 
     /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry. 
      * The foundry, the organization that created the font. 
      */
-    QList<QUrl> foundrys() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, m_res->property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry", QUrl::StrictMode)))
-            value << v.value<QUrl>();
+    QUrl foundry() const {
+        QUrl value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry", QUrl::StrictMode)).first().value<QUrl>();
         return value;
     }
 
@@ -73,12 +49,10 @@ public:
      * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry. 
      * The foundry, the organization that created the font. 
      */
-    void setFoundrys(const QList<QUrl>& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
+    void setFoundry(const QUrl& value) {
         QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        m_res->setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry", QUrl::StrictMode), values);
     }
 
     /**
@@ -86,15 +60,44 @@ public:
      * The foundry, the organization that created the font. 
      */
     void addFoundry(const QUrl& value) {
-        m_res->addProperty(Soprano::Vocabulary::RDF::type(), resourceType());
-        m_res->addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry", QUrl::StrictMode), value);
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#foundry", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily. 
+     * The name of the font family. 
+     */
+    QString fontFamily() const {
+        QString value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily", QUrl::StrictMode)).first().value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily. 
+     * The name of the font family. 
+     */
+    void setFontFamily(const QString& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily. 
+     * The name of the font family. 
+     */
+    void addFontFamily(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fontFamily", QUrl::StrictMode), value);
     }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Font", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    Font(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    }
+    Font(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type) {
+    }
 };
 }
 }

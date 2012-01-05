@@ -7,31 +7,40 @@
 #include <QtCore/QDate>
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
-#include <Soprano/Vocabulary/RDF>
 
 #include <nepomuk/simpleresource.h>
 
 #include "nfo/datacontainer.h"
+
 namespace Nepomuk {
 namespace NFO {
 /**
  * Represents a container for deleted files, a feature common 
  * in modern operating systems. 
  */
-class Trash : public NFO::DataContainer
+class Trash : public virtual NFO::DataContainer
 {
 public:
-    Trash(Nepomuk::SimpleResource* res)
-      : NFO::DataContainer(res), m_res(res)
-    {}
+    Trash(const QUrl& uri = QUrl())
+      : SimpleResource(uri), NIE::InformationElement(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Trash", QUrl::StrictMode)), NFO::DataContainer(uri, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Trash", QUrl::StrictMode)) {
+    }
 
-    virtual ~Trash() {}
+    Trash(const SimpleResource& res)
+      : SimpleResource(res), NIE::InformationElement(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Trash", QUrl::StrictMode)), NFO::DataContainer(res, QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Trash", QUrl::StrictMode)) {
+    }
+
+    Trash& operator=(const SimpleResource& res) {
+        SimpleResource::operator=(res);
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Trash", QUrl::StrictMode));
+        return *this;
+    }
 
 protected:
-    virtual QUrl resourceType() const { return QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#Trash", QUrl::StrictMode); }
-
-private:
-    Nepomuk::SimpleResource* m_res;
+    Trash(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type) {
+    }
+    Trash(const SimpleResource& res, const QUrl& type)
+      : SimpleResource(res), NIE::InformationElement(res, type), NFO::DataContainer(res, type) {
+    }
 };
 }
 }
