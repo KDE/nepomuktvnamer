@@ -35,29 +35,29 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber. 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season. 
      */
-    qint64 episodeNumber() const {
+    qint64 season() const {
         qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode)).first().value<qint64>();
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber. 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season. 
      */
-    void setEpisodeNumber(const qint64& value) {
+    void setSeason(const qint64& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season. 
      */
-    void addEpisodeNumber(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode), value);
+    void addSeason(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode), value);
     }
 
     /**
@@ -90,29 +90,29 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season. 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber. 
      */
-    qint64 season() const {
+    qint64 episodeNumber() const {
         qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode)).first().value<qint64>();
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season. 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber. 
      */
-    void setSeason(const qint64& value) {
+    void setEpisodeNumber(const qint64& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber. 
      */
-    void addSeason(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#season", QUrl::StrictMode), value);
+    void addEpisodeNumber(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#episodeNumber", QUrl::StrictMode), value);
     }
 
 protected:

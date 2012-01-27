@@ -38,6 +38,38 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition. 
+     * Stream position of the bookmark, suitable for e.g. audio books. 
+     * Expressed in milliseconds 
+     */
+    qint64 streamPosition() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode)).first().value<qint64>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition. 
+     * Stream position of the bookmark, suitable for e.g. audio books. 
+     * Expressed in milliseconds 
+     */
+    void setStreamPosition(const qint64& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition. 
+     * Stream position of the bookmark, suitable for e.g. audio books. 
+     * Expressed in milliseconds 
+     */
+    void addStreamPosition(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber. 
      * Page linked by the bookmark. 
      */
@@ -64,35 +96,6 @@ public:
      */
     void addPageNumber(const qint64& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#pageNumber", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
-     * The address of the linked object. Usually a web URI. 
-     */
-    QUrl bookmarks() const {
-        QUrl value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode)).first().value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
-     * The address of the linked object. Usually a web URI. 
-     */
-    void setBookmarks(const QUrl& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
-     * The address of the linked object. Usually a web URI. 
-     */
-    void addBookmarks(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), value);
     }
 
     /**
@@ -125,35 +128,32 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition. 
-     * Stream position of the bookmark, suitable for e.g. audio books. 
-     * Expressed in milliseconds 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
+     * The address of the linked object. Usually a web URI. 
      */
-    qint64 streamPosition() const {
-        qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode)).first().value<qint64>();
+    QUrl bookmarks() const {
+        QUrl value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode)).first().value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition. 
-     * Stream position of the bookmark, suitable for e.g. audio books. 
-     * Expressed in milliseconds 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
+     * The address of the linked object. Usually a web URI. 
      */
-    void setStreamPosition(const qint64& value) {
+    void setBookmarks(const QUrl& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition. 
-     * Stream position of the bookmark, suitable for e.g. audio books. 
-     * Expressed in milliseconds 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks. 
+     * The address of the linked object. Usually a web URI. 
      */
-    void addStreamPosition(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#streamPosition", QUrl::StrictMode), value);
+    void addBookmarks(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bookmarks", QUrl::StrictMode), value);
     }
 
 protected:

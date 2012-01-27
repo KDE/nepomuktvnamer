@@ -25,6 +25,7 @@
 #include "nmm/tvshow.h"
 #include "nmm/tvseries.h"
 #include "nfo/image.h"
+#include "nco/contact.h"
 
 #include <tvdb/client.h>
 #include <tvdb/series.h>
@@ -195,17 +196,18 @@ Nepomuk::SimpleResource TVNamer::createNepomukResource(const KUrl& url, int seas
     episodeRes.setSynopsis(series[season][episode].overview());
     episodeRes.setReleaseDate(QDateTime(series[season][episode].firstAired(), QTime(), Qt::UTC));
     episodeRes.setGenres(series.genres());
-
     return episodeRes;
 }
 
 void TVNamer::slotSaveToNepomukDone(KJob *job)
 {
     kDebug() << job;
-    if(job->error())
+    if(job->error()) {
         KMessageBox::error(0, i18nc("@info", "Failed to store information in Nepomuk (<message>%1</message>)", job->errorString()));
-
-    saveToNepomuk();
+        if(m_fileNameResults.isEmpty()) {
+            qApp->quit();
+        }
+    }
 }
 
 void TVNamer::lookupSeries()
@@ -263,10 +265,33 @@ void TVNamer::saveToNepomuk()
             graph << banner;
         }
 
+        // create all the regular actor resources which we will add to all episodes
+        QList<Nepomuk::NCO::Contact> regularActors;
+        foreach(const QString& actor, series.actors()) {
+            Nepomuk::NCO::Contact contact;
+            contact.setFullname(actor);
+            regularActors << contact;
+            graph << contact;
+        }
+
         // add all the episodes to the graph
         for(QHash<QString, TVShowFilenameAnalyzer::AnalysisResult>::const_iterator it = files.constBegin();
             it != files.constEnd(); ++it) {
+            // create the basic episode
             Nepomuk::NMM::TVShow episodeRes = createNepomukResource(QUrl::fromLocalFile(it.key()), it.value().season, it.value().episode, series);
+
+            // add all the actors
+            foreach(const Nepomuk::NCO::Contact& actor, regularActors) {
+                episodeRes.addActor(actor.uri());
+            }
+            // add the guest stars
+            foreach(const QString& guestStar, series[it.value().season][it.value().episode].guestStars()) {
+                Nepomuk::NCO::Contact contact;
+                contact.setFullname(guestStar);
+                episodeRes.addActor(contact.uri());
+                graph << contact;
+            }
+
             seriesRes.addEpisode(episodeRes.uri());
             episodeRes.setSeries(seriesRes.uri());
             graph << episodeRes;
@@ -275,11 +300,11 @@ void TVNamer::saveToNepomuk()
         // add the series to the graph (after the episodes)
         graph << seriesRes;
 
-        connect(Nepomuk::storeResources(graph), SIGNAL(result(KJob*)),
+        connect(Nepomuk::storeResources(graph, Nepomuk::IdentifyNew, Nepomuk::OverwriteProperties), SIGNAL(result(KJob*)),
                 this, SLOT(slotSaveToNepomukDone(KJob*)));
     }
     else {
-        KMessageBox::information(0, i18nc("@info", "Successfully stored information in Nepomuk."));
+//        KMessageBox::information(0, i18nc("@info", "Successfully stored information in Nepomuk."));
         qApp->quit();
     }
 }

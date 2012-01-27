@@ -35,61 +35,33 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate. 
-     * Amount of video frames per second. 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer. 
+     * Producer 
      */
-    double frameRate() const {
-        double value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode)).first().value<double>();
+    QList<QUrl> producers() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer", QUrl::StrictMode)))
+            value << v.value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate. 
-     * Amount of video frames per second. 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer. 
+     * Producer 
      */
-    void setFrameRate(const double& value) {
+    void setProducers(const QList<QUrl>& value) {
         QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode), values);
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate. 
-     * Amount of video frames per second. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer. 
+     * Producer 
      */
-    void addFrameRate(const double& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount. 
-     * The amount of frames in a video sequence. 
-     */
-    qint64 frameCount() const {
-        qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode)).first().value<qint64>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount. 
-     * The amount of frames in a video sequence. 
-     */
-    void setFrameCount(const qint64& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount. 
-     * The amount of frames in a video sequence. 
-     */
-    void addFrameCount(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode), value);
+    void addProducer(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer", QUrl::StrictMode), value);
     }
 
     /**
@@ -126,33 +98,33 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer. 
-     * Producer 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor. 
+     * Actor 
      */
-    QList<QUrl> producers() const {
+    QList<QUrl> actors() const {
         QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer", QUrl::StrictMode)))
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor", QUrl::StrictMode)))
             value << v.value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer. 
-     * Producer 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor. 
+     * Actor 
      */
-    void setProducers(const QList<QUrl>& value) {
+    void setActors(const QList<QUrl>& value) {
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer. 
-     * Producer 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor. 
+     * Actor 
      */
-    void addProducer(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#producer", QUrl::StrictMode), value);
+    void addActor(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor", QUrl::StrictMode), value);
     }
 
     /**
@@ -180,33 +152,6 @@ public:
      */
     void addAssistantDirector(const QUrl& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#assistantDirector", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer. 
-     */
-    QList<QUrl> cinematographers() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer. 
-     */
-    void setCinematographers(const QList<QUrl>& value) {
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer. 
-     */
-    void addCinematographer(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer", QUrl::StrictMode), value);
     }
 
     /**
@@ -240,33 +185,91 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor. 
-     * Actor 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount. 
+     * The amount of frames in a video sequence. 
      */
-    QList<QUrl> actors() const {
+    qint64 frameCount() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode)).first().value<qint64>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount. 
+     * The amount of frames in a video sequence. 
+     */
+    void setFrameCount(const qint64& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount. 
+     * The amount of frames in a video sequence. 
+     */
+    void addFrameCount(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameCount", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director. 
+     * Director 
+     */
+    QList<QUrl> directors() const {
         QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor", QUrl::StrictMode)))
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director", QUrl::StrictMode)))
             value << v.value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor. 
-     * Actor 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director. 
+     * Director 
      */
-    void setActors(const QList<QUrl>& value) {
+    void setDirectors(const QList<QUrl>& value) {
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor. 
-     * Actor 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director. 
+     * Director 
      */
-    void addActor(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#actor", QUrl::StrictMode), value);
+    void addDirector(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate. 
+     * Amount of video frames per second. 
+     */
+    double frameRate() const {
+        double value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode)).first().value<double>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate. 
+     * Amount of video frames per second. 
+     */
+    void setFrameRate(const double& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate. 
+     * Amount of video frames per second. 
+     */
+    void addFrameRate(const double& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#frameRate", QUrl::StrictMode), value);
     }
 
     /**
@@ -299,33 +302,30 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director. 
-     * Director 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer. 
      */
-    QList<QUrl> directors() const {
+    QList<QUrl> cinematographers() const {
         QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director", QUrl::StrictMode)))
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer", QUrl::StrictMode)))
             value << v.value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director. 
-     * Director 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer. 
      */
-    void setDirectors(const QList<QUrl>& value) {
+    void setCinematographers(const QList<QUrl>& value) {
         QVariantList values;
         foreach(const QUrl& v, value)
             values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director. 
-     * Director 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer. 
      */
-    void addDirector(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#director", QUrl::StrictMode), value);
+    void addCinematographer(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#cinematographer", QUrl::StrictMode), value);
     }
 
 protected:

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=NepomukService
+X-KDE-Library=nepomuktvnamerservice
+X-KDE-Nepomuk-autostart=true
+Name=Nepomuk TV Namer Service
+Comment=Nepomuk Service which automatically fetches information about TV show episodes

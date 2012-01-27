@@ -72,100 +72,63 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType. 
-     * The type of the bitrate. Examples may include CBR and VBR. 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork. 
+     * Associated Artwork 
      */
-    QString bitrateType() const {
-        QString value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode)).first().value<QString>();
+    QList<QUrl> artworks() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork", QUrl::StrictMode)))
+            value << v.value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType. 
-     * The type of the bitrate. Examples may include CBR and VBR. 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork. 
+     * Associated Artwork 
      */
-    void setBitrateType(const QString& value) {
+    void setArtworks(const QList<QUrl>& value) {
         QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType. 
-     * The type of the bitrate. Examples may include CBR and VBR. 
-     */
-    void addBitrateType(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate. 
-     * A common superproperty for all properties specifying the media 
-     * rate. Examples of subproperties may include frameRate for 
-     * video and sampleRate for audio. This property is expressed 
-     * in units per second. 
-     */
-    QList<double> rates() const {
-        QList<double> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate", QUrl::StrictMode)))
-            value << v.value<double>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate. 
-     * A common superproperty for all properties specifying the media 
-     * rate. Examples of subproperties may include frameRate for 
-     * video and sampleRate for audio. This property is expressed 
-     * in units per second. 
-     */
-    void setRates(const QList<double>& value) {
-        QVariantList values;
-        foreach(const double& v, value)
+        foreach(const QUrl& v, value)
             values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate. 
-     * A common superproperty for all properties specifying the media 
-     * rate. Examples of subproperties may include frameRate for 
-     * video and sampleRate for audio. This property is expressed 
-     * in units per second. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork. 
+     * Associated Artwork 
      */
-    void addRate(const double& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate", QUrl::StrictMode), value);
+    void addArtwork(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork", QUrl::StrictMode), value);
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate. 
-     * The date the media was released. 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec. 
+     * The name of the codec necessary to decode a piece of media. 
      */
-    QDateTime releaseDate() const {
-        QDateTime value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode)).first().value<QDateTime>();
+    QStringList codecs() const {
+        QStringList value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec", QUrl::StrictMode)))
+            value << v.value<QString>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate. 
-     * The date the media was released. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec. 
+     * The name of the codec necessary to decode a piece of media. 
      */
-    void setReleaseDate(const QDateTime& value) {
+    void setCodecs(const QStringList& value) {
         QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode), values);
+        foreach(const QString& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate. 
-     * The date the media was released. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec. 
+     * The name of the codec necessary to decode a piece of media. 
      */
-    void addReleaseDate(const QDateTime& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode), value);
+    void addCodec(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec", QUrl::StrictMode), value);
     }
 
     /**
@@ -195,6 +158,68 @@ public:
      */
     void addDuration(const QUrl& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#duration", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType. 
+     * The type of the bitrate. Examples may include CBR and VBR. 
+     */
+    QString bitrateType() const {
+        QString value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode)).first().value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType. 
+     * The type of the bitrate. Examples may include CBR and VBR. 
+     */
+    void setBitrateType(const QString& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType. 
+     * The type of the bitrate. Examples may include CBR and VBR. 
+     */
+    void addBitrateType(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitrateType", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream. 
+     * Connects a media container with a single media stream contained 
+     * within. 
+     */
+    QList<QUrl> mediaStreams() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream. 
+     * Connects a media container with a single media stream contained 
+     * within. 
+     */
+    void setMediaStreams(const QList<QUrl>& value) {
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream. 
+     * Connects a media container with a single media stream contained 
+     * within. 
+     */
+    void addMediaStream(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream", QUrl::StrictMode), value);
     }
 
     /**
@@ -233,33 +258,32 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec. 
-     * The name of the codec necessary to decode a piece of media. 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType. 
+     * The type of the compression. Values include, 'lossy' and 'lossless'. 
      */
-    QStringList codecs() const {
-        QStringList value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec", QUrl::StrictMode)))
-            value << v.value<QString>();
+    QUrl compressionType() const {
+        QUrl value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode)).first().value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec. 
-     * The name of the codec necessary to decode a piece of media. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType. 
+     * The type of the compression. Values include, 'lossy' and 'lossless'. 
      */
-    void setCodecs(const QStringList& value) {
+    void setCompressionType(const QUrl& value) {
         QVariantList values;
-        foreach(const QString& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec. 
-     * The name of the codec necessary to decode a piece of media. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType. 
+     * The type of the compression. Values include, 'lossy' and 'lossless'. 
      */
-    void addCodec(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#codec", QUrl::StrictMode), value);
+    void addCompressionType(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode), value);
     }
 
     /**
@@ -293,66 +317,32 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork. 
-     * Associated Artwork 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate. 
+     * The date the media was released. 
      */
-    QList<QUrl> artworks() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork", QUrl::StrictMode)))
-            value << v.value<QUrl>();
+    QDateTime releaseDate() const {
+        QDateTime value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode)).first().value<QDateTime>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork. 
-     * Associated Artwork 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate. 
+     * The date the media was released. 
      */
-    void setArtworks(const QList<QUrl>& value) {
+    void setReleaseDate(const QDateTime& value) {
         QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork", QUrl::StrictMode), values);
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork. 
-     * Associated Artwork 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate. 
+     * The date the media was released. 
      */
-    void addArtwork(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#artwork", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream. 
-     * Connects a media container with a single media stream contained 
-     * within. 
-     */
-    QList<QUrl> mediaStreams() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream. 
-     * Connects a media container with a single media stream contained 
-     * within. 
-     */
-    void setMediaStreams(const QList<QUrl>& value) {
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream. 
-     * Connects a media container with a single media stream contained 
-     * within. 
-     */
-    void addMediaStream(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hasMediaStream", QUrl::StrictMode), value);
+    void addReleaseDate(const QDateTime& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#releaseDate", QUrl::StrictMode), value);
     }
 
     /**
@@ -392,32 +382,42 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType. 
-     * The type of the compression. Values include, 'lossy' and 'lossless'. 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate. 
+     * A common superproperty for all properties specifying the media 
+     * rate. Examples of subproperties may include frameRate for 
+     * video and sampleRate for audio. This property is expressed 
+     * in units per second. 
      */
-    QUrl compressionType() const {
-        QUrl value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode)).first().value<QUrl>();
+    QList<double> rates() const {
+        QList<double> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate", QUrl::StrictMode)))
+            value << v.value<double>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType. 
-     * The type of the compression. Values include, 'lossy' and 'lossless'. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate. 
+     * A common superproperty for all properties specifying the media 
+     * rate. Examples of subproperties may include frameRate for 
+     * video and sampleRate for audio. This property is expressed 
+     * in units per second. 
      */
-    void setCompressionType(const QUrl& value) {
+    void setRates(const QList<double>& value) {
         QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode), values);
+        foreach(const double& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType. 
-     * The type of the compression. Values include, 'lossy' and 'lossless'. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate. 
+     * A common superproperty for all properties specifying the media 
+     * rate. Examples of subproperties may include frameRate for 
+     * video and sampleRate for audio. This property is expressed 
+     * in units per second. 
      */
-    void addCompressionType(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#compressionType", QUrl::StrictMode), value);
+    void addRate(const double& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#rate", QUrl::StrictMode), value);
     }
 
 protected:

@@ -37,36 +37,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder. 
-     * The folder contains a bookmark folder. 
-     */
-    QList<QUrl> containsBookmarkFolders() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder. 
-     * The folder contains a bookmark folder. 
-     */
-    void setContainsBookmarkFolders(const QList<QUrl>& value) {
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder. 
-     * The folder contains a bookmark folder. 
-     */
-    void addContainsBookmarkFolder(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmark. 
      * The folder contains a bookmark. 
      */
@@ -94,6 +64,36 @@ public:
      */
     void addContainsBookmark(const QUrl& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmark", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder. 
+     * The folder contains a bookmark folder. 
+     */
+    QList<QUrl> containsBookmarkFolders() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder. 
+     * The folder contains a bookmark folder. 
+     */
+    void setContainsBookmarkFolders(const QList<QUrl>& value) {
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder. 
+     * The folder contains a bookmark folder. 
+     */
+    void addContainsBookmarkFolder(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#containsBookmarkFolder", QUrl::StrictMode), value);
     }
 
 protected:

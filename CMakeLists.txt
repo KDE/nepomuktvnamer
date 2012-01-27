@@ -34,15 +34,18 @@ set( nepomuktvnamer_BIN_SRCS
 kde4_add_executable(nepomuktvnamer ${nepomuktvnamer_BIN_SRCS})
 
 target_link_libraries(nepomuktvnamer
-  ${NEPOMUK_LIBRARIES}
   ${QT_QTGUI_LIBRARY}
   ${KDE4_KDEUI_LIBS}
   ${KDE4_KIO_LIBS}
   ${SOPRANO_LIBRARIES}
-  ${NEPOMUK_QUERY_LIBRARIES}
   ${LIBTVDB_LIBRARIES}
+  ${NEPOMUK_LIBRARIES}
+  ${NEPOMUK_QUERY_LIBRARIES}
   nepomukdatamanagement
+  #nepomukcore
 )
 
 install(TARGETS nepomuktvnamer ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS nepomuktvnamer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+
+add_subdirectory(service)
