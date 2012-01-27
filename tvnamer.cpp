@@ -208,6 +208,7 @@ void TVNamer::slotSaveToNepomukDone(KJob *job)
             qApp->quit();
         }
     }
+    saveToNepomuk();
 }
 
 void TVNamer::lookupSeries()
