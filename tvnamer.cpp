@@ -52,6 +52,11 @@
 #include <nepomuk/datamanagement.h>
 #include <nepomuk/storeresourcesjob.h>
 
+#include <Soprano/Vocabulary/RDFS>
+#include <Soprano/Vocabulary/NAO>
+
+using namespace Soprano::Vocabulary;
+
 
 TVNamer::TVNamer(QObject *parent)
     : QObject(parent)
@@ -285,19 +290,35 @@ void TVNamer::saveToNepomuk()
         // add all the episodes to the graph
         for(QHash<QString, TVShowFilenameAnalyzer::AnalysisResult>::const_iterator it = files.constBegin();
             it != files.constEnd(); ++it) {
+            const Tvdb::Episode episode = series[it.value().season][it.value().episode];
+
             // create the basic episode
             Nepomuk::NMM::TVShow episodeRes = createNepomukResource(QUrl::fromLocalFile(it.key()), it.value().season, it.value().episode, series);
 
             // add all the actors
             foreach(const Nepomuk::NCO::Contact& actor, regularActors) {
                 episodeRes.addActor(actor.uri());
+                episodeRes.addProperty(NAO::hasSubResource(), actor.uri());
             }
             // add the guest stars
-            foreach(const QString& guestStar, series[it.value().season][it.value().episode].guestStars()) {
+            foreach(const QString& guestStar, episode.guestStars()) {
                 Nepomuk::NCO::Contact contact;
                 contact.setFullname(guestStar);
                 episodeRes.addActor(contact.uri());
+                episodeRes.addProperty(NAO::hasSubResource(), contact.uri());
                 graph << contact;
+            }
+            if(!episode.director().isEmpty()) {
+                Nepomuk::NCO::Contact contact;
+                contact.setFullname(episode.director());
+                graph << contact;
+                episodeRes.addDirector(contact.uri());
+            }
+            foreach(const QString& writer, episode.writers()) {
+                Nepomuk::NCO::Contact contact;
+                contact.setFullname(writer);
+                graph << contact;
+                episodeRes.addWriter(contact.uri());
             }
 
             seriesRes.addEpisode(episodeRes.uri());
