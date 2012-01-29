@@ -25,6 +25,7 @@
 #include "nmm/tvshow.h"
 #include "nmm/tvseries.h"
 #include "nfo/image.h"
+#include "nfo/webdataobject.h"
 #include "nco/contact.h"
 
 #include <tvdb/client.h>
@@ -253,6 +254,12 @@ void TVNamer::saveToNepomuk()
         Nepomuk::NMM::TVSeries seriesRes;
         seriesRes.setTitle(series.name());
         seriesRes.addDescription(series.overview());
+        if(!series.imdbId().isEmpty()) {
+            // TODO: this is not nice: the DMS does not allow to simply use an http URL as object
+            Nepomuk::NFO::WebDataObject imdbRes(series.imdbUrl());
+            seriesRes.addProperty(RDFS::seeAlso(), imdbRes.uri());
+            graph << imdbRes;
+        }
         foreach(const QUrl& bannerUrl, series.bannerUrls() + series.posterUrls()) {
             const KUrl localUrl = KGlobal::dirs()->locateLocal("appdata", QLatin1String("banners/") + series.name() + QLatin1String("/") + KUrl(bannerUrl).fileName(), true);
             if(!QFile::exists(localUrl.toLocalFile())) {
