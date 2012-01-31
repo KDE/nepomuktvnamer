@@ -10,7 +10,9 @@ target_link_libraries(nepomuktvnamerservice
   ${KDE4_KDEUI_LIBS}
   ${KDE4_KIO_LIBS}
   ${SOPRANO_LIBRARIES}
-  nepomukcore
+  #nepomukcore
+  ${NEPOMUK_LIBRARIES}
+  nepomukdatamanagement
   )
 
 install(
