@@ -49,3 +49,4 @@ install(TARGETS nepomuktvnamer ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(PROGRAMS nepomuktvnamer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 
 add_subdirectory(service)
+add_subdirectory(kioslave)
