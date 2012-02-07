@@ -66,6 +66,11 @@ private:
 
     Nepomuk::SimpleResource createNepomukResource(const KUrl& url, int season, int episode, const Tvdb::Series& series);
 
+    /**
+     * Adds the banner folder to the indexer config.
+     */
+    void updateFileIndexerConfig();
+
     Tvdb::Client* m_client;
 
     /// maps tv show names to a map of paths to results

@@ -45,6 +45,8 @@
 #include <KDebug>
 #include <KStandardDirs>
 #include <KIO/CopyJob>
+#include <KConfig>
+#include <KConfigGroup>
 
 #include <Nepomuk/Vocabulary/NMM>
 #include <nepomuk/simpleresource.h>
@@ -205,6 +207,17 @@ Nepomuk::SimpleResource TVNamer::createNepomukResource(const KUrl& url, int seas
     return episodeRes;
 }
 
+void TVNamer::updateFileIndexerConfig()
+{
+    KConfig cfg("nepomukstrigirc");
+    QStringList folders = cfg.group("General").readPathEntry( "folders", QStringList() << QDir::homePath() );
+    const QString bannerPath = KGlobal::dirs()->locateLocal("appdata", QLatin1String("banners/"), true);
+    if(!folders.contains(bannerPath)) {
+        folders << bannerPath;
+        cfg.group("General").writePathEntry( "folders", folders );
+    }
+}
+
 void TVNamer::slotSaveToNepomukDone(KJob *job)
 {
     kDebug() << job;
@@ -242,6 +255,8 @@ void TVNamer::lookupSeries()
 void TVNamer::saveToNepomuk()
 {
     if(!m_fileNameResults.isEmpty()) {
+        updateFileIndexerConfig();
+
         const QHash<QString, TVShowFilenameAnalyzer::AnalysisResult> files = m_fileNameResults.begin().value();
         const QString name = m_fileNameResults.begin().key();
         m_fileNameResults.erase(m_fileNameResults.begin());
