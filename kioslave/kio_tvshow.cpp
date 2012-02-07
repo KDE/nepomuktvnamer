@@ -102,19 +102,17 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
     if(url.path().length() <= 1) {
         // list all tv shows including title, description, and an optional depiction (for now we simply take one of them)
         Soprano::QueryResultIterator it
-                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?r ?t ?d min(?img) as ?img where { "
+                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?r ?t ?d where { "
                                                                                                       "?r a %1 . "
                                                                                                       "?r %2 ?t . "
                                                                                                       "?r %3 ?d . "
                                                                                                       "?r %4 ?cd . "
-                                                                                                      "?r %5 ?md . "
-                                                                                                      "OPTIONAL { ?r %6 ?i . ?i nie:url ?img . } . }")
+                                                                                                      "?r %5 ?md . }")
                                                                                   .arg(Soprano::Node::resourceToN3(NMM::TVSeries()),
                                                                                        Soprano::Node::resourceToN3(NIE::title()),
                                                                                        Soprano::Node::resourceToN3(NIE::description()),
                                                                                        Soprano::Node::resourceToN3(NAO::created()),
-                                                                                       Soprano::Node::resourceToN3(NAO::lastModified()),
-                                                                                       Soprano::Node::resourceToN3(NFO::depiction())),
+                                                                                       Soprano::Node::resourceToN3(NAO::lastModified())),
                                                                                   Soprano::Query::QueryLanguageSparql);
         while(it.next()) {
             UDSEntry uds = createSeriesUDSEntry(it["r"].uri(),
@@ -123,9 +121,6 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                                                 it["d"].toString(),
                                                 it["cd"].literal().toDateTime(),
                                                 it["md"].literal().toDateTime());
-            if(it["img"].isValid()) {
-                uds.insert(UDSEntry::UDS_ICON_NAME, it["img"].uri().toLocalFile());
-            }
             listEntry(uds, false);
         }
         listEntry(UDSEntry(), true);
@@ -252,8 +247,41 @@ void Nepomuk::TvshowProtocol::mimetype( const KUrl& url )
 
 void Nepomuk::TvshowProtocol::stat( const KUrl& url )
 {
-    // FIXME
-    error( ERR_UNSUPPORTED_ACTION, url.prettyUrl() );
+    // for basic functionality we only need to stat the folders
+    const QStringList pathTokens = url.path().split('/', QString::SkipEmptyParts);
+    if(pathTokens.count() == 1) {
+        // stat series folder
+        Soprano::QueryResultIterator it
+                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct * where { "
+                                                                                                      "?r a nmm:TVSeries ; "
+                                                                                                      "nie:title %1 ; "
+                                                                                                      "nao:created ?cd ; "
+                                                                                                      "nao:lastModified ?md ; "
+                                                                                                      "nie:description ?d . } LIMIT 1")
+                                                                                  .arg(Soprano::Node::literalToN3(pathTokens[0])),
+                                                                                  Soprano::Query::QueryLanguageSparql);
+        if(it.next()) {
+            statEntry(createSeriesUDSEntry(it["r"].uri(),
+                                           pathTokens[0],
+                                           pathTokens[0],
+                                           it["d"].toString(),
+                                           it["cd"].literal().toDateTime(),
+                                           it["md"].literal().toDateTime()));
+            finished();
+        }
+        else {
+            error( ERR_DOES_NOT_EXIST, url.prettyUrl() );
+        }
+    }
+    else if(pathTokens.count() == 2) {
+        // stat season folder
+        statEntry(createFolderUDSEntry(pathTokens[1], pathTokens[2]));
+        finished();
+    }
+    else {
+        // FIXME
+        error( ERR_UNSUPPORTED_ACTION, url.prettyUrl() );
+    }
 }
 
 

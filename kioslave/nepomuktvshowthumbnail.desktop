@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+Name=TV Series
+ServiceTypes=ThumbCreator
+X-KDE-Protocol=tvshow
+X-KDE-Library=nepomuktvshowthumbnail
+MimeType=inode/directory;
+CacheThumbnail=true
