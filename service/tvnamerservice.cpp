@@ -26,8 +26,10 @@
 #include <Nepomuk/File>
 
 #include <QtCore/QProcess>
+#include <QFile>
 
 #include <KStandardDirs>
+#include <KDebug>
 
 using namespace Nepomuk::Vocabulary;
 
@@ -46,11 +48,16 @@ TVNamerService::~TVNamerService()
 {
 }
 
-void TVNamerService::slotResourceCreated(const Nepomuk::Resource &res, const QList<QUrl> &)
+void TVNamerService::slotResourceCreated(const Nepomuk::Resource &res, const QList<QUrl> &types)
 {
+    kDebug() << res.resourceUri() << types;
     // all we need to do is call the nepomuktvnamer executable on the newly created file
     if(res.isFile()) {
-        QProcess::startDetached(KStandardDirs::findExe(QLatin1String("nepomuktvnamer")), QStringList() << res.toFile().url().toLocalFile());
+        const QString path = res.toFile().url().toLocalFile();
+        if(QFile::exists(path)) {
+            kDebug() << "Calling" << KStandardDirs::findExe(QLatin1String("nepomuktvnamer")) << path;
+            QProcess::startDetached(KStandardDirs::findExe(QLatin1String("nepomuktvnamer")), QStringList() << path);
+        }
     }
 }
 
