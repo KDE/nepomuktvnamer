@@ -275,7 +275,7 @@ void Nepomuk::TvshowProtocol::stat( const KUrl& url )
     }
     else if(pathTokens.count() == 2) {
         // stat season folder
-        statEntry(createFolderUDSEntry(pathTokens[1], pathTokens[2]));
+        statEntry(createFolderUDSEntry(pathTokens[0], pathTokens[1]));
         finished();
     }
     else {
