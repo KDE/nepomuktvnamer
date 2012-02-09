@@ -32,7 +32,9 @@ int main( int argc, char *argv[] )
                           "nepomuktvnamer",
                           ki18n("Nepomuk Shell"),
                           NEPOMUKTVNAMER_VERSION,
-                          ki18n("The Nepomuk TV Namer"),
+                          ki18n("The Nepomuk TV Namer tries to extract TV Show name, season, and episode from the file name of the given file (or all files in a given directory).\n"
+                                "If found fetches details from thetvdb.com and stores the results in Nepomuk.\n"
+                                "If no TV Show information could be extracted from the filename -1 is returned. If communication with Nepomuk failed -2 is returned."),
                           KAboutData::License_GPL,
                           ki18n("(c) 2011-2012, Sebastian Trüg"),
                           KLocalizedString(),

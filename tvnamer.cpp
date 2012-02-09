@@ -88,7 +88,8 @@ void TVNamer::lookupFile(const KUrl &url)
         else {
             if(!m_quiet)
                 KMessageBox::sorry(0, i18nc("@info", "Failed to extract TV Show details from filename <filename>%1</filename>.", url.fileName()));
-            qApp->quit();
+            // report error case
+            qApp->exit(-1);
         }
     }
 }
@@ -108,7 +109,8 @@ void TVNamer::lookupFolder(const KUrl &folder)
     if(m_fileNameResults.isEmpty()) {
         if(!m_quiet)
             KMessageBox::sorry(0, i18nc("@info", "Could not find any file names which contained TV Shows in <filename>%1</filename>.", folder.prettyUrl()));
-        qApp->quit();
+        // not an error
+        qApp->exit(0);
     }
     else {
         m_nameSeriesHash.clear();
@@ -228,7 +230,7 @@ void TVNamer::slotSaveToNepomukDone(KJob *job)
         if(!m_quiet)
             KMessageBox::error(0, i18nc("@info", "Failed to store information in Nepomuk (<message>%1</message>)", job->errorString()));
         if(m_fileNameResults.isEmpty()) {
-            qApp->quit();
+            qApp->exit(-2);
         }
     }
     saveToNepomuk();
@@ -352,9 +354,10 @@ void TVNamer::saveToNepomuk()
                 this, SLOT(slotSaveToNepomukDone(KJob*)));
     }
     else {
+        // FIXME: if no series is found the tvnamer claims success anyway
         if(!m_quiet)
             KMessageBox::information(0, i18nc("@info", "Successfully stored information in Nepomuk."));
-        qApp->quit();
+        qApp->exit(0);
     }
 }
 
