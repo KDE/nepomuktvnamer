@@ -157,7 +157,6 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                                                                                                           "nmm:series [ nie:title %2 ] ; "
                                                                                                           "nie:title ?t ; "
                                                                                                           "nmm:episodeNumber ?e ; "
-                                                                                                          "nie:mimeType ?mt ; "
                                                                                                           "nie:url ?url ; "
                                                                                                           "nmm:releaseDate ?rd ; "
                                                                                                           "nmm:synopsis ?d . }")
@@ -169,7 +168,6 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                 UDSEntry uds;
                 uds.insert( KIO::UDSEntry::UDS_NAME, episodeName );
                 uds.insert( KIO::UDSEntry::UDS_FILE_TYPE, S_IFREG );
-                uds.insert( KIO::UDSEntry::UDS_MIME_TYPE, it["mt"].toString() );
                 uds.insert( KIO::UDSEntry::UDS_DISPLAY_TYPE, i18n("TV Show") );
                 uds.insert( KIO::UDSEntry::UDS_ACCESS, 0700 );
                 uds.insert( KIO::UDSEntry::UDS_USER, KUser().loginName() );
