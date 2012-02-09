@@ -46,6 +46,7 @@ public:
     TVNamer(QObject *parent = 0);
 
 public Q_SLOTS:
+    void setQuiet(bool quiet) { m_quiet = quiet; }
     void lookupFile(const KUrl& url);
     void lookupFolder(const KUrl& folder);
 
@@ -70,6 +71,8 @@ private:
      * Adds the banner folder to the indexer config.
      */
     void updateFileIndexerConfig();
+
+    bool m_quiet;
 
     Tvdb::Client* m_client;
 

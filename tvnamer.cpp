@@ -61,7 +61,8 @@ using namespace Soprano::Vocabulary;
 
 
 TVNamer::TVNamer(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      m_quiet(false)
 {
     m_client = new Tvdb::Client( this );
     m_client->setFlags(Tvdb::Client::FetchFullDetails);
@@ -85,7 +86,8 @@ void TVNamer::lookupFile(const KUrl &url)
             lookupSeries();
         }
         else {
-            KMessageBox::sorry(0, i18nc("@info", "Failed to extract TV Show details from filename <filename>%1</filename>.", url.fileName()));
+            if(!m_quiet)
+                KMessageBox::sorry(0, i18nc("@info", "Failed to extract TV Show details from filename <filename>%1</filename>.", url.fileName()));
             qApp->quit();
         }
     }
@@ -104,7 +106,8 @@ void TVNamer::lookupFolder(const KUrl &folder)
     }
 
     if(m_fileNameResults.isEmpty()) {
-        KMessageBox::sorry(0, i18nc("@info", "Could not find any file names which contained TV Shows in <filename>%1</filename>.", folder.prettyUrl()));
+        if(!m_quiet)
+            KMessageBox::sorry(0, i18nc("@info", "Could not find any file names which contained TV Shows in <filename>%1</filename>.", folder.prettyUrl()));
         qApp->quit();
     }
     else {
@@ -222,7 +225,8 @@ void TVNamer::slotSaveToNepomukDone(KJob *job)
 {
     kDebug() << job;
     if(job->error()) {
-        KMessageBox::error(0, i18nc("@info", "Failed to store information in Nepomuk (<message>%1</message>)", job->errorString()));
+        if(!m_quiet)
+            KMessageBox::error(0, i18nc("@info", "Failed to store information in Nepomuk (<message>%1</message>)", job->errorString()));
         if(m_fileNameResults.isEmpty()) {
             qApp->quit();
         }
@@ -348,7 +352,8 @@ void TVNamer::saveToNepomuk()
                 this, SLOT(slotSaveToNepomukDone(KJob*)));
     }
     else {
-//        KMessageBox::information(0, i18nc("@info", "Successfully stored information in Nepomuk."));
+        if(!m_quiet)
+            KMessageBox::information(0, i18nc("@info", "Successfully stored information in Nepomuk."));
         qApp->quit();
     }
 }

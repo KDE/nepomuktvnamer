@@ -56,7 +56,7 @@ void TVNamerService::slotResourceCreated(const Nepomuk::Resource &res, const QLi
         const QString path = res.toFile().url().toLocalFile();
         if(QFile::exists(path)) {
             kDebug() << "Calling" << KStandardDirs::findExe(QLatin1String("nepomuktvnamer")) << path;
-            QProcess::startDetached(KStandardDirs::findExe(QLatin1String("nepomuktvnamer")), QStringList() << path);
+            QProcess::startDetached(KStandardDirs::findExe(QLatin1String("nepomuktvnamer")), QStringList() << QLatin1String("--quiet") << path);
         }
     }
 }

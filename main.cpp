@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2011 by Sebastian Trueg <trueg at kde.org>
+   Copyright (C) 2011-2012 by Sebastian Trueg <trueg at kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
@@ -43,7 +43,8 @@ int main( int argc, char *argv[] )
 
     KCmdLineArgs::init( argc, argv, &aboutData );
     KCmdLineOptions options;
-	options.add("+uri", ki18n("The URL to the video file(s) to annotate."));
+    options.add("quiet").add("q", ki18n("Try to be quiet by not showing any error message boxes to the user."));
+    options.add("+uri", ki18n("The URL to the video file(s) to annotate."));
     KCmdLineArgs::addCmdLineOptions( options );
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
@@ -51,6 +52,7 @@ int main( int argc, char *argv[] )
     QApplication::setQuitOnLastWindowClosed( false );
 
     TVNamer tvnamer;
+    tvnamer.setQuiet(args->isSet("quiet"));
     if ( args->count() ) {
         QMetaObject::invokeMethod(&tvnamer, "lookupFile", Qt::QueuedConnection, Q_ARG(KUrl, args->url( 0 )));
         return app.exec();
