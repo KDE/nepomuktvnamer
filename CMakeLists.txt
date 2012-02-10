@@ -2,7 +2,7 @@ project(nepomuktvnamer)
 
 ##################  Nepomuktvnamer version  ################################
 set(CMAKE_NEPOMUKTVNAMER_VERSION_MAJOR 0)
-set(CMAKE_NEPOMUKTVNAMER_VERSION_MINOR 1)
+set(CMAKE_NEPOMUKTVNAMER_VERSION_MINOR 2)
 set(CMAKE_NEPOMUKTVNAMER_VERSION_RELEASE 0)
 set(CMAKE_NEPOMUKTVNAMER_VERSION "${CMAKE_NEPOMUKTVNAMER_VERSION_MAJOR}.${CMAKE_NEPOMUKTVNAMER_VERSION_MINOR}.${CMAKE_NEPOMUKTVNAMER_VERSION_RELEASE}")
 
@@ -20,33 +20,8 @@ include_directories(
   ${KDE4_INCLUDES}
   ${SOPRANO_INCLUDE_DIR}
   ${NEPOMUK_INCLUDE_DIR}
-  ${nepomuktvnamer_BINARY_DIR}
 )
 
-configure_file(nepomuktvnamer-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/nepomuktvnamer-config.h)
-
-set( nepomuktvnamer_BIN_SRCS
-  main.cpp
-  tvnamer.cpp
-  tvshowfilenameanalyzer.cpp
-)
-
-kde4_add_executable(nepomuktvnamer ${nepomuktvnamer_BIN_SRCS})
-
-target_link_libraries(nepomuktvnamer
-  ${QT_QTGUI_LIBRARY}
-  ${KDE4_KDEUI_LIBS}
-  ${KDE4_KIO_LIBS}
-  ${SOPRANO_LIBRARIES}
-  ${LIBTVDB_LIBRARIES}
-  ${NEPOMUK_LIBRARIES}
-  ${NEPOMUK_QUERY_LIBRARIES}
-  nepomukdatamanagement
-  #nepomukcore
-)
-
-install(TARGETS nepomuktvnamer ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS nepomuktvnamer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
-
+add_subdirectory(src)
 add_subdirectory(service)
 add_subdirectory(kioslave)
