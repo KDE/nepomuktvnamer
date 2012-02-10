@@ -47,6 +47,7 @@
 #include <KIO/CopyJob>
 #include <KConfig>
 #include <KConfigGroup>
+#include <KMimeType>
 
 #include <Nepomuk/Vocabulary/NMM>
 #include <nepomuk/simpleresource.h>
@@ -99,10 +100,13 @@ void TVNamer::lookupFolder(const KUrl &folder)
     QDirIterator it(folder.toLocalFile(), QDir::Files, QDirIterator::Subdirectories);
     while(it.hasNext()) {
         const QString path = it.next();
-        TVShowFilenameAnalyzer analyzer;
-        TVShowFilenameAnalyzer::AnalysisResult fileNameResult = analyzer.analyzeFilename(path);
-        if(fileNameResult.isValid()) {
-            m_fileNameResults[fileNameResult.name.toLower()].insert(path, fileNameResult);
+        // only check videos. We do not want to mark archives or subtitles as tv shows
+        if(KMimeType::findByPath(path)->name().contains(QLatin1String("video"))) {
+            TVShowFilenameAnalyzer analyzer;
+            TVShowFilenameAnalyzer::AnalysisResult fileNameResult = analyzer.analyzeFilename(path);
+            if(fileNameResult.isValid()) {
+                m_fileNameResults[fileNameResult.name.toLower()].insert(path, fileNameResult);
+            }
         }
     }
 
