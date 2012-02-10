@@ -1,7 +1,12 @@
 [Desktop Entry]
-Name=Nepomuk TVNamer
-Comment=Tool to lookup and store TV Show metadata in Nepomuk
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=video/*;inode/directory;
+Actions=tvnamer;
+X-KDE-Submenu=Desktop Search
 Icon=nepomuk
-Exec=nepomuktvnamer
-Type=Application
-Categories=Qt;KDE;Multimedia;
+
+[Desktop Action tvnamer]
+Name=Lookup TV Shows on thetvdb.com
+Icon=nepomuk
+Exec=nepomuktvnamer %f

@@ -25,4 +25,4 @@ target_link_libraries(nepomuktvnamer
 )
 
 install(TARGETS nepomuktvnamer ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(PROGRAMS nepomuktvnamer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES nepomuktvnamer.desktop DESTINATION ${SERVICES_INSTALL_DIR}/ServiceMenus)
