@@ -157,9 +157,9 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                                                                                                           "nmm:series [ nie:title %2 ] ; "
                                                                                                           "nie:title ?t ; "
                                                                                                           "nmm:episodeNumber ?e ; "
-                                                                                                          "nie:url ?url ; "
-                                                                                                          "nmm:releaseDate ?rd ; "
-                                                                                                          "nmm:synopsis ?d . }")
+                                                                                                          "nie:url ?url . "
+                                                                                                          "OPTIONAL { ?r nmm:releaseDate ?rd ; "
+                                                                                                          "nmm:synopsis ?d . } . }")
                                                                                       .arg(Soprano::Node::literalToN3(season),
                                                                                            Soprano::Node::literalToN3(seriesTitle)),
                                                                                       Soprano::Query::QueryLanguageSparql);

@@ -206,8 +206,12 @@ Nepomuk::SimpleResource TVNamer::createNepomukResource(const KUrl& url, int seas
     episodeRes.setEpisodeNumber(episode);
     episodeRes.setSeason(season);
     episodeRes.setTitle(series[season][episode].name());
-    episodeRes.setSynopsis(series[season][episode].overview());
-    episodeRes.setReleaseDate(QDateTime(series[season][episode].firstAired(), QTime(), Qt::UTC));
+    if(!series[season][episode].overview().isEmpty()) {
+        episodeRes.setSynopsis(series[season][episode].overview());
+    }
+    if(series[season][episode].firstAired().isValid()) {
+        episodeRes.setReleaseDate(QDateTime(series[season][episode].firstAired(), QTime(), Qt::UTC));
+    }
     episodeRes.setGenres(series.genres());
     return episodeRes;
 }
