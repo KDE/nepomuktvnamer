@@ -28,7 +28,10 @@ from datetime import date, datetime
 t = Tvdb()
 
 def prettyPrintDate(d):
-    return datetime.strptime(str(d), '%Y-%m-%d').strftime('%d %B %Y')
+    if d == None:
+        return 'unknown date'
+    else:
+        return datetime.strptime(str(d), '%Y-%m-%d').strftime('%d %B %Y')
 
 def checkNewEpisode(name, s, e):
     series = t[name]
