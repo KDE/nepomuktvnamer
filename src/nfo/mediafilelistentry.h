@@ -347,7 +347,8 @@ public:
     }
 
 protected:
-    MediaFileListEntry(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    MediaFileListEntry(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     MediaFileListEntry(const SimpleResource& res, const QUrl& type)

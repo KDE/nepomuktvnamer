@@ -72,6 +72,8 @@ private:
      */
     void updateFileIndexerConfig();
 
+    KUrl downloadBanner(const QString& seriesName, const QUrl& bannerUrl) const;
+
     bool m_quiet;
 
     Tvdb::Client* m_client;

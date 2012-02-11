@@ -38,7 +38,8 @@ public:
     }
 
 protected:
-    FilesystemImage(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type), NFO::Filesystem(uri, type) {
+    FilesystemImage(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type), NFO::Filesystem(uri, type) {
     }
     FilesystemImage(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::DataContainer(res, type), NFO::Filesystem(res, type) {

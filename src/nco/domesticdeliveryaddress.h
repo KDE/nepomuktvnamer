@@ -36,7 +36,8 @@ public:
     }
 
 protected:
-    DomesticDeliveryAddress(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PostalAddress(uri, type) {
+    DomesticDeliveryAddress(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PostalAddress(uri, type) {
     }
     DomesticDeliveryAddress(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::ContactMedium(res, type), NCO::PostalAddress(res, type) {

@@ -39,6 +39,67 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
+     * The owner of the file as defined by the file system access rights 
+     * feature. 
+     */
+    QUrl fileOwner() const {
+        QUrl value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode)).first().value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
+     * The owner of the file as defined by the file system access rights 
+     * feature. 
+     */
+    void setFileOwner(const QUrl& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
+     * The owner of the file as defined by the file system access rights 
+     * feature. 
+     */
+    void addFileOwner(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
+     * File creation date 
+     */
+    QDateTime fileCreated() const {
+        QDateTime value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode)).first().value<QDateTime>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
+     * File creation date 
+     */
+    void setFileCreated(const QDateTime& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
+     * File creation date 
+     */
+    void addFileCreated(const QDateTime& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastModified. 
      * last modification date 
      */
@@ -95,80 +156,6 @@ public:
      */
     void addFileName(const QString& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
-     * File creation date 
-     */
-    QDateTime fileCreated() const {
-        QDateTime value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode)).first().value<QDateTime>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
-     * File creation date 
-     */
-    void setFileCreated(const QDateTime& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated. 
-     * File creation date 
-     */
-    void addFileCreated(const QDateTime& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileCreated", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl. 
-     * URL of the file. It points at the location of the file. In cases 
-     * where creating a simple file:// or http:// URL for a file is difficult 
-     * (e.g. for files inside compressed archives) the applications 
-     * are encouraged to use conventions defined by Apache Commons 
-     * VFS Project at http://jakarta.apache.org/ commons/ vfs/ 
-     * filesystems.html. 
-     */
-    QList<QUrl> fileUrls() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl. 
-     * URL of the file. It points at the location of the file. In cases 
-     * where creating a simple file:// or http:// URL for a file is difficult 
-     * (e.g. for files inside compressed archives) the applications 
-     * are encouraged to use conventions defined by Apache Commons 
-     * VFS Project at http://jakarta.apache.org/ commons/ vfs/ 
-     * filesystems.html. 
-     */
-    void setFileUrls(const QList<QUrl>& value) {
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl. 
-     * URL of the file. It points at the location of the file. In cases 
-     * where creating a simple file:// or http:// URL for a file is difficult 
-     * (e.g. for files inside compressed archives) the applications 
-     * are encouraged to use conventions defined by Apache Commons 
-     * VFS Project at http://jakarta.apache.org/ commons/ vfs/ 
-     * filesystems.html. 
-     */
-    void addFileUrl(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl", QUrl::StrictMode), value);
     }
 
     /**
@@ -269,6 +256,51 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl. 
+     * URL of the file. It points at the location of the file. In cases 
+     * where creating a simple file:// or http:// URL for a file is difficult 
+     * (e.g. for files inside compressed archives) the applications 
+     * are encouraged to use conventions defined by Apache Commons 
+     * VFS Project at http://jakarta.apache.org/ commons/ vfs/ 
+     * filesystems.html. 
+     */
+    QList<QUrl> fileUrls() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl. 
+     * URL of the file. It points at the location of the file. In cases 
+     * where creating a simple file:// or http:// URL for a file is difficult 
+     * (e.g. for files inside compressed archives) the applications 
+     * are encouraged to use conventions defined by Apache Commons 
+     * VFS Project at http://jakarta.apache.org/ commons/ vfs/ 
+     * filesystems.html. 
+     */
+    void setFileUrls(const QList<QUrl>& value) {
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl. 
+     * URL of the file. It points at the location of the file. In cases 
+     * where creating a simple file:// or http:// URL for a file is difficult 
+     * (e.g. for files inside compressed archives) the applications 
+     * are encouraged to use conventions defined by Apache Commons 
+     * VFS Project at http://jakarta.apache.org/ commons/ vfs/ 
+     * filesystems.html. 
+     */
+    void addFileUrl(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileUrl", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed. 
      * Time when the file was last accessed. 
      */
@@ -297,40 +329,9 @@ public:
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileLastAccessed", QUrl::StrictMode), value);
     }
 
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
-     * The owner of the file as defined by the file system access rights 
-     * feature. 
-     */
-    QUrl fileOwner() const {
-        QUrl value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode)).first().value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
-     * The owner of the file as defined by the file system access rights 
-     * feature. 
-     */
-    void setFileOwner(const QUrl& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner. 
-     * The owner of the file as defined by the file system access rights 
-     * feature. 
-     */
-    void addFileOwner(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileOwner", QUrl::StrictMode), value);
-    }
-
 protected:
-    FileDataObject(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type) {
+    FileDataObject(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::DataObject(uri, type) {
     }
     FileDataObject(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::DataObject(res, type) {

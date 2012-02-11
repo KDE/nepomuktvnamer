@@ -39,44 +39,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end. 
-     * End datetime for the role, such as: the datetime of leaving a 
-     * project or organization, datetime of ending employment, datetime 
-     * of divorce. If absent or set to a date in the future, the role is 
-     * currently active. 
-     */
-    QDateTime end() const {
-        QDateTime value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode)).first().value<QDateTime>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end. 
-     * End datetime for the role, such as: the datetime of leaving a 
-     * project or organization, datetime of ending employment, datetime 
-     * of divorce. If absent or set to a date in the future, the role is 
-     * currently active. 
-     */
-    void setEnd(const QDateTime& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end. 
-     * End datetime for the role, such as: the datetime of leaving a 
-     * project or organization, datetime of ending employment, datetime 
-     * of divorce. If absent or set to a date in the future, the role is 
-     * currently active. 
-     */
-    void addEnd(const QDateTime& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/01/19/nie#disclaimer. 
      * A disclaimer 
      */
@@ -264,6 +226,39 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress. 
+     * The default Address for a Contact. An equivalent of the 'ADR' 
+     * property as defined in RFC 2426 Sec. 3.2.1. 
+     */
+    QList<QUrl> postalAddresses() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress. 
+     * The default Address for a Contact. An equivalent of the 'ADR' 
+     * property as defined in RFC 2426 Sec. 3.2.1. 
+     */
+    void setPostalAddresses(const QList<QUrl>& value) {
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress. 
+     * The default Address for a Contact. An equivalent of the 'ADR' 
+     * property as defined in RFC 2426 Sec. 3.2.1. 
+     */
+    void addPostalAddress(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/01/19/nie#depends. 
      * Dependency relation. A piece of content depends on another 
      * piece of data in order to be properly understood/used/interpreted. 
@@ -395,39 +390,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress. 
-     * The default Address for a Contact. An equivalent of the 'ADR' 
-     * property as defined in RFC 2426 Sec. 3.2.1. 
-     */
-    QList<QUrl> postalAddresses() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress. 
-     * The default Address for a Contact. An equivalent of the 'ADR' 
-     * property as defined in RFC 2426 Sec. 3.2.1. 
-     */
-    void setPostalAddresses(const QList<QUrl>& value) {
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress. 
-     * The default Address for a Contact. An equivalent of the 'ADR' 
-     * property as defined in RFC 2426 Sec. 3.2.1. 
-     */
-    void addPostalAddress(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasPostalAddress", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/01/19/nie#license. 
      * Terms and intellectual property rights licensing conditions. 
      */
@@ -550,6 +512,44 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end. 
+     * End datetime for the role, such as: the datetime of leaving a 
+     * project or organization, datetime of ending employment, datetime 
+     * of divorce. If absent or set to a date in the future, the role is 
+     * currently active. 
+     */
+    QDateTime end() const {
+        QDateTime value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode)).first().value<QDateTime>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end. 
+     * End datetime for the role, such as: the datetime of leaving a 
+     * project or organization, datetime of ending employment, datetime 
+     * of divorce. If absent or set to a date in the future, the role is 
+     * currently active. 
+     */
+    void setEnd(const QDateTime& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end. 
+     * End datetime for the role, such as: the datetime of leaving a 
+     * project or organization, datetime of ending employment, datetime 
+     * of divorce. If absent or set to a date in the future, the role is 
+     * currently active. 
+     */
+    void addEnd(const QDateTime& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#end", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#url. 
      * A uniform resource locator associated with the given role of 
      * a Contact. Inspired by the 'URL' property defined in RFC 2426 
@@ -616,41 +616,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start. 
-     * Start datetime for the role, such as: the datetime of joining 
-     * a project or organization, datetime of starting employment, 
-     * datetime of marriage 
-     */
-    QDateTime start() const {
-        QDateTime value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode)).first().value<QDateTime>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start. 
-     * Start datetime for the role, such as: the datetime of joining 
-     * a project or organization, datetime of starting employment, 
-     * datetime of marriage 
-     */
-    void setStart(const QDateTime& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start. 
-     * Start datetime for the role, such as: the datetime of joining 
-     * a project or organization, datetime of starting employment, 
-     * datetime of marriage 
-     */
-    void addStart(const QDateTime& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#foafUrl. 
      * The URL of the FOAF file. 
      */
@@ -713,8 +678,44 @@ public:
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/01/19/nie#licenseType", QUrl::StrictMode), value);
     }
 
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start. 
+     * Start datetime for the role, such as: the datetime of joining 
+     * a project or organization, datetime of starting employment, 
+     * datetime of marriage 
+     */
+    QDateTime start() const {
+        QDateTime value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode)).first().value<QDateTime>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start. 
+     * Start datetime for the role, such as: the datetime of joining 
+     * a project or organization, datetime of starting employment, 
+     * datetime of marriage 
+     */
+    void setStart(const QDateTime& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start. 
+     * Start datetime for the role, such as: the datetime of joining 
+     * a project or organization, datetime of starting employment, 
+     * datetime of marriage 
+     */
+    void addStart(const QDateTime& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#start", QUrl::StrictMode), value);
+    }
+
 protected:
-    Role(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    Role(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     Role(const SimpleResource& res, const QUrl& type)

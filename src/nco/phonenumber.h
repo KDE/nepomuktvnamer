@@ -61,7 +61,8 @@ public:
     }
 
 protected:
-    PhoneNumber(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::ContactMedium(uri, type) {
+    PhoneNumber(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::ContactMedium(uri, type) {
     }
     PhoneNumber(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::ContactMedium(res, type) {

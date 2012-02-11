@@ -36,7 +36,8 @@ public:
     }
 
 protected:
-    Website(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    Website(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type) {
     }
     Website(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type) {

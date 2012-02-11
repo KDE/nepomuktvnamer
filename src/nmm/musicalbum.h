@@ -36,32 +36,32 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode. 
-     * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize. 
+     * The number of parts in the set. 
      */
-    QString internationalStandardRecordingCode() const {
-        QString value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode)).first().value<QString>();
+    qint64 setSize() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode. 
-     * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize. 
+     * The number of parts in the set. 
      */
-    void setInternationalStandardRecordingCode(const QString& value) {
+    void setSetSize(const qint64& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode. 
-     * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize. 
+     * The number of parts in the set. 
      */
-    void addInternationalStandardRecordingCode(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode), value);
+    void addSetSize(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode), value);
     }
 
     /**
@@ -94,32 +94,32 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize. 
-     * The number of parts in the set. 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain. 
+     * ReplayGain album(audiophile) gain 
      */
-    qint64 setSize() const {
-        qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode)).first().value<qint64>();
+    double albumGain() const {
+        double value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode)).first().value<double>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize. 
-     * The number of parts in the set. 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain. 
+     * ReplayGain album(audiophile) gain 
      */
-    void setSetSize(const qint64& value) {
+    void setAlbumGain(const double& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize. 
-     * The number of parts in the set. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain. 
+     * ReplayGain album(audiophile) gain 
      */
-    void addSetSize(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#setSize", QUrl::StrictMode), value);
+    void addAlbumGain(const double& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode), value);
     }
 
     /**
@@ -217,36 +217,37 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain. 
-     * ReplayGain album(audiophile) gain 
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode. 
+     * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
      */
-    double albumGain() const {
-        double value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode)).first().value<double>();
+    QString internationalStandardRecordingCode() const {
+        QString value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode)).first().value<QString>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain. 
-     * ReplayGain album(audiophile) gain 
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode. 
+     * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
      */
-    void setAlbumGain(const double& value) {
+    void setInternationalStandardRecordingCode(const QString& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain. 
-     * ReplayGain album(audiophile) gain 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode. 
+     * ISRC ID. Format: 'CC-XXX-YY-NNNNN' 
      */
-    void addAlbumGain(const double& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#albumGain", QUrl::StrictMode), value);
+    void addInternationalStandardRecordingCode(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#internationalStandardRecordingCode", QUrl::StrictMode), value);
     }
 
 protected:
-    MusicAlbum(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::MediaList(uri, type) {
+    MusicAlbum(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::MediaList(uri, type) {
     }
     MusicAlbum(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::MediaList(res, type) {

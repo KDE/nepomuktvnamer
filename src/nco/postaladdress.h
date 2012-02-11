@@ -103,38 +103,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox. 
-     * Post office box. This is the first part of the value of the 'ADR' 
-     * property as defined in RFC 2426, sec. 3.2.1 
-     */
-    QString pobox() const {
-        QString value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode)).first().value<QString>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox. 
-     * Post office box. This is the first part of the value of the 'ADR' 
-     * property as defined in RFC 2426, sec. 3.2.1 
-     */
-    void setPobox(const QString& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox. 
-     * Post office box. This is the first part of the value of the 'ADR' 
-     * property as defined in RFC 2426, sec. 3.2.1 
-     */
-    void addPobox(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#extendedAddress. 
      * An extended part of an address. This field might be used to express 
      * parts of an address that aren't include in the name of the Contact 
@@ -214,6 +182,38 @@ public:
      */
     void addPostalcode(const QString& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#postalcode", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox. 
+     * Post office box. This is the first part of the value of the 'ADR' 
+     * property as defined in RFC 2426, sec. 3.2.1 
+     */
+    QString pobox() const {
+        QString value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode)).first().value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox. 
+     * Post office box. This is the first part of the value of the 'ADR' 
+     * property as defined in RFC 2426, sec. 3.2.1 
+     */
+    void setPobox(const QString& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox. 
+     * Post office box. This is the first part of the value of the 'ADR' 
+     * property as defined in RFC 2426, sec. 3.2.1 
+     */
+    void addPobox(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#pobox", QUrl::StrictMode), value);
     }
 
     /**
@@ -310,7 +310,8 @@ public:
     }
 
 protected:
-    PostalAddress(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::ContactMedium(uri, type) {
+    PostalAddress(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::ContactMedium(uri, type) {
     }
     PostalAddress(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::ContactMedium(res, type) {

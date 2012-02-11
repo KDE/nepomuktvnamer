@@ -35,7 +35,8 @@ public:
     }
 
 protected:
-    OperatingSystem(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Software(uri, type) {
+    OperatingSystem(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Software(uri, type) {
     }
     OperatingSystem(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::Software(res, type) {

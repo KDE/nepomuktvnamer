@@ -37,7 +37,8 @@ public:
     }
 
 protected:
-    PcsNumber(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PhoneNumber(uri, type), NCO::VoicePhoneNumber(uri, type) {
+    PcsNumber(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PhoneNumber(uri, type), NCO::VoicePhoneNumber(uri, type) {
     }
     PcsNumber(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::ContactMedium(res, type), NCO::PhoneNumber(res, type), NCO::VoicePhoneNumber(res, type) {

@@ -39,7 +39,8 @@ public:
     }
 
 protected:
-    RemotePortAddress(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type) {
+    RemotePortAddress(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::DataObject(uri, type) {
     }
     RemotePortAddress(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::DataObject(res, type) {

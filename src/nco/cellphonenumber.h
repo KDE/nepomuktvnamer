@@ -39,7 +39,8 @@ public:
     }
 
 protected:
-    CellPhoneNumber(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PhoneNumber(uri, type), NCO::VoicePhoneNumber(uri, type), NCO::MessagingNumber(uri, type) {
+    CellPhoneNumber(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PhoneNumber(uri, type), NCO::VoicePhoneNumber(uri, type), NCO::MessagingNumber(uri, type) {
     }
     CellPhoneNumber(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::ContactMedium(res, type), NCO::PhoneNumber(res, type), NCO::VoicePhoneNumber(res, type), NCO::MessagingNumber(res, type) {

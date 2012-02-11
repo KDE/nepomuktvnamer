@@ -93,7 +93,8 @@ public:
     }
 
 protected:
-    Font(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    Font(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type) {
     }
     Font(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type) {

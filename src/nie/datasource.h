@@ -350,7 +350,8 @@ public:
     }
 
 protected:
-    DataSource(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    DataSource(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     DataSource(const SimpleResource& res, const QUrl& type)

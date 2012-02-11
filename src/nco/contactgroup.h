@@ -72,7 +72,8 @@ public:
     }
 
 protected:
-    ContactGroup(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    ContactGroup(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type) {
     }
     ContactGroup(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type) {

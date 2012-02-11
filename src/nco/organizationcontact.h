@@ -68,7 +68,8 @@ public:
     }
 
 protected:
-    OrganizationContact(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NCO::Role(uri, type), NCO::Contact(uri, type) {
+    OrganizationContact(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NCO::Role(uri, type), NCO::Contact(uri, type) {
     }
     OrganizationContact(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NCO::Role(res, type), NCO::Contact(res, type) {

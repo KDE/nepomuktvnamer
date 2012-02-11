@@ -35,7 +35,8 @@ public:
     }
 
 protected:
-    HardDiskPartition(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type) {
+    HardDiskPartition(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::DataObject(uri, type) {
     }
     HardDiskPartition(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::DataObject(res, type) {

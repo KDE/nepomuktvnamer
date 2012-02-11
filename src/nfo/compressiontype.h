@@ -342,7 +342,8 @@ public:
     }
 
 protected:
-    CompressionType(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    CompressionType(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     CompressionType(const SimpleResource& res, const QUrl& type)

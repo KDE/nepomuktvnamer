@@ -344,7 +344,8 @@ public:
     }
 
 protected:
-    EncryptionStatus(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    EncryptionStatus(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     EncryptionStatus(const SimpleResource& res, const QUrl& type)

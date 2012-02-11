@@ -95,7 +95,8 @@ public:
     }
 
 protected:
-    DeletedResource(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type) {
+    DeletedResource(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type) {
     }
     DeletedResource(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::DataObject(res, type), NFO::FileDataObject(res, type) {
