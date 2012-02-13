@@ -124,7 +124,9 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
             listEntry(uds, false);
         }
 
-        listEntry(createFolderUDSEntry(QLatin1String("latest"), i18n("Next Episodes To Watch")), false);
+        KIO::UDSEntry uds = createFolderUDSEntry(QLatin1String("latest"), i18n("Next Episodes To Watch"));
+        uds.insert(KIO::UDSEntry::UDS_ICON_NAME, QLatin1String("favorites"));
+        listEntry(uds, false);
 
         listEntry(UDSEntry(), true);
         finished();
@@ -317,7 +319,9 @@ void Nepomuk::TvshowProtocol::stat( const KUrl& url )
     // for basic functionality we only need to stat the folders
     const QStringList pathTokens = url.path().split('/', QString::SkipEmptyParts);
     if(pathTokens.count() == 1 && pathTokens.first() == QLatin1String("latest")) {
-        statEntry(createFolderUDSEntry(QLatin1String("latest"), i18n("Next Episodes To Watch")));
+        KIO::UDSEntry uds = createFolderUDSEntry(QLatin1String("latest"), i18n("Next Episodes To Watch"));
+        uds.insert(KIO::UDSEntry::UDS_ICON_NAME, QLatin1String("favorites"));
+        statEntry(uds);
         finished();
     }
 
