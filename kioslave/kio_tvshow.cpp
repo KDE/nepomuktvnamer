@@ -123,6 +123,11 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                                                 it["md"].literal().toDateTime());
             listEntry(uds, false);
         }
+
+        KIO::UDSEntry uds = createFolderUDSEntry(QLatin1String("latest"), i18n("Next Episodes To Watch"));
+        uds.insert(KIO::UDSEntry::UDS_ICON_NAME, QLatin1String("favorites"));
+        listEntry(uds, false);
+
         listEntry(UDSEntry(), true);
         finished();
     }
@@ -130,6 +135,70 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
     // all other URLS
     else {
         const QStringList pathTokens = url.path().split('/', QString::SkipEmptyParts);
+        if(pathTokens.count() == 1 && pathTokens.first() == QLatin1String("latest")) {
+            // list the next unwatched episodes of all series
+            // query the min episode which does not have any watched episode after it
+            // TODO: find a way to also query the episode at the same time
+            Soprano::QueryResultIterator it
+                    = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QLatin1String("select ?st ?series min(1000*?s+?e) as ?x where { "
+                                                                                                    "?r a nmm:TVShow ; "
+                                                                                                    "nmm:episodeNumber ?e ; "
+                                                                                                    "nmm:season ?s ; "
+                                                                                                    "nmm:series ?series . "
+                                                                                                    "?series nie:title ?st "
+                                                                                                    "FILTER NOT EXISTS { ?r nuao:usageCount ?u . filter(?u>0) . } "
+                                                                                                    "FILTER NOT EXISTS { "
+                                                                                                    "?r2 a nmm:TVShow ; "
+                                                                                                    "nmm:series ?series ; "
+                                                                                                    "nmm:episodeNumber ?e2 ; "
+                                                                                                    "nmm:season ?s2 ; "
+                                                                                                    "nuao:usageCount ?uc . "
+                                                                                                    "filter(?uc>0) . "
+                                                                                                    "filter((1000*?s2+?e2) > (1000*?s+?e)) . } "
+                                                                                                    "}"),
+                                                                                      Soprano::Query::QueryLanguageSparql);
+            while(it.next()) {
+                const QString seriesTitle = it["st"].toString();
+                const int seasonNum = it["x"].literal().toInt() / 1000;
+                const int episodeNum = it["x"].literal().toInt() % 1000;
+                Soprano::QueryResultIterator it2
+                        = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?r ?url ?t where { "
+                                                                                                              "?r a nmm:TVShow ; "
+                                                                                                              "nie:url ?url ; "
+                                                                                                              "nie:title ?t ; "
+                                                                                                              "nmm:series %1 ; "
+                                                                                                              "nmm:episodeNumber %2 ; "
+                                                                                                              "nmm:season %3 . "
+                                                                                                              "OPTIONAL { ?r nmm:releaseDate ?rd ; "
+                                                                                                              "nmm:synopsis ?d . } . }")
+                                                                                          .arg(it["series"].toN3())
+                                                                                          .arg(episodeNum)
+                                                                                          .arg(seasonNum),
+                                                                                          Soprano::Query::QueryLanguageSparql);
+                if(it2.next()) {
+                    const QString episodeTitle = it2["t"].toString();
+                    const QString title = i18n("Next episode of %1: %2x%3 - %4",
+                                               seriesTitle,
+                                               QString::number(seasonNum).rightJustified(2, QLatin1Char('0')),
+                                               QString::number(episodeNum).rightJustified(2, QLatin1Char('0')),
+                                               episodeTitle);
+                    UDSEntry uds;
+                    uds.insert( KIO::UDSEntry::UDS_NAME, title );
+                    uds.insert( KIO::UDSEntry::UDS_FILE_TYPE, S_IFREG );
+                    uds.insert( KIO::UDSEntry::UDS_DISPLAY_TYPE, i18n("TV Show") );
+                    uds.insert( KIO::UDSEntry::UDS_ACCESS, 0700 );
+                    uds.insert( KIO::UDSEntry::UDS_USER, KUser().loginName() );
+                    uds.insert( KIO::UDSEntry::UDS_CREATION_TIME, it2["rd"].literal().toDateTime().toTime_t() );
+                    uds.insert( KIO::UDSEntry::UDS_COMMENT, it2["d"].toString() );
+                    uds.insert( KIO::UDSEntry::UDS_URL, KUrl(it2["url"].uri()).url() );
+                    uds.insert( KIO::UDSEntry::UDS_NEPOMUK_URI, KUrl(it2["r"].uri()).url() );
+                    listEntry(uds, false);
+                }
+            }
+            listEntry(UDSEntry(), true);
+            finished();
+        }
+
         if(pathTokens.count() == 1) {
             // list one TV Series: list seasons
             Soprano::QueryResultIterator it
@@ -151,6 +220,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
             listEntry(UDSEntry(), true);
             finished();
         }
+
         else if(pathTokens.count() == 2) {
             const QString seriesTitle = pathTokens[0];
             const int season = pathTokens[1].mid(pathTokens[1].lastIndexOf(' ')+1).toInt();
@@ -184,6 +254,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
             listEntry(UDSEntry(), true);
             finished();
         }
+
         else {
             error( KIO::ERR_CANNOT_ENTER_DIRECTORY, url.prettyUrl() );
         }
@@ -252,7 +323,14 @@ void Nepomuk::TvshowProtocol::stat( const KUrl& url )
 {
     // for basic functionality we only need to stat the folders
     const QStringList pathTokens = url.path().split('/', QString::SkipEmptyParts);
-    if(pathTokens.count() == 1) {
+    if(pathTokens.count() == 1 && pathTokens.first() == QLatin1String("latest")) {
+        KIO::UDSEntry uds = createFolderUDSEntry(QLatin1String("latest"), i18n("Next Episodes To Watch"));
+        uds.insert(KIO::UDSEntry::UDS_ICON_NAME, QLatin1String("favorites"));
+        statEntry(uds);
+        finished();
+    }
+
+    else if(pathTokens.count() == 1) {
         // stat series folder
         Soprano::QueryResultIterator it
                 = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct * where { "
@@ -276,11 +354,13 @@ void Nepomuk::TvshowProtocol::stat( const KUrl& url )
             error( ERR_DOES_NOT_EXIST, url.prettyUrl() );
         }
     }
+
     else if(pathTokens.count() == 2) {
         // stat season folder
         statEntry(createFolderUDSEntry(pathTokens[0], pathTokens[1]));
         finished();
     }
+
     else {
         // FIXME
         error( ERR_UNSUPPORTED_ACTION, url.prettyUrl() );

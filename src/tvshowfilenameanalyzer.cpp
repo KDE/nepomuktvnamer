@@ -58,6 +58,11 @@ TVShowFilenameAnalyzer::TVShowFilenameAnalyzer()
     m_filenameRegExps.append(
         QRegExp( QLatin1String( "(.+)[ \\._\\-]([0-9]{2})([0-9]{2,3})(?:[^\\d][^\\\\/]*)?" ),
                  Qt::CaseInsensitive, QRegExp::RegExp2 ) );
+
+    // foo Season 01 Episode 02...
+    m_filenameRegExps.append(
+        QRegExp( QLatin1String( "(.+)[ \\._\\-]season[ \\._\\-]([0-9]+)[ \\._\\-]episode[ \\._\\-]([0-9]+)[ \\._\\-].*" ),
+                 Qt::CaseInsensitive, QRegExp::RegExp2 ) );
 }
 
 
