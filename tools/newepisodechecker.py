@@ -44,35 +44,35 @@ def checkNewEpisode(name, s, e):
     if s in series and e+1 in series[s]:
         season = series[s]
         episode = season[e+1]
-        
+
     elif s+1 in series and 1 in series[s+1]:
         season = series[s+1]
         episode = season[1]
-        
-    if not season is None:         
+
+    if not season is None:
         firstaired = episode['firstaired']
         if firstaired < str(date.today()):
             if firstaired != None:
                 print '\t%s - New episode "%s" (%sx%s) first aired %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
-                
+
             else:
                 result = _CNE_WAITING
-                
+
         else:
             print '\t%s - Upcoming episode "%s" (%sx%s) will air %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
-        
+
     else:
         result = _CNE_FINISHED
         #print '%s - No new episode found.' % name
-        
+
     return result
-    
+
 
 def main():
     noNewEpisodes = []
     waitingForEmision = []
     print "Airing shows:"
-    
+
     model = Soprano.Client.DBusModel('org.kde.NepomukStorage', '/org/soprano/Server/models/main')
     it = model.executeQuery('select ?l bif:lower(?l) AS ?l_sort max(1000*?sn + ?en) as ?last where { ?r a nmm:TVSeries. ?r nie:title ?l . ?e nmm:series ?r . ?e nmm:episodeNumber ?en . ?e nmm:season ?sn . } ORDER BY ?l_sort', Soprano.Query.QueryLanguageSparql)
     while it.next():
@@ -80,13 +80,13 @@ def main():
         episode = it['last'].literal().toInt() % 1000
         name = it['l'].toString().toLatin1().data()
         result = checkNewEpisode(name, season, episode)
-            
+
         if result == 0:
             noNewEpisodes += [name]
-            
+
         elif result == 2:
             waitingForEmision += [name]
-            
+
     print "\nWaiting for new emision date:\n\t" + ", ".join(waitingForEmision)
 
     print "\nNo new episodes for:\n\t" + ", ".join(noNewEpisodes)
