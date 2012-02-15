@@ -1,2 +1,3 @@
 0.3.0
 * Added ServiceMenu action to reset the usage count on a video.
+* Improved newepisodechecker.py script with grouping and sorting.
