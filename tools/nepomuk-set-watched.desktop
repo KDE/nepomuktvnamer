@@ -2,7 +2,7 @@
 Type=Service
 X-KDE-ServiceTypes=KonqPopupMenu/Plugin
 MimeType=video/*;
-Actions=markAsWatched;
+Actions=markAsWatched;markAsUnwatched;
 X-KDE-Submenu=Desktop Search
 Icon=nepomuk
 
@@ -10,3 +10,8 @@ Icon=nepomuk
 Name=Mark Video As Watched
 Icon=nepomuk
 Exec=qdbus org.kde.NepomukStorage /datamanagement org.kde.nepomuk.DataManagement.setProperty %u "nuao:usageCount" 1 "shell"
+
+[Desktop Action markAsUnwatched]
+Name=Mark Video As Not Watched
+Icon=nepomuk
+Exec=qdbus org.kde.NepomukStorage /datamanagement org.kde.nepomuk.DataManagement.setProperty %u "nuao:usageCount" 0 "shell"
