@@ -27,9 +27,14 @@ from datetime import date, datetime
 
 t = Tvdb()
 
+# constants used in checkNewEpisode
 _CNE_FINISHED = 0
 _CNE_AIRING = 1
 _CNE_WAITING = 2
+
+# string lists filled by checkNewEpisode
+newEpisodes = []
+upcomingEpisodes = []
 
 def prettyPrintDate(d):
     if d == None:
@@ -53,17 +58,16 @@ def checkNewEpisode(name, s, e):
         firstaired = episode['firstaired']
         if firstaired < str(date.today()):
             if firstaired != None:
-                print '\t%s - New episode "%s" (%sx%s) first aired %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
+                newEpisodes.append('%s - "%s" (%sx%s) first aired %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired)))
 
             else:
                 result = _CNE_WAITING
 
         else:
-            print '\t%s - Upcoming episode "%s" (%sx%s) will air %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
+            upcomingEpisodes.append('%s - "%s" (%sx%s) will air %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired)))
 
     else:
         result = _CNE_FINISHED
-        #print '%s - No new episode found.' % name
 
     return result
 
@@ -71,7 +75,6 @@ def checkNewEpisode(name, s, e):
 def main():
     noNewEpisodes = []
     waitingForEmision = []
-    print "Airing shows:"
 
     model = Soprano.Client.DBusModel('org.kde.NepomukStorage', '/org/soprano/Server/models/main')
     it = model.executeQuery('select ?l bif:lower(?l) AS ?l_sort max(1000*?sn + ?en) as ?last where { ?r a nmm:TVSeries. ?r nie:title ?l . ?e nmm:series ?r . ?e nmm:episodeNumber ?en . ?e nmm:season ?sn . } ORDER BY ?l_sort', Soprano.Query.QueryLanguageSparql)
@@ -87,7 +90,11 @@ def main():
         elif result == 2:
             waitingForEmision += [name]
 
-    print "\nWaiting for new emision date:\n\t" + ", ".join(waitingForEmision)
+    print "New Episodes:\n\t" + "\t".join([s + '\n' for s in newEpisodes])
+
+    print "Upcoming Episodes:\n\t" + "\t".join([s + '\n' for s in upcomingEpisodes])
+
+    print "Waiting for new emision date:\n\t" + ", ".join(waitingForEmision)
 
     print "\nNo new episodes for:\n\t" + ", ".join(noNewEpisodes)
 
