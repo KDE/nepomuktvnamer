@@ -27,6 +27,10 @@ from datetime import date, datetime
 
 t = Tvdb()
 
+_CNE_FINISHED = 0
+_CNE_AIRING = 1
+_CNE_WAITING = 2
+
 def prettyPrintDate(d):
     if d == None:
         return 'unknown date'
@@ -34,32 +38,58 @@ def prettyPrintDate(d):
         return datetime.strptime(str(d), '%Y-%m-%d').strftime('%d %B %Y')
 
 def checkNewEpisode(name, s, e):
+    result = _CNE_AIRING
     series = t[name]
     season = None
     if s in series and e+1 in series[s]:
         season = series[s]
         episode = season[e+1]
+        
     elif s+1 in series and 1 in series[s+1]:
         season = series[s+1]
         episode = season[1]
+        
     if not season is None:         
         firstaired = episode['firstaired']
         if firstaired < str(date.today()):
-            print '%s - New episode "%s" (%sx%s) first aired %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
+            if firstaired != None:
+                print '\t%s - New episode "%s" (%sx%s) first aired %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
+                
+            else:
+                result = _CNE_WAITING
+                
         else:
-            print '%s - Upcoming episode "%s" (%sx%s) will air %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
+            print '\t%s - Upcoming episode "%s" (%sx%s) will air %s.' % (name, episode['episodename'], episode['seasonnumber'].zfill(2), episode['episodenumber'].zfill(2), prettyPrintDate(firstaired))
+        
     else:
-        print '%s - No new episode found.' % name
+        result = _CNE_FINISHED
+        #print '%s - No new episode found.' % name
+        
+    return result
     
 
 def main():
+    noNewEpisodes = []
+    waitingForEmision = []
+    print "Airing shows:"
+    
     model = Soprano.Client.DBusModel('org.kde.NepomukStorage', '/org/soprano/Server/models/main')
-    it = model.executeQuery('select ?l max(1000*?sn + ?en) as ?last where { ?r a nmm:TVSeries. ?r nie:title ?l . ?e nmm:series ?r . ?e nmm:episodeNumber ?en . ?e nmm:season ?sn . }', Soprano.Query.QueryLanguageSparql)
+    it = model.executeQuery('select ?l bif:lower(?l) AS ?l_sort max(1000*?sn + ?en) as ?last where { ?r a nmm:TVSeries. ?r nie:title ?l . ?e nmm:series ?r . ?e nmm:episodeNumber ?en . ?e nmm:season ?sn . } ORDER BY ?l_sort', Soprano.Query.QueryLanguageSparql)
     while it.next():
         season = it['last'].literal().toInt() / 1000
         episode = it['last'].literal().toInt() % 1000
         name = it['l'].toString().toLatin1().data()
-        checkNewEpisode(name, season, episode)
+        result = checkNewEpisode(name, season, episode)
+            
+        if result == 0:
+            noNewEpisodes += [name]
+            
+        elif result == 2:
+            waitingForEmision += [name]
+            
+    print "\nWaiting for new emision date:\n\t" + ", ".join(waitingForEmision)
+
+    print "\nNo new episodes for:\n\t" + ", ".join(noNewEpisodes)
 
 if __name__ == "__main__":
     main()
