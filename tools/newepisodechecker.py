@@ -24,6 +24,7 @@ from tvdb_api import Tvdb
 from PyKDE4.soprano import Soprano
 from PyQt4 import QtCore
 from datetime import date, datetime
+import sys
 
 t = Tvdb()
 
@@ -73,6 +74,8 @@ def checkNewEpisode(name, s, e):
 
 
 def main():
+    app = QtCore.QCoreApplication(sys.argv)
+    
     noNewEpisodes = []
     waitingForEmision = []
 
