@@ -35,7 +35,8 @@ public:
     }
 
 protected:
-    Executable(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type) {
+    Executable(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type) {
     }
     Executable(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type) {

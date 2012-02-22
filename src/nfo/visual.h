@@ -35,32 +35,32 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height. 
-     * Visual content height in pixels. 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width. 
+     * Visual content width in pixels. 
      */
-    qint64 height() const {
+    qint64 width() const {
         qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode)).first().value<qint64>();
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height. 
-     * Visual content height in pixels. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width. 
+     * Visual content width in pixels. 
      */
-    void setHeight(const qint64& value) {
+    void setWidth(const qint64& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height. 
-     * Visual content height in pixels. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width. 
+     * Visual content width in pixels. 
      */
-    void addHeight(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode), value);
+    void addWidth(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode), value);
     }
 
     /**
@@ -93,61 +93,32 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio. 
-     * Visual content aspect ratio. (Width divided by Height) 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height. 
+     * Visual content height in pixels. 
      */
-    double aspectRatio() const {
-        double value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode)).first().value<double>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio. 
-     * Visual content aspect ratio. (Width divided by Height) 
-     */
-    void setAspectRatio(const double& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio. 
-     * Visual content aspect ratio. (Width divided by Height) 
-     */
-    void addAspectRatio(const double& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width. 
-     * Visual content width in pixels. 
-     */
-    qint64 width() const {
+    qint64 height() const {
         qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode)).first().value<qint64>();
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode)).first().value<qint64>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width. 
-     * Visual content width in pixels. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height. 
+     * Visual content height in pixels. 
      */
-    void setWidth(const qint64& value) {
+    void setHeight(const qint64& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width. 
-     * Visual content width in pixels. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height. 
+     * Visual content height in pixels. 
      */
-    void addWidth(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#width", QUrl::StrictMode), value);
+    void addHeight(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#height", QUrl::StrictMode), value);
     }
 
     /**
@@ -179,8 +150,38 @@ public:
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#interlaceMode", QUrl::StrictMode), value);
     }
 
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio. 
+     * Visual content aspect ratio. (Width divided by Height) 
+     */
+    double aspectRatio() const {
+        double value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode)).first().value<double>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio. 
+     * Visual content aspect ratio. (Width divided by Height) 
+     */
+    void setAspectRatio(const double& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio. 
+     * Visual content aspect ratio. (Width divided by Height) 
+     */
+    void addAspectRatio(const double& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#aspectRatio", QUrl::StrictMode), value);
+    }
+
 protected:
-    Visual(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Media(uri, type) {
+    Visual(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Media(uri, type) {
     }
     Visual(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::Media(res, type) {

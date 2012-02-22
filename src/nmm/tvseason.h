@@ -1,5 +1,5 @@
-#ifndef _NCO_IMSTATUSTYPE_H_
-#define _NCO_IMSTATUSTYPE_H_
+#ifndef _NMM_TVSEASON_H_
+#define _NMM_TVSEASON_H_
 
 #include <QtCore/QVariant>
 #include <QtCore/QStringList>
@@ -11,27 +11,26 @@
 #include <nepomuk/simpleresource.h>
 
 namespace Nepomuk {
-namespace NCO {
+namespace NMM {
 /**
- * The status type of an IMAccount. Based on the Connection_Presence_Type 
- * enumeration of the Telepathy project: http://telepathy.freedesktop.org/spec/Connection_Interface_Simple_Presence.html#Enum:Connection_Presence_Type 
+ * A season of a TV Show 
  */
-class IMStatusType : public virtual Nepomuk::SimpleResource
+class TVSeason : public virtual Nepomuk::SimpleResource
 {
 public:
-    IMStatusType(const QUrl& uri = QUrl())
+    TVSeason(const QUrl& uri = QUrl())
       : SimpleResource(uri) {
-        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#IMStatusType", QUrl::StrictMode));
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#TVSeason", QUrl::StrictMode));
     }
 
-    IMStatusType(const SimpleResource& res)
+    TVSeason(const SimpleResource& res)
       : SimpleResource(res) {
-        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#IMStatusType", QUrl::StrictMode));
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#TVSeason", QUrl::StrictMode));
     }
 
-    IMStatusType& operator=(const SimpleResource& res) {
+    TVSeason& operator=(const SimpleResource& res) {
         SimpleResource::operator=(res);
-        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#IMStatusType", QUrl::StrictMode));
+        addType(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#TVSeason", QUrl::StrictMode));
         return *this;
     }
 
@@ -190,6 +189,35 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonNumber. 
+     * The number of a season 
+     */
+    qint64 seasonNumber() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonNumber", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonNumber", QUrl::StrictMode)).first().value<qint64>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonNumber. 
+     * The number of a season 
+     */
+    void setSeasonNumber(const qint64& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonNumber", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonNumber. 
+     * The number of a season 
+     */
+    void addSeasonNumber(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonNumber", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#lfeChannels. 
      * Number of Low Frequency Expansion (subwoofer) channels. 
      */
@@ -216,6 +244,35 @@ public:
      */
     void addLfeChannels(const qint64& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#lfeChannels", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonOf. 
+     * Relates a TV Season to its series 
+     */
+    QUrl seasonOf() const {
+        QUrl value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonOf", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonOf", QUrl::StrictMode)).first().value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonOf. 
+     * Relates a TV Season to its series 
+     */
+    void setSeasonOf(const QUrl& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonOf", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonOf. 
+     * Relates a TV Season to its series 
+     */
+    void addSeasonOf(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#seasonOf", QUrl::StrictMode), value);
     }
 
     /**
@@ -308,6 +365,36 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasSeasonEpisode. 
+     * Relates a TV Show season to its episodes 
+     */
+    QList<QUrl> seasonEpisodes() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasSeasonEpisode", QUrl::StrictMode)))
+            value << v.value<QUrl>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasSeasonEpisode. 
+     * Relates a TV Show season to its episodes 
+     */
+    void setSeasonEpisodes(const QList<QUrl>& value) {
+        QVariantList values;
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasSeasonEpisode", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasSeasonEpisode. 
+     * Relates a TV Show season to its episodes 
+     */
+    void addSeasonEpisode(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2009/02/19/nmm#hasSeasonEpisode", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/01/19/nie#licenseType. 
      * The type of the license. Possible values for this field may include 
      * "GPL", "BSD", "Creative Commons" etc. 
@@ -341,11 +428,11 @@ public:
     }
 
 protected:
-    IMStatusType(const QUrl& uri, const QUrl& type)
+    TVSeason(const QUrl& uri, const QUrl& type)
       : SimpleResource(uri) {
         addType(type);
     }
-    IMStatusType(const SimpleResource& res, const QUrl& type)
+    TVSeason(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res) {
         addType(type);
     }

@@ -42,7 +42,8 @@ public:
     }
 
 protected:
-    SoftwareService(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type) {
+    SoftwareService(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::DataObject(uri, type) {
     }
     SoftwareService(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::DataObject(res, type) {

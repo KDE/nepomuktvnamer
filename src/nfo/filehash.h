@@ -156,35 +156,36 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm. 
-     * Name of the algorithm used to compute the hash value. Examples 
-     * might include CRC32, MD5, SHA, TTH etc. 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction. 
+     * Relates an information element to an image which depicts said 
+     * element. 
      */
-    QString hAlgorithm() const {
-        QString value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode)).first().value<QString>();
+    QList<QUrl> depictions() const {
+        QList<QUrl> value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction", QUrl::StrictMode)))
+            value << v.value<QUrl>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm. 
-     * Name of the algorithm used to compute the hash value. Examples 
-     * might include CRC32, MD5, SHA, TTH etc. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction. 
+     * Relates an information element to an image which depicts said 
+     * element. 
      */
-    void setHAlgorithm(const QString& value) {
+    void setDepictions(const QList<QUrl>& value) {
         QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode), values);
+        foreach(const QUrl& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm. 
-     * Name of the algorithm used to compute the hash value. Examples 
-     * might include CRC32, MD5, SHA, TTH etc. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction. 
+     * Relates an information element to an image which depicts said 
+     * element. 
      */
-    void addHAlgorithm(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode), value);
+    void addDepiction(const QUrl& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction", QUrl::StrictMode), value);
     }
 
     /**
@@ -214,6 +215,35 @@ public:
      */
     void addLfeChannels(const qint64& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#lfeChannels", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue. 
+     * The actual value of the hash. 
+     */
+    QString hValue() const {
+        QString value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode)).first().value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue. 
+     * The actual value of the hash. 
+     */
+    void setHValue(const QString& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue. 
+     * The actual value of the hash. 
+     */
+    void addHValue(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode), value);
     }
 
     /**
@@ -276,39 +306,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction. 
-     * Relates an information element to an image which depicts said 
-     * element. 
-     */
-    QList<QUrl> depictions() const {
-        QList<QUrl> value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction", QUrl::StrictMode)))
-            value << v.value<QUrl>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction. 
-     * Relates an information element to an image which depicts said 
-     * element. 
-     */
-    void setDepictions(const QList<QUrl>& value) {
-        QVariantList values;
-        foreach(const QUrl& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction. 
-     * Relates an information element to an image which depicts said 
-     * element. 
-     */
-    void addDepiction(const QUrl& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#depiction", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/01/19/nie#copyright. 
      * Content copyright 
      */
@@ -339,32 +336,35 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue. 
-     * The actual value of the hash. 
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm. 
+     * Name of the algorithm used to compute the hash value. Examples 
+     * might include CRC32, MD5, SHA, TTH etc. 
      */
-    QString hValue() const {
+    QString hAlgorithm() const {
         QString value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode)).first().value<QString>();
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode)).first().value<QString>();
         return value;
     }
 
     /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue. 
-     * The actual value of the hash. 
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm. 
+     * Name of the algorithm used to compute the hash value. Examples 
+     * might include CRC32, MD5, SHA, TTH etc. 
      */
-    void setHValue(const QString& value) {
+    void setHAlgorithm(const QString& value) {
         QVariantList values;
         values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode), values);
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode), values);
     }
 
     /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue. 
-     * The actual value of the hash. 
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm. 
+     * Name of the algorithm used to compute the hash value. Examples 
+     * might include CRC32, MD5, SHA, TTH etc. 
      */
-    void addHValue(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashValue", QUrl::StrictMode), value);
+    void addHAlgorithm(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#hashAlgorithm", QUrl::StrictMode), value);
     }
 
     /**
@@ -401,7 +401,8 @@ public:
     }
 
 protected:
-    FileHash(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    FileHash(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     FileHash(const SimpleResource& res, const QUrl& type)

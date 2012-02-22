@@ -340,7 +340,8 @@ public:
     }
 
 protected:
-    IMCapability(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    IMCapability(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     IMCapability(const SimpleResource& res, const QUrl& type)

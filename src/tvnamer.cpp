@@ -24,6 +24,7 @@
 
 #include "nmm/tvshow.h"
 #include "nmm/tvseries.h"
+#include "nmm/tvseason.h"
 #include "nfo/image.h"
 #include "nfo/webdataobject.h"
 #include "nco/contact.h"
@@ -32,6 +33,7 @@
 #include <tvdb/series.h>
 #include <tvdb/season.h>
 #include <tvdb/episode.h>
+#include <tvdb/banner.h>
 
 #include <QtGui/QInputDialog>
 #include <QtCore/QDate>
@@ -231,6 +233,18 @@ void TVNamer::updateFileIndexerConfig()
     }
 }
 
+KUrl TVNamer::downloadBanner(const QString& seriesName, const QUrl &bannerUrl) const
+{
+    const KUrl localUrl = KGlobal::dirs()->locateLocal("appdata", QLatin1String("banners/") + seriesName + QLatin1String("/") + KUrl(bannerUrl).fileName(), true);
+    if(!QFile::exists(localUrl.toLocalFile())) {
+        KIO::CopyJob* job = KIO::copy(bannerUrl, localUrl, KIO::HideProgressInfo);
+        if(!job->exec()) {
+            return KUrl();
+        }
+    }
+    return localUrl;
+}
+
 void TVNamer::slotSaveToNepomukDone(KJob *job)
 {
     kDebug() << job;
@@ -294,17 +308,19 @@ void TVNamer::saveToNepomuk()
             seriesRes.addProperty(RDFS::seeAlso(), imdbRes.uri());
             graph << imdbRes;
         }
-        foreach(const QUrl& bannerUrl, series.bannerUrls() + series.posterUrls()) {
-            const KUrl localUrl = KGlobal::dirs()->locateLocal("appdata", QLatin1String("banners/") + series.name() + QLatin1String("/") + KUrl(bannerUrl).fileName(), true);
-            if(!QFile::exists(localUrl.toLocalFile())) {
-                KIO::CopyJob* job = KIO::copy(bannerUrl, localUrl);
-                if(!job->exec()) {
-                    continue;
+        // grab a max of 3 banners - one of each type
+        foreach(Tvdb::Banner::BannerType type, QList<Tvdb::Banner::BannerType>() << Tvdb::Banner::PosterBanner << Tvdb::Banner::GraphicalBanner << Tvdb::Banner::FanartBanner) {
+            foreach(const Tvdb::Banner& banner, series.banners()) {
+                if(banner.type() == type) {
+                    const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
+                    if(!localUrl.isEmpty()) {
+                        Nepomuk::NFO::Image banner(localUrl);
+                        seriesRes.addDepiction(banner.uri());
+                        graph << banner;
+                        break;
+                    }
                 }
             }
-            Nepomuk::NFO::Image banner(localUrl);
-            seriesRes.addDepiction(banner.uri());
-            graph << banner;
         }
 
         // create all the regular actor resources which we will add to all episodes
@@ -316,6 +332,9 @@ void TVNamer::saveToNepomuk()
             graph << contact;
         }
 
+        // the seasons we store
+        QHash<int, Nepomuk::NMM::TVSeason> seasons;
+
         // add all the episodes to the graph
         for(QHash<QString, TVShowFilenameAnalyzer::AnalysisResult>::const_iterator it = files.constBegin();
             it != files.constEnd(); ++it) {
@@ -323,6 +342,31 @@ void TVNamer::saveToNepomuk()
 
             // create the basic episode
             Nepomuk::NMM::TVShow episodeRes = createNepomukResource(QUrl::fromLocalFile(it.key()), it.value().season, it.value().episode, series);
+
+            // add the season
+            if(!seasons.contains(it.value().season)) {
+                Nepomuk::NMM::TVSeason seasonRes;
+                seasonRes.setSeasonNumber(it.value().season);
+                seasonRes.setSeasonOf(seriesRes.uri());
+                seriesRes.addSeason(seasonRes.uri());
+                // grab a banner
+                foreach(const Tvdb::Banner& banner, series[it.value().season].banners()) {
+                    const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
+                    if(!localUrl.isEmpty()) {
+                        Nepomuk::NFO::Image banner(localUrl);
+                        seasonRes.addDepiction(banner.uri());
+                        graph << banner;
+                        break;
+                    }
+                }
+
+                seasons.insert(it.value().season, seasonRes);
+            }
+            seasons[it.value().season].addSeasonEpisode(episodeRes.uri());
+            episodeRes.setIsPartOfSeason(seasons[it.value().season].uri());
+
+            // we make the seasons sub-resources of the episodes since they do not make sense without them
+            episodeRes.addProperty(NAO::hasSubResource(), seasons[it.value().season].uri());
 
             // add all the actors
             foreach(const Nepomuk::NCO::Contact& actor, regularActors) {
@@ -353,6 +397,11 @@ void TVNamer::saveToNepomuk()
             seriesRes.addEpisode(episodeRes.uri());
             episodeRes.setSeries(seriesRes.uri());
             graph << episodeRes;
+        }
+
+        // add the seasons to the graph
+        foreach(const Nepomuk::NMM::TVSeason& season, seasons.values()) {
+            graph << season;
         }
 
         // add the series to the graph (after the episodes)

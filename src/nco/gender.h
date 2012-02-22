@@ -340,7 +340,8 @@ public:
     }
 
 protected:
-    Gender(const QUrl& uri, const QUrl& type)      : SimpleResource(uri) {
+    Gender(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri) {
         addType(type);
     }
     Gender(const SimpleResource& res, const QUrl& type)

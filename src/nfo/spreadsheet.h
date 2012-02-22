@@ -36,7 +36,8 @@ public:
     }
 
 protected:
-    Spreadsheet(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type) {
+    Spreadsheet(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type) {
     }
     Spreadsheet(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::Document(res, type) {

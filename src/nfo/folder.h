@@ -36,7 +36,8 @@ public:
     }
 
 protected:
-    Folder(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type) {
+    Folder(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type) {
     }
     Folder(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::DataContainer(res, type) {

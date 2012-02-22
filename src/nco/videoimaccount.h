@@ -35,7 +35,8 @@ public:
     }
 
 protected:
-    VideoIMAccount(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::IMAccount(uri, type), NCO::AudioIMAccount(uri, type) {
+    VideoIMAccount(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::IMAccount(uri, type), NCO::AudioIMAccount(uri, type) {
     }
     VideoIMAccount(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::ContactMedium(res, type), NCO::IMAccount(res, type), NCO::AudioIMAccount(res, type) {

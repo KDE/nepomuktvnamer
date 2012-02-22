@@ -38,44 +38,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title. 
-     * The official title the object represented by this contact in 
-     * an organization. E.g. 'CEO', 'Director, Research and Development', 
-     * 'Junior Software Developer/Analyst' etc. An equivalent of 
-     * the 'TITLE' property defined in RFC 2426 Sec. 3.5.1 
-     */
-    QString title() const {
-        QString value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode)).first().value<QString>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title. 
-     * The official title the object represented by this contact in 
-     * an organization. E.g. 'CEO', 'Director, Research and Development', 
-     * 'Junior Software Developer/Analyst' etc. An equivalent of 
-     * the 'TITLE' property defined in RFC 2426 Sec. 3.5.1 
-     */
-    void setTitle(const QString& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title. 
-     * The official title the object represented by this contact in 
-     * an organization. E.g. 'CEO', 'Director, Research and Development', 
-     * 'Junior Software Developer/Analyst' etc. An equivalent of 
-     * the 'TITLE' property defined in RFC 2426 Sec. 3.5.1 
-     */
-    void addTitle(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#org. 
      * Name of an organization or a unit within an organization the 
      * object represented by a Contact is associated with. An equivalent 
@@ -108,36 +70,6 @@ public:
      */
     void addOrg(const QUrl& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#org", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department. 
-     * Department. The organizational unit within the organization. 
-     */
-    QStringList departments() const {
-        QStringList value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department", QUrl::StrictMode)))
-            value << v.value<QString>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department. 
-     * Department. The organizational unit within the organization. 
-     */
-    void setDepartments(const QStringList& value) {
-        QVariantList values;
-        foreach(const QString& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department. 
-     * Department. The organizational unit within the organization. 
-     */
-    void addDepartment(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department", QUrl::StrictMode), value);
     }
 
     /**
@@ -185,8 +117,77 @@ public:
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#role", QUrl::StrictMode), value);
     }
 
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title. 
+     * The official title the object represented by this contact in 
+     * an organization. E.g. 'CEO', 'Director, Research and Development', 
+     * 'Junior Software Developer/Analyst' etc. An equivalent of 
+     * the 'TITLE' property defined in RFC 2426 Sec. 3.5.1 
+     */
+    QString title() const {
+        QString value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode)).first().value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title. 
+     * The official title the object represented by this contact in 
+     * an organization. E.g. 'CEO', 'Director, Research and Development', 
+     * 'Junior Software Developer/Analyst' etc. An equivalent of 
+     * the 'TITLE' property defined in RFC 2426 Sec. 3.5.1 
+     */
+    void setTitle(const QString& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title. 
+     * The official title the object represented by this contact in 
+     * an organization. E.g. 'CEO', 'Director, Research and Development', 
+     * 'Junior Software Developer/Analyst' etc. An equivalent of 
+     * the 'TITLE' property defined in RFC 2426 Sec. 3.5.1 
+     */
+    void addTitle(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#title", QUrl::StrictMode), value);
+    }
+
+    /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department. 
+     * Department. The organizational unit within the organization. 
+     */
+    QStringList departments() const {
+        QStringList value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department", QUrl::StrictMode)))
+            value << v.value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department. 
+     * Department. The organizational unit within the organization. 
+     */
+    void setDepartments(const QStringList& value) {
+        QVariantList values;
+        foreach(const QString& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department. 
+     * Department. The organizational unit within the organization. 
+     */
+    void addDepartment(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nco#department", QUrl::StrictMode), value);
+    }
+
 protected:
-    Affiliation(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::Role(uri, type) {
+    Affiliation(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::Role(uri, type) {
     }
     Affiliation(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::Role(res, type) {

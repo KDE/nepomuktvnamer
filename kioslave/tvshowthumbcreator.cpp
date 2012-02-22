@@ -40,7 +40,6 @@
 
 TVShowThumbCreator::TVShowThumbCreator()
 {
-    kDebug() << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 }
 
 bool TVShowThumbCreator::create(const QString &path, int width, int height, QImage &img)
@@ -52,28 +51,52 @@ bool TVShowThumbCreator::create(const QString &path, int width, int height, QIma
     // although the docs state that path is always local this is not correct
     KUrl url(path);
     const QStringList pathTokens = url.path().split('/', QString::SkipEmptyParts);
-    if(pathTokens.count() != 1) {
-        return false;
+
+    // get a series poster
+    if(pathTokens.count() == 1) {
+        // we query the depiction which has the best aspect ratio: the rough heuristic is an image which is higher than it is wide
+        const QString seriesName = pathTokens[0];
+        Soprano::QueryResultIterator it
+                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
+                                                                                                      "?r a nmm:TVSeries ; "
+                                                                                                      "nie:title %1 ; "
+                                                                                                      "nfo:depiction ?d . "
+                                                                                                      "?d nie:url ?u ; "
+                                                                                                      "nfo:height ?h ; "
+                                                                                                      "nfo:width ?w . "
+                                                                                                      "} ORDER BY DESC(?h-?w) LIMIT 1")
+                                                                                  .arg(Soprano::Node::literalToN3(seriesName)),
+                                                                                  Soprano::Query::QueryLanguageSparql);
+        if(it.next()) {
+            img.load(it["u"].uri().toLocalFile());
+            return true;
+        }
     }
 
-    // we query the depiction which has the best aspect ratio: the rough heuristic is an image which is higher than it is wide
-    const QString seriesName = pathTokens[0];
-    Soprano::QueryResultIterator it
-            = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
-                                                                                                  "?r a nmm:TVSeries ; "
-                                                                                                  "nie:title %1 ; "
-                                                                                                  "nfo:depiction ?d . "
-                                                                                                  "?d nie:url ?u ; "
-                                                                                                  "nfo:height ?h ; "
-                                                                                                  "nfo:width ?w . "
-                                                                                                  "} ORDER BY DESC(?h-?w) LIMIT 1")
-                                                                              .arg(Soprano::Node::literalToN3(seriesName)),
-                                                                              Soprano::Query::QueryLanguageSparql);
-    if(it.next()) {
-        img.load(it["u"].uri().toLocalFile());
-        return true;
+    // get a season poster
+    else if(pathTokens.count() == 2) {
+        const QString seriesName = pathTokens[0];
+        const int season = pathTokens[1].mid(pathTokens[1].lastIndexOf(' ')+1).toInt();
+        Soprano::QueryResultIterator it
+                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
+                                                                                                      "?r a nmm:TVSeries ; "
+                                                                                                      "nie:title %1 . "
+                                                                                                      "?r nmm:hasSeason ?s . "
+                                                                                                      "?s nmm:seasonNumber %2 ; "
+                                                                                                      "nfo:depiction ?d . "
+                                                                                                      "?d nie:url ?u ; "
+                                                                                                      "nfo:height ?h ; "
+                                                                                                      "nfo:width ?w . "
+                                                                                                      "} ORDER BY DESC(?h-?w) LIMIT 1")
+                                                                                  .arg(Soprano::Node::literalToN3(seriesName))
+                                                                                  .arg(season),
+                                                                                  Soprano::Query::QueryLanguageSparql);
+        if(it.next()) {
+            img.load(it["u"].uri().toLocalFile());
+            return true;
+        }
     }
-    else {
-        return false;
-    }
+
+    // fallback
+    return false;
 }

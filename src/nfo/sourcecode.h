@@ -35,6 +35,42 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage. 
+     * Indicates the name of the programming language this source 
+     * code file is written in. Examples might include 'C', 'C++', 
+     * 'Java' etc. 
+     */
+    QStringList programmingLanguages() const {
+        QStringList value;
+        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode)))
+            value << v.value<QString>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage. 
+     * Indicates the name of the programming language this source 
+     * code file is written in. Examples might include 'C', 'C++', 
+     * 'Java' etc. 
+     */
+    void setProgrammingLanguages(const QStringList& value) {
+        QVariantList values;
+        foreach(const QString& v, value)
+            values << v;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage. 
+     * Indicates the name of the programming language this source 
+     * code file is written in. Examples might include 'C', 'C++', 
+     * 'Java' etc. 
+     */
+    void addProgrammingLanguage(const QString& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesClass. 
      * Name of a class defined in the source code file. 
      */
@@ -92,42 +128,6 @@ public:
      */
     void addDefinesGlobalVariable(const QString& value) {
         addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#definesGlobalVariable", QUrl::StrictMode), value);
-    }
-
-    /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage. 
-     * Indicates the name of the programming language this source 
-     * code file is written in. Examples might include 'C', 'C++', 
-     * 'Java' etc. 
-     */
-    QStringList programmingLanguages() const {
-        QStringList value;
-        foreach(const QVariant& v, property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode)))
-            value << v.value<QString>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage. 
-     * Indicates the name of the programming language this source 
-     * code file is written in. Examples might include 'C', 'C++', 
-     * 'Java' etc. 
-     */
-    void setProgrammingLanguages(const QStringList& value) {
-        QVariantList values;
-        foreach(const QString& v, value)
-            values << v;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage. 
-     * Indicates the name of the programming language this source 
-     * code file is written in. Examples might include 'C', 'C++', 
-     * 'Java' etc. 
-     */
-    void addProgrammingLanguage(const QString& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#programmingLanguage", QUrl::StrictMode), value);
     }
 
     /**
@@ -196,7 +196,8 @@ public:
     }
 
 protected:
-    SourceCode(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type), NFO::TextDocument(uri, type), NFO::PlainTextDocument(uri, type) {
+    SourceCode(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type), NFO::TextDocument(uri, type), NFO::PlainTextDocument(uri, type) {
     }
     SourceCode(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::Document(res, type), NFO::TextDocument(res, type), NFO::PlainTextDocument(res, type) {

@@ -205,12 +205,16 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                     = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?s where { "
                                                                                                           "?r nmm:series ?tv . "
                                                                                                           "?tv nie:title %1 . "
-                                                                                                          "?r nmm:season ?s . }")
+                                                                                                          "?r nmm:season ?s . "
+                                                                                                          "OPTIONAL { ?sr a nmm:TVSeason ; nmm:seasonOf ?tv ; nmm:seasonNumber ?s . } . }")
                                                                                       .arg(Soprano::Node::literalToN3(pathTokens.first())),
                                                                                       Soprano::Query::QueryLanguageSparql);
             while(it.next()) {
                 const QString name = pathTokens.first() + QLatin1String(" - ") + i18n("Season %1", it["s"].literal().toInt());
                 UDSEntry uds = createFolderUDSEntry(name, name);
+                if(it["sr"].isResource()) {
+                    uds.insert( KIO::UDSEntry::UDS_NEPOMUK_URI, KUrl(it["sr"].uri()).url() );
+                }
                 listEntry(uds, false);
             }
             listEntry(UDSEntry(), true);
@@ -244,6 +248,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                 uds.insert( KIO::UDSEntry::UDS_CREATION_TIME, it["rd"].literal().toDateTime().toTime_t() );
                 uds.insert( KIO::UDSEntry::UDS_COMMENT, it["d"].toString() );
                 uds.insert( KIO::UDSEntry::UDS_URL, KUrl(it["url"].uri()).url() );
+                uds.insert( KIO::UDSEntry::UDS_NEPOMUK_URI, KUrl(it["r"].uri()).url() );
                 listEntry(uds, false);
             }
             listEntry(UDSEntry(), true);

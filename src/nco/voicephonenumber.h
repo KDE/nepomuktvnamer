@@ -72,7 +72,8 @@ public:
     }
 
 protected:
-    VoicePhoneNumber(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PhoneNumber(uri, type) {
+    VoicePhoneNumber(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NCO::ContactMedium(uri, type), NCO::PhoneNumber(uri, type) {
     }
     VoicePhoneNumber(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NCO::ContactMedium(res, type), NCO::PhoneNumber(res, type) {

@@ -38,7 +38,8 @@ public:
     }
 
 protected:
-    RemoteDataObject(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type) {
+    RemoteDataObject(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::DataObject(uri, type), NFO::FileDataObject(uri, type) {
     }
     RemoteDataObject(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::DataObject(res, type), NFO::FileDataObject(res, type) {

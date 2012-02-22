@@ -38,7 +38,8 @@ public:
     }
 
 protected:
-    WebDataObject(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::DataObject(uri, type) {
+    WebDataObject(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::DataObject(uri, type) {
     }
     WebDataObject(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::DataObject(res, type) {

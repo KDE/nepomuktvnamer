@@ -35,6 +35,41 @@ public:
     }
 
     /**
+     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels. 
+     * Number of channels. This property is to be used directly if no 
+     * detailed information is necessary. Otherwise use more detailed 
+     * subproperties. 
+     */
+    qint64 channels() const {
+        qint64 value;
+        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode)))
+            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode)).first().value<qint64>();
+        return value;
+    }
+
+    /**
+     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels. 
+     * Number of channels. This property is to be used directly if no 
+     * detailed information is necessary. Otherwise use more detailed 
+     * subproperties. 
+     */
+    void setChannels(const qint64& value) {
+        QVariantList values;
+        values << value;
+        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode), values);
+    }
+
+    /**
+     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels. 
+     * Number of channels. This property is to be used directly if no 
+     * detailed information is necessary. Otherwise use more detailed 
+     * subproperties. 
+     */
+    void addChannels(const qint64& value) {
+        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode), value);
+    }
+
+    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#bitsPerSample. 
      * Amount of bits in each audio sample. 
      */
@@ -93,41 +128,6 @@ public:
     }
 
     /**
-     * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels. 
-     * Number of channels. This property is to be used directly if no 
-     * detailed information is necessary. Otherwise use more detailed 
-     * subproperties. 
-     */
-    qint64 channels() const {
-        qint64 value;
-        if(contains(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode)))
-            value = property(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode)).first().value<qint64>();
-        return value;
-    }
-
-    /**
-     * Set property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels. 
-     * Number of channels. This property is to be used directly if no 
-     * detailed information is necessary. Otherwise use more detailed 
-     * subproperties. 
-     */
-    void setChannels(const qint64& value) {
-        QVariantList values;
-        values << value;
-        setProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode), values);
-    }
-
-    /**
-     * Add value to property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels. 
-     * Number of channels. This property is to be used directly if no 
-     * detailed information is necessary. Otherwise use more detailed 
-     * subproperties. 
-     */
-    void addChannels(const qint64& value) {
-        addProperty(QUrl::fromEncoded("http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#channels", QUrl::StrictMode), value);
-    }
-
-    /**
      * Get property http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#sampleRate. 
      * The amount of audio samples per second. 
      */
@@ -157,7 +157,8 @@ public:
     }
 
 protected:
-    Audio(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Media(uri, type) {
+    Audio(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Media(uri, type) {
     }
     Audio(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::Media(res, type) {

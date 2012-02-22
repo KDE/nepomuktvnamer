@@ -64,7 +64,8 @@ public:
     }
 
 protected:
-    Archive(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type) {
+    Archive(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::DataContainer(uri, type) {
     }
     Archive(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::DataContainer(res, type) {

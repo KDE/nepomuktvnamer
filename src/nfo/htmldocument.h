@@ -35,7 +35,8 @@ public:
     }
 
 protected:
-    HtmlDocument(const QUrl& uri, const QUrl& type)      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type), NFO::TextDocument(uri, type), NFO::PlainTextDocument(uri, type) {
+    HtmlDocument(const QUrl& uri, const QUrl& type)
+      : SimpleResource(uri), NIE::InformationElement(uri, type), NFO::Document(uri, type), NFO::TextDocument(uri, type), NFO::PlainTextDocument(uri, type) {
     }
     HtmlDocument(const SimpleResource& res, const QUrl& type)
       : SimpleResource(res), NIE::InformationElement(res, type), NFO::Document(res, type), NFO::TextDocument(res, type), NFO::PlainTextDocument(res, type) {
