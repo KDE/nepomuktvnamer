@@ -311,7 +311,9 @@ void TVNamer::saveToNepomuk()
         // grab a max of 3 banners - one of each type
         foreach(Tvdb::Banner::BannerType type, QList<Tvdb::Banner::BannerType>() << Tvdb::Banner::PosterBanner << Tvdb::Banner::GraphicalBanner << Tvdb::Banner::FanartBanner) {
             foreach(const Tvdb::Banner& banner, series.banners()) {
-                if(banner.type() == type) {
+                if(banner.type() == type &&
+                   (banner.language() == series.language() ||
+                    banner.language() == KGlobal::locale()->language())) {
                     const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
                     if(!localUrl.isEmpty()) {
                         Nepomuk::NFO::Image banner(localUrl);
@@ -351,12 +353,15 @@ void TVNamer::saveToNepomuk()
                 seriesRes.addSeason(seasonRes.uri());
                 // grab a banner
                 foreach(const Tvdb::Banner& banner, series[it.value().season].banners()) {
-                    const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
-                    if(!localUrl.isEmpty()) {
-                        Nepomuk::NFO::Image banner(localUrl);
-                        seasonRes.addDepiction(banner.uri());
-                        graph << banner;
-                        break;
+                    if(banner.language() == series.language() ||
+                       banner.language() == KGlobal::locale()->language()) {
+                        const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
+                        if(!localUrl.isEmpty()) {
+                            Nepomuk::NFO::Image banner(localUrl);
+                            seasonRes.addDepiction(banner.uri());
+                            graph << banner;
+                            break;
+                        }
                     }
                 }
 
