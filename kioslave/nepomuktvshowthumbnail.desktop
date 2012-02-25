@@ -1,6 +1,10 @@
 [Desktop Entry]
 Type=Service
 Name=TV Series
+Name[pt]=Séries de TV
+Name[pt_BR]=Séries de TV
+Name[uk]=Телевізійні серіали
+Name[x-test]=xxTV Seriesxx
 ServiceTypes=ThumbCreator
 X-KDE-Protocol=tvshow
 X-KDE-Library=nepomuktvshowthumbnail

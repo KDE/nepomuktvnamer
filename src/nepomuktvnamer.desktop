@@ -4,9 +4,17 @@ X-KDE-ServiceTypes=KonqPopupMenu/Plugin
 MimeType=video/*;inode/directory;
 Actions=tvnamer;
 X-KDE-Submenu=Desktop Search
+X-KDE-Submenu[pt]=Pesquisa no Ambiente de Trabalho
+X-KDE-Submenu[pt_BR]=Pesquisa no ambiente de trabalho
+X-KDE-Submenu[uk]=Стільничний пошук
+X-KDE-Submenu[x-test]=xxDesktop Searchxx
 Icon=nepomuk
 
 [Desktop Action tvnamer]
 Name=Lookup TV Shows on thetvdb.com
+Name[pt]=Procurar programas de TV no thetvdb.com
+Name[pt_BR]=Busca por Shows de TV em thetvdb.com
+Name[uk]=Пошук телепрограм на thetvdb.com
+Name[x-test]=xxLookup TV Shows on thetvdb.comxx
 Icon=nepomuk
 Exec=nepomuktvnamer %f
