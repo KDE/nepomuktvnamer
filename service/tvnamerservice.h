@@ -38,7 +38,8 @@ public:
     ~TVNamerService();
 
 private Q_SLOTS:
-    void slotResourceCreated(const Nepomuk::Resource& res, const QList<QUrl>& types);
+    void slotVideoResourceCreated(const Nepomuk::Resource& res, const QList<QUrl>& types);
+    void slotTVShowResourceCreated(const Nepomuk::Resource& res);
 };
 
 #endif // TVNAMERSERVICE_H

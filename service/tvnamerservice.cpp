@@ -23,13 +23,19 @@
 
 #include <nepomuk/resourcewatcher.h>
 #include <Nepomuk/Vocabulary/NFO>
+#include <Nepomuk/Vocabulary/NMM>
 #include <Nepomuk/File>
+
+#include <Soprano/Model>
+#include <Soprano/QueryResultIterator>
+#include <Soprano/Node>
 
 #include <QtCore/QProcess>
 #include <QFile>
 
 #include <KStandardDirs>
 #include <KDebug>
+#include <KDirNotify>
 
 using namespace Nepomuk::Vocabulary;
 
@@ -40,7 +46,16 @@ TVNamerService::TVNamerService(QObject *parent, const QVariantList &)
     Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
     watcher->addType(NFO::Video());
     connect(watcher, SIGNAL(resourceCreated(Nepomuk::Resource,QList<QUrl>)),
-            this, SLOT(slotResourceCreated(Nepomuk::Resource,QList<QUrl>)));
+            this, SLOT(slotVideoResourceCreated(Nepomuk::Resource,QList<QUrl>)));
+    watcher->start();
+
+    // set up the watcher for newly created TV Shows
+    watcher = new Nepomuk::ResourceWatcher(this);
+    watcher->addType(NMM::TVShow());
+    connect(watcher, SIGNAL(resourceCreated(Nepomuk::Resource,QList<QUrl>)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
+    connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk::Resource,Nepomuk::Types::Class)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
     watcher->start();
 }
 
@@ -48,9 +63,8 @@ TVNamerService::~TVNamerService()
 {
 }
 
-void TVNamerService::slotResourceCreated(const Nepomuk::Resource &res, const QList<QUrl> &types)
+void TVNamerService::slotVideoResourceCreated(const Nepomuk::Resource &res, const QList<QUrl> &types)
 {
-    kDebug() << res.resourceUri() << types;
     // all we need to do is call the nepomuktvnamer executable on the newly created file
     if(res.isFile()) {
         const QString path = res.toFile().url().toLocalFile();
@@ -58,6 +72,26 @@ void TVNamerService::slotResourceCreated(const Nepomuk::Resource &res, const QLi
             kDebug() << "Calling" << KStandardDirs::findExe(QLatin1String("nepomuktvnamer")) << path;
             QProcess::startDetached(KStandardDirs::findExe(QLatin1String("nepomuktvnamer")), QStringList() << QLatin1String("--quiet") << path);
         }
+    }
+}
+
+void TVNamerService::slotTVShowResourceCreated(const Nepomuk::Resource &res)
+{
+    kDebug() << res.resourceUri();
+    // inform KIO about the change
+    Soprano::QueryResultIterator it = mainModel()->executeQuery(QString::fromLatin1("select ?s ?t where { "
+                                                                                    "%1 nmm:series [ nie:title ?t ] ; "
+                                                                                    "nmm:isPartOfSeason [ nmm:seasonNumber ?s ] "
+                                                                                    "} LIMIT 1")
+                                                                .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                                                Soprano::Query::QueryLanguageSparql);
+    if(it.next()) {
+        kDebug() << QString::fromLatin1("tvshow:/%1/%1 - Season %2")
+                    .arg(it["t"].toString())
+                    .arg(it["s"].literal().toInt(), 2, 10, QLatin1Char('0'));
+        org::kde::KDirNotify::emitFilesAdded(QString::fromLatin1("tvshow:/%1/%1 - Season %2")
+                                             .arg(it["t"].toString())
+                                             .arg(it["s"].literal().toInt()));
     }
 }
 
