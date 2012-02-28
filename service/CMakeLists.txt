@@ -7,7 +7,7 @@ set( tvnamerservice_SRCS
 kde4_add_plugin(nepomuktvnamerservice ${tvnamerservice_SRCS})
 
 target_link_libraries(nepomuktvnamerservice
-  ${KDE4_KDEUI_LIBS}
+  ${KDE4_KDECORE_LIBS}
   ${KDE4_KIO_LIBS}
   ${SOPRANO_LIBRARIES}
   #nepomukcore
