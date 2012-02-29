@@ -54,6 +54,7 @@ private slots:
 
 private:
     void updateSeries(const QString& name);
+    void updateSeriesReleaseGrouping(const QString& name);
 
     QHash<QString, Tvdb::Series> m_seriesCache;
 };

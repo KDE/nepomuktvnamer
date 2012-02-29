@@ -172,9 +172,26 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
             removeData(series.name(), i18n("Season Number"));
             removeData(series.name(), i18n("Episode Number"));
         }
+        updateSeriesReleaseGrouping(name);
     }
     else {
         kDebug() << "Failed to find last episode of" << series.name();
+    }
+}
+
+void NepomukTVShowEngine::updateSeriesReleaseGrouping(const QString &name)
+{
+    const QDate date = query(name)[i18n("Release date")].value<QDate>();
+    if(date.isValid()) {
+        if(date < QDate::currentDate()) {
+            setData(name, i18n("Release Group"), i18n("New"));
+        }
+        else {
+            setData(name, i18n("Release Group"), i18n("Upcoming"));
+        }
+    }
+    else {
+        setData(name, i18n("Release Group"), i18n("Finished"));
     }
 }
 

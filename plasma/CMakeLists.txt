@@ -10,8 +10,9 @@ target_link_libraries(plasma_engine_nepomuktvshow
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_PLASMA_LIBS}
                       ${SOPRANO_LIBRARIES}
-                      ${NEPOMUK_LIBRARIES}
-                      nepomukdatamanagement
+                      #${NEPOMUK_LIBRARIES}
+                      #nepomukdatamanagement
+        nepomukcore
                       tvdb)
  
 install(TARGETS plasma_engine_nepomuktvshow
