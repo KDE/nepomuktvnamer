@@ -9,7 +9,9 @@ kde4_add_plugin(plasma_engine_nepomuktvshow ${nepomuktvshow_engine_SRCS})
 target_link_libraries(plasma_engine_nepomuktvshow
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_PLASMA_LIBS}
+                      ${SOPRANO_LIBRARIES}
                       ${NEPOMUK_LIBRARIES}
+                      nepomukdatamanagement
                       tvdb)
  
 install(TARGETS plasma_engine_nepomuktvshow

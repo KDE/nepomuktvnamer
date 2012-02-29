@@ -24,7 +24,12 @@
 #include <Soprano/Model>
 #include <Soprano/QueryResultIterator>
 #include <Soprano/Node>
+
+#include <Nepomuk/Resource>
 #include <Nepomuk/ResourceManager>
+#include <nepomuk/resourcewatcher.h>
+
+#include <Nepomuk/Vocabulary/NMM>
 
 #include <tvdb/client.h>
 #include <tvdb/series.h>
@@ -36,10 +41,24 @@
 
 #include <KLocale>
 
+using namespace Nepomuk::Vocabulary;
+
 
 NepomukTVShowEngine::NepomukTVShowEngine(QObject *parent, const QVariantList& args)
     :  Plasma::DataEngine(parent, args)
 {
+}
+
+void NepomukTVShowEngine::init()
+{
+    // set up the watcher for newly created TV Shows
+    Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
+    watcher->addType(NMM::TVShow());
+    connect(watcher, SIGNAL(resourceCreated(Nepomuk::Resource,QList<QUrl>)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
+    connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk::Resource,Nepomuk::Types::Class)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
+    watcher->start();
 }
 
 QStringList NepomukTVShowEngine::sources() const
@@ -62,19 +81,18 @@ bool NepomukTVShowEngine::sourceRequestEvent(const QString &name)
     // insert a dummy data block
     setData(name, DataEngine::Data());
 
+    return updateSourceEvent(name);
+}
+
+bool NepomukTVShowEngine::updateSourceEvent(const QString &name)
+{
     // fetch the information
     Tvdb::Client* client = new Tvdb::Client( this );
     client->setFlags(Tvdb::Client::FetchFullDetails);
     connect( client, SIGNAL( finished( Tvdb::Series ) ), SLOT( slotFinishedSeriesLookup( Tvdb::Series ) ) );
     connect( client, SIGNAL( multipleResultsFound( QList<Tvdb::Series> ) ), SLOT( slotMultipleSeriesResultsFound( QList<Tvdb::Series> ) ) );
     client->getSeriesByName(name);
-
     return true;
-}
-
-bool NepomukTVShowEngine::updateSourceEvent(const QString &source)
-{
-    return DataEngine::updateSourceEvent(source);
 }
 
 void NepomukTVShowEngine::slotFinishedSeriesLookup(const Tvdb::Series &series)
@@ -96,6 +114,25 @@ void NepomukTVShowEngine::slotMultipleSeriesResultsFound(const QList<Tvdb::Serie
     m_seriesCache.insert(series.first().name(), series.first());
     updateSeries(series.first().name());
     sender()->deleteLater();
+}
+
+void NepomukTVShowEngine::slotTVShowResourceCreated(const Nepomuk::Resource &res)
+{
+    // check the series to see if we have a to update the next episode
+    Soprano::QueryResultIterator it
+            = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?t where { "
+                                                                                                  "%1 nmm:series [ a nmm:TVSeries ; nie:title ?t ] } LIMIT 1")
+                                                                              .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                                                              Soprano::Query::QueryLanguageSparql);
+    if(it.next()) {
+        const QString name = it["t"].toString();
+        if(m_seriesCache.contains(name)) {
+            updateSeries(name);
+        }
+        else {
+            updateSourceEvent(name);
+        }
+    }
 }
 
 void NepomukTVShowEngine::updateSeries(const QString &name)

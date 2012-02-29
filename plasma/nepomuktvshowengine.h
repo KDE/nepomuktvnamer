@@ -28,6 +28,9 @@
 
 #include <tvdb/series.h>
 
+namespace Nepomuk {
+    class Resource;
+}
 
 class NepomukTVShowEngine : public Plasma::DataEngine
 {
@@ -36,15 +39,18 @@ class NepomukTVShowEngine : public Plasma::DataEngine
 public:
     NepomukTVShowEngine(QObject *parent = 0, const QVariantList& args = QVariantList());
     
+    void init();
+
     QStringList sources() const;
 
 protected:
     bool sourceRequestEvent(const QString& name);
-    bool updateSourceEvent(const QString& source);
+    bool updateSourceEvent(const QString& name);
 
 private slots:
     void slotFinishedSeriesLookup( const Tvdb::Series& series );
     void slotMultipleSeriesResultsFound( const QList<Tvdb::Series>& series );
+    void slotTVShowResourceCreated(const Nepomuk::Resource& res);
 
 private:
     void updateSeries(const QString& name);
