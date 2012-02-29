@@ -81,6 +81,21 @@ Item {
                     text: "Released: " + Qt.formatDate(releaseDate, Qt.TextDate)
                 }
             }
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
+                hoverEnabled: true
+                onEntered: {
+                    parent.opacity = 0.5
+                }
+                onExited: {
+                    parent.opacity = 1
+                }
+                onClicked: {
+                    service = tvshowSource.serviceForSource(DataEngineSource)
+                    service.startOperationCall(service.operationDescription("search"))
+                }
+            }
         }
     }
 }

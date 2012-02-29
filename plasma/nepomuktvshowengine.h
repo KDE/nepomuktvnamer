@@ -44,6 +44,8 @@ public:
 
     QStringList sources() const;
 
+    Plasma::Service *serviceForSource(const QString &source);
+
 protected:
     bool sourceRequestEvent(const QString& name);
     bool updateSourceEvent(const QString& name);
