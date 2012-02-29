@@ -20,3 +20,10 @@ install(TARGETS plasma_engine_nepomuktvshow
  
 install(FILES plasma-engine-nepomuktvshow.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+# install the QML plasmoid
+install(DIRECTORY package/
+        DESTINATION ${DATA_INSTALL_DIR}/plasma/plasmoids/org.kde.nepomuk.tvshowreleases)
+
+install(FILES package/metadata.desktop
+        DESTINATION ${SERVICES_INSTALL_DIR} RENAME plasma-applet-nepomuktvshow.desktop)
