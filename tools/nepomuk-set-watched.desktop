@@ -4,6 +4,7 @@ X-KDE-ServiceTypes=KonqPopupMenu/Plugin
 MimeType=video/*;
 Actions=markAsWatched;markAsUnwatched;
 X-KDE-Submenu=Desktop Search
+X-KDE-Submenu[es]=Búsqueda de escritorio
 X-KDE-Submenu[nds]=Schriefdischsöök
 X-KDE-Submenu[nl]=Bureaublad-zoekopdracht
 X-KDE-Submenu[pt]=Pesquisa no Ambiente de Trabalho
@@ -14,6 +15,7 @@ Icon=nepomuk
 
 [Desktop Action markAsWatched]
 Name=Mark Video As Watched
+Name[es]=Marcar vídeo como visto
 Name[pt]=Marcar o Vídeo como Visto
 Name[pt_BR]=Marcar o vídeo como assistido
 Name[uk]=Позначити відео як переглянуте
@@ -23,6 +25,7 @@ Exec=qdbus org.kde.NepomukStorage /datamanagement org.kde.nepomuk.DataManagement
 
 [Desktop Action markAsUnwatched]
 Name=Mark Video As Not Watched
+Name[es]=Marcar vídeo como no visto
 Name[pt]=Marcar o Vídeo como Não Visto
 Name[pt_BR]=Marcar o vídeo como não assistido
 Name[uk]=Позначити відео як не переглянуте
