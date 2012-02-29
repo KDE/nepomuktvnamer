@@ -14,7 +14,11 @@ Item {
           id: tvshowSource
           dataEngine: "nepomuktvshow"
           connectedSources: sources
-      }
+    }
+
+    Component.onCompleted: {
+        plasmoid.aspectRatioMode = IgnoreAspectRatio
+    }
 
     Component {
         id: sectionHeading
