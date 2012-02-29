@@ -192,13 +192,17 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
         }
         updateSeriesReleaseGrouping(name);
 
-        // get a depiction in case we do not already have one
+        // get a depiction in case we do not already have one. We prefere the wide banners
         if(!query(name).contains(i18n("Depiction"))) {
             it = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
                                                                                                      "?r a nmm:TVSeries ; "
                                                                                                      "nie:title %1 ; "
-                                                                                                     "nfo:depiction [ nie:url ?u ] . }"
-                                                                                                     "LIMIT 1")
+                                                                                                     "nfo:depiction [ "
+                                                                                                     "nie:url ?u ; "
+                                                                                                     "nfo:height ?h ; "
+                                                                                                     "nfo:width ?w "
+                                                                                                     "] } "
+                                                                                                     "ORDER BY DESC(?w/?h) LIMIT 1")
                                                                                  .arg(Soprano::Node::literalToN3(series.name())),
                                                                                  Soprano::Query::QueryLanguageSparql);
             if(it.next()) {
