@@ -34,6 +34,7 @@ Item {
         section.property: "releaseGroup"
         section.delegate: sectionHeading
         anchors.fill: parent
+        clip: true
 
         // sort by release date starting with the newest one
         // but put the already released episodes first
