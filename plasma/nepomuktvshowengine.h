@@ -28,6 +28,7 @@
 
 #include <tvdb/series.h>
 
+class QTimer;
 namespace Nepomuk {
     class Resource;
 }
@@ -51,12 +52,14 @@ private slots:
     void slotFinishedSeriesLookup( const Tvdb::Series& series );
     void slotMultipleSeriesResultsFound( const QList<Tvdb::Series>& series );
     void slotTVShowResourceCreated(const Nepomuk::Resource& res);
+    void updateAllReleaseGroupings();
 
 private:
     void updateSeries(const QString& name);
     void updateSeriesReleaseGrouping(const QString& name);
 
     QHash<QString, Tvdb::Series> m_seriesCache;
+    QTimer* m_releaseGroupingTimer;
 };
 
 #endif // NEPOMUKTVSHOWENGINE_H

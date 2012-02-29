@@ -36,8 +36,10 @@
 #include <tvdb/season.h>
 #include <tvdb/episode.h>
 
-#include <QDateTime>
+#include <QDate>
+#include <QTime>
 #include <QVariant>
+#include <QTimer>
 
 #include <KLocale>
 
@@ -59,6 +61,12 @@ void NepomukTVShowEngine::init()
     connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk::Resource,Nepomuk::Types::Class)),
             this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
     watcher->start();
+
+    // set up the timer which will update the release grouping every 24 hours
+    m_releaseGroupingTimer = new QTimer(this);
+    connect(m_releaseGroupingTimer, SIGNAL(timeout()), this, SLOT(updateAllReleaseGroupings()));
+    m_releaseGroupingTimer->setSingleShot(true);
+    m_releaseGroupingTimer->start(QTime::currentTime().secsTo(QTime(23, 59, 59, 999))*1000);
 }
 
 QStringList NepomukTVShowEngine::sources() const
@@ -133,6 +141,16 @@ void NepomukTVShowEngine::slotTVShowResourceCreated(const Nepomuk::Resource &res
             updateSourceEvent(name);
         }
     }
+}
+
+void NepomukTVShowEngine::updateAllReleaseGroupings()
+{
+    foreach(const QString& name, m_seriesCache.keys()) {
+        updateSeriesReleaseGrouping(name);
+    }
+
+    // update again at the end of the day
+    m_releaseGroupingTimer->start(QTime::currentTime().secsTo(QTime(23, 59, 59, 999))*1000);
 }
 
 void NepomukTVShowEngine::updateSeries(const QString &name)
