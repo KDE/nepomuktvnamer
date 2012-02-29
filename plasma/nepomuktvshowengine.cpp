@@ -191,6 +191,20 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
             removeData(series.name(), i18n("Episode Number"));
         }
         updateSeriesReleaseGrouping(name);
+
+        // get a depiction in case we do not already have one
+        if(!query(name).contains(i18n("Depiction"))) {
+            it = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
+                                                                                                     "?r a nmm:TVSeries ; "
+                                                                                                     "nie:title %1 ; "
+                                                                                                     "nfo:depiction [ nie:url ?u ] . }"
+                                                                                                     "LIMIT 1")
+                                                                                 .arg(Soprano::Node::literalToN3(series.name())),
+                                                                                 Soprano::Query::QueryLanguageSparql);
+            if(it.next()) {
+                setData(name, i18n("Depiction"), it["u"].uri().toLocalFile());
+            }
+        }
     }
     else {
         kDebug() << "Failed to find last episode of" << series.name();
