@@ -40,6 +40,7 @@ public:
 private Q_SLOTS:
     void slotVideoResourceCreated(const Nepomuk::Resource& res, const QList<QUrl>& types);
     void slotTVShowResourceCreated(const Nepomuk::Resource& res);
+    void slotTVShowUsageCountChanged(const Nepomuk::Resource& res);
 };
 
 #endif // TVNAMERSERVICE_H

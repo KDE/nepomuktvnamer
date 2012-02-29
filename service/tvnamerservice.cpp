@@ -24,6 +24,7 @@
 #include <nepomuk/resourcewatcher.h>
 #include <Nepomuk/Vocabulary/NFO>
 #include <Nepomuk/Vocabulary/NMM>
+#include <Nepomuk/Vocabulary/NUAO>
 #include <Nepomuk/File>
 
 #include <Soprano/Model>
@@ -56,6 +57,14 @@ TVNamerService::TVNamerService(QObject *parent, const QVariantList &)
             this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
     connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk::Resource,Nepomuk::Types::Class)),
             this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
+    watcher->start();
+
+    // set up the watcher for watched TV Shows
+    watcher = new Nepomuk::ResourceWatcher(this);
+    watcher->addType(NMM::TVShow());
+    watcher->addProperty(NUAO::usageCount());
+    connect(watcher, SIGNAL(propertyAdded(Nepomuk::Resource,Nepomuk::Types::Property,QVariant)),
+            this, SLOT(slotTVShowUsageCountChanged(Nepomuk::Resource)));
     watcher->start();
 }
 
@@ -93,6 +102,30 @@ void TVNamerService::slotTVShowResourceCreated(const Nepomuk::Resource &res)
                                              .arg(it["t"].toString())
                                              .arg(it["s"].literal().toInt()));
     }
+}
+
+void TVNamerService::slotTVShowUsageCountChanged(const Nepomuk::Resource &res)
+{
+    // fetch the changed show's details and tell KIO to remove it in any case
+    Soprano::QueryResultIterator it
+            = mainModel()->executeQuery(QString::fromLatin1("select ?s ?e ?st ?t where { "
+                                                            "%1 nmm:episodeNumber ?e ; "
+                                                            "nmm:season ?s ; "
+                                                            "nmm:series [ a nmm:TVSeries ; nie:title ?st ] ; "
+                                                            "nie:title ?t . } LIMIT 1")
+                                        .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                        Soprano::Query::QueryLanguageSparql);
+    if(it.next()) {
+        const QString title = i18n("Next episode of %1: %2x%3 - %4",
+                                   it["st"].toString(),
+                                   QString::number(it["s"].literal().toInt()).rightJustified(2, QLatin1Char('0')),
+                                   QString::number(it["e"].literal().toInt()).rightJustified(2, QLatin1Char('0')),
+                                   it["t"].toString());
+        org::kde::KDirNotify::emitFilesRemoved(QStringList() << (QLatin1String("tvshow:/latest/") + title));
+    }
+
+    // now simply tell KIO to check for added files
+    org::kde::KDirNotify::emitFilesAdded(QLatin1String("tvshow:/latest"));
 }
 
 #include <kpluginfactory.h>
