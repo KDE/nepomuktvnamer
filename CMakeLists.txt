@@ -10,7 +10,7 @@ set(CMAKE_NEPOMUKTVNAMER_VERSION "${CMAKE_NEPOMUKTVNAMER_VERSION_MAJOR}.${CMAKE_
 set(KDE_MIN_VERSION "4.5.80")  # for the < 4.2 macro
 find_package(KDE4 4.5.80 REQUIRED)
 find_package(Nepomuk REQUIRED)
-find_package(LibTvdb REQUIRED)
+find_package(LibTvdb "0.3.53" REQUIRED)
 set(SDO_MIN_VERSION "0.8.53")
 find_package(SharedDesktopOntologies)
 
@@ -28,3 +28,4 @@ add_subdirectory(src)
 add_subdirectory(service)
 add_subdirectory(kioslave)
 add_subdirectory(tools)
+add_subdirectory(plasma)
