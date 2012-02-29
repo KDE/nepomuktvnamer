@@ -35,14 +35,19 @@ Item {
         section.delegate: sectionHeading
         anchors.fill: parent
 
+        // sort by release date starting with the newest one
+        // but put the already released episodes first
         model: PlasmaCore.SortFilterModel {
-            id: filterModel
-            sourceModel: PlasmaCore.DataModel {
+            sourceModel: PlasmaCore.SortFilterModel {
+                sourceModel: PlasmaCore.DataModel {
                 dataSource: tvshowSource
+                }
+                filterRole: "releaseGroup"
+                filterRegExp: "New Episode"
+                sortRole: "releaseDate"
+                sortOrder: Qt.DescendingOrder
             }
-            filterRole: "releaseGroup"
-            filterRegExp: "New Episode"
-            sortRole: "releaseDate"
+            sortRole: "releaseGroup"
             sortOrder: Qt.AscendingOrder
         }
 
