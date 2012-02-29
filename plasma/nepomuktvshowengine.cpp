@@ -179,16 +179,16 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
         }
 
         if(episode.isValid()) {
-            setData(series.name(), i18n("Release date"), episode.firstAired());
-            setData(series.name(), i18n("Title"), episode.name());
-            setData(series.name(), i18n("Season Number"), episode.season().seasonNumber());
-            setData(series.name(), i18n("Episode Number"), episode.episodeNumber());
+            setData(series.name(), QLatin1String("releaseDate"), episode.firstAired());
+            setData(series.name(), QLatin1String("title"), episode.name());
+            setData(series.name(), QLatin1String("seasonNumber"), episode.season().seasonNumber());
+            setData(series.name(), QLatin1String("episodeNumber"), episode.episodeNumber());
         }
         else {
-            setData(series.name(), i18n("Release date"), QDate());
-            removeData(series.name(), i18n("Title"));
-            removeData(series.name(), i18n("Season Number"));
-            removeData(series.name(), i18n("Episode Number"));
+            setData(series.name(), QLatin1String("releaseDate"), QString());
+            removeData(series.name(), QLatin1String("title"));
+            removeData(series.name(), QLatin1String("seasonNumber"));
+            removeData(series.name(), QLatin1String("episodeNumber"));
         }
         updateSeriesReleaseGrouping(name);
 
@@ -206,7 +206,7 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
                                                                                  .arg(Soprano::Node::literalToN3(series.name())),
                                                                                  Soprano::Query::QueryLanguageSparql);
             if(it.next()) {
-                setData(name, i18n("Depiction"), it["u"].uri().toLocalFile());
+                setData(name, QLatin1String("depiction"), it["u"].uri().toLocalFile());
             }
         }
     }
@@ -217,17 +217,17 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
 
 void NepomukTVShowEngine::updateSeriesReleaseGrouping(const QString &name)
 {
-    const QDate date = query(name)[i18n("Release date")].value<QDate>();
+    const QDate date = query(name)[QLatin1String("releaseDate")].value<QDate>();
     if(date.isValid()) {
         if(date < QDate::currentDate()) {
-            setData(name, i18n("Release Group"), i18n("New"));
+            setData(name, QLatin1String("releaseGroup"), i18n("New Episode Available"));
         }
         else {
-            setData(name, i18n("Release Group"), i18n("Upcoming"));
+            setData(name, QLatin1String("releaseGroup"), i18n("New Episode Upcoming"));
         }
     }
     else {
-        setData(name, i18n("Release Group"), i18n("Finished"));
+        setData(name, QLatin1String("releaseGroup"), i18n("Series Finished"));
     }
 }
 
