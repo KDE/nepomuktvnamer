@@ -3,3 +3,5 @@
 * Improved newepisodechecker.py script with grouping and sorting.
 * Added a Plasma data engine which provides information about upcoming episodes.
 * Update folder listings of the KIO slave via KDirNotify
+* Added special folder tvshow:/latest which shows the next episodes to watch.
+* Show banners for seasons.
