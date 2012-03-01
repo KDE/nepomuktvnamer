@@ -2,7 +2,7 @@
 Name=Nepomuk TV Show Engine
 Comment=An engine which provides information about upcoming TV show episodes
 Type=Service
- 
+
 X-KDE-ServiceTypes=Plasma/DataEngine
 X-KDE-Library=plasma_engine_nepomuktvshow
 X-Plasma-EngineName=nepomuktvshow
