@@ -2,6 +2,7 @@
 Comment=Plasmoid showing upcoming TV show releases
 Comment[pt]=Um plasmóide que mostra os próximos lançamentos de programas de TV
 Comment[pt_BR]=Plasmoide que mostra os próximos lançamentos de programas de TV
+Comment[sv]=Plasmoid som visar kommande tv-program
 Comment[uk]=Плазмоїд, який показує наступні випуски телепередач
 Comment[x-test]=xxPlasmoid showing upcoming TV show releasesxx
 Encoding=UTF-8
@@ -9,6 +10,7 @@ Keywords=
 Name=Nepomuk TV Shows
 Name[pt]=Programas de TV do Nepomuk
 Name[pt_BR]=Programas de TV do Nepomuk
+Name[sv]=Nepomuk tv-program
 Name[uk]=Телепередачі Nepomuk
 Name[x-test]=xxNepomuk TV Showsxx
 Type=Service

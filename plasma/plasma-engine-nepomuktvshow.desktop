@@ -2,11 +2,13 @@
 Name=Nepomuk TV Show Engine
 Name[pt]=Motor de Programas de TV do Nepomuk
 Name[pt_BR]=Mecanismo de programas de TV do Nepomuk
+Name[sv]=Nepomuk tv-programgränssnitt
 Name[uk]=Рушій телепередач Nepomuk
 Name[x-test]=xxNepomuk TV Show Enginexx
 Comment=An engine which provides information about upcoming TV show episodes
 Comment[pt]=Um motor que fornece informações acerca dos próximos episódios de programas de TV
 Comment[pt_BR]=Um mecanismo que fornece informações sobre os próximos episódios de programas de TV
+Comment[sv]=Ett gränssnitt som tillhandahåller information om kommande avsnitt av tv-program
 Comment[uk]=Рушій даних, який надає дані щодо наступних випусків телепередач
 Comment[x-test]=xxAn engine which provides information about upcoming TV show episodesxx
 Type=Service
