@@ -20,6 +20,7 @@
 */
 
 #include "nepomuktvshowengine.h"
+#include "nepomuktvshowservice.h"
 
 #include <Soprano/Model>
 #include <Soprano/QueryResultIterator>
@@ -84,6 +85,11 @@ QStringList NepomukTVShowEngine::sources() const
         titles << it["t"].toString();
     }
     return titles;
+}
+
+Plasma::Service *NepomukTVShowEngine::serviceForSource(const QString &source)
+{
+    return new NepomukTVShowService(this, source);
 }
 
 bool NepomukTVShowEngine::sourceRequestEvent(const QString &name)
