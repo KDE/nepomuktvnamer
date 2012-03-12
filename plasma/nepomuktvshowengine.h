@@ -53,6 +53,7 @@ private slots:
     void slotMultipleSeriesResultsFound( const QList<Tvdb::Series>& series );
     void slotTVShowResourceCreated(const Nepomuk::Resource& res);
     void updateAllReleaseGroupings();
+    void updateSources();
 
 private:
     void updateSeries(const QString& name);

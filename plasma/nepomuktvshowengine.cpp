@@ -67,6 +67,10 @@ void NepomukTVShowEngine::init()
     connect(m_releaseGroupingTimer, SIGNAL(timeout()), this, SLOT(updateAllReleaseGroupings()));
     m_releaseGroupingTimer->setSingleShot(true);
     m_releaseGroupingTimer->start(QTime::currentTime().secsTo(QTime(23, 59, 59, 999))*1000);
+
+    // update sources after a Nepomuk restart
+    connect(Nepomuk::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
+            this, SLOT(updateSources()));
 }
 
 QStringList NepomukTVShowEngine::sources() const
@@ -151,6 +155,16 @@ void NepomukTVShowEngine::updateAllReleaseGroupings()
 
     // update again at the end of the day
     m_releaseGroupingTimer->start(QTime::currentTime().secsTo(QTime(23, 59, 59, 999))*1000);
+}
+
+void NepomukTVShowEngine::updateSources()
+{
+    // we simply tell the clients about all sources in case plasma was started before Nepomuk
+    foreach(const QString& s, sources()) {
+        if(!m_seriesCache.contains(s)) {
+            emit sourceAdded(s);
+        }
+    }
 }
 
 void NepomukTVShowEngine::updateSeries(const QString &name)
