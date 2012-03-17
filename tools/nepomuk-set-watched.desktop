@@ -19,6 +19,7 @@ Icon=nepomuk
 [Desktop Action markAsWatched]
 Name=Mark Video As Watched
 Name[es]=Marcar vídeo como visto
+Name[nl]=Video als bekeken markeren
 Name[pt]=Marcar o Vídeo como Visto
 Name[pt_BR]=Marcar o vídeo como assistido
 Name[sv]=Markera video som sedd
@@ -30,6 +31,7 @@ Exec=qdbus org.kde.NepomukStorage /datamanagement org.kde.nepomuk.DataManagement
 [Desktop Action markAsUnwatched]
 Name=Mark Video As Not Watched
 Name[es]=Marcar vídeo como no visto
+Name[nl]=Video als niet-bekeken markeren
 Name[pt]=Marcar o Vídeo como Não Visto
 Name[pt_BR]=Marcar o vídeo como não assistido
 Name[sv]=Markera video som inte sedd
