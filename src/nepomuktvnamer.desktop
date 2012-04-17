@@ -5,6 +5,7 @@ MimeType=video/*;inode/directory;
 Actions=tvnamer;
 X-KDE-Submenu=Desktop Search
 X-KDE-Submenu[cs]=Vyhledávací služby
+X-KDE-Submenu[de]=Desktopsuche
 X-KDE-Submenu[es]=Búsqueda de escritorio
 X-KDE-Submenu[nds]=Schriefdischsöök
 X-KDE-Submenu[nl]=Bureaublad-zoekopdracht
