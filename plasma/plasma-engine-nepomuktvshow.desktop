@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Nepomuk TV Show Engine
+Name[da]=Motor til Nepomuk tv-serie
 Name[nl]=Engine van nepomuk tv-shows
 Name[pl]=Silnik programów telewizyjnych Nepomuk
 Name[pt]=Motor de Programas de TV do Nepomuk
@@ -8,6 +9,7 @@ Name[sv]=Nepomuk tv-programgränssnitt
 Name[uk]=Рушій телепередач Nepomuk
 Name[x-test]=xxNepomuk TV Show Enginexx
 Comment=An engine which provides information about upcoming TV show episodes
+Comment[da]=En motor som giver information om kommende afsnit af tv-serier
 Comment[nl]=Een engine die informatie levert over aankomende afleveringen van tv-shows
 Comment[pl]=Silnik, który dostarcza informacji o nadchodzących odcinkach seriali telewizyjnych
 Comment[pt]=Um motor que fornece informações acerca dos próximos episódios de programas de TV

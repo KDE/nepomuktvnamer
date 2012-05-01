@@ -5,6 +5,7 @@ MimeType=video/*;inode/directory;
 Actions=tvnamer;
 X-KDE-Submenu=Desktop Search
 X-KDE-Submenu[cs]=Vyhledávací služby
+X-KDE-Submenu[da]=Skrivebordssøgning
 X-KDE-Submenu[de]=Desktopsuche
 X-KDE-Submenu[es]=Búsqueda de escritorio
 X-KDE-Submenu[nds]=Schriefdischsöök
@@ -20,6 +21,7 @@ Icon=nepomuk
 
 [Desktop Action tvnamer]
 Name=Lookup TV Shows on thetvdb.com
+Name[da]=Slå tv-serier op på thetvdb.com
 Name[es]=Buscar series de TV en thevdb.com
 Name[nl]=Tv-shows op thetvdb.com opzoeken
 Name[pl]=Znajdź programy telewizyjny na thetvdb.com
