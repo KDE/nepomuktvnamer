@@ -1,6 +1,7 @@
 [Desktop Entry]
 Comment=Plasmoid showing upcoming TV show releases
 Comment[da]=Plasmoid som viser kommende udsendelser af tv-serier
+Comment[et]=Eesseisvaid telesarjade osi näitav plasmoid
 Comment[nl]=Plasmoid voor het tonen van aankomende tv-shows
 Comment[pl]=Plazmoid pokazujący nadchodzące wydania programów telewizyjnych
 Comment[pt]=Um plasmóide que mostra os próximos lançamentos de programas de TV
@@ -12,6 +13,7 @@ Encoding=UTF-8
 Keywords=
 Name=Nepomuk TV Shows
 Name[da]=Nepomuk tv-serier
+Name[et]=Nepomuki telesarjad
 Name[nl]=Nepomuk tv-shows
 Name[pl]=Programy telewizyjne Nepomuk
 Name[pt]=Programas de TV do Nepomuk
