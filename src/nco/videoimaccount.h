@@ -8,11 +8,11 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
 #include "nco/audioimaccount.h"
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NCO {
 /**
  * Deprecated in favour of nco:imCapabilityVideo. 

@@ -8,14 +8,14 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NCO {
 /**
  * Capabilities of a cetain IMAccount. 
  */
-class IMCapability : public virtual Nepomuk::SimpleResource
+class IMCapability : public virtual Nepomuk2::SimpleResource
 {
 public:
     IMCapability(const QUrl& uri = QUrl())

@@ -8,11 +8,11 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
 #include "nco/phonenumber.h"
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NCO {
 /**
  * A number that can accept textual messages. 

@@ -26,11 +26,11 @@
 #include <Soprano/QueryResultIterator>
 #include <Soprano/Node>
 
-#include <Nepomuk/Resource>
-#include <Nepomuk/ResourceManager>
-#include <nepomuk/resourcewatcher.h>
+#include <Nepomuk2/Resource>
+#include <Nepomuk2/ResourceManager>
+#include <nepomuk2/resourcewatcher.h>
 
-#include <Nepomuk/Vocabulary/NMM>
+#include <Nepomuk2/Vocabulary/NMM>
 
 #include <tvdb/client.h>
 #include <tvdb/series.h>
@@ -44,7 +44,7 @@
 
 #include <KLocale>
 
-using namespace Nepomuk::Vocabulary;
+using namespace Nepomuk2::Vocabulary;
 
 
 NepomukTVShowEngine::NepomukTVShowEngine(QObject *parent, const QVariantList& args)
@@ -55,12 +55,12 @@ NepomukTVShowEngine::NepomukTVShowEngine(QObject *parent, const QVariantList& ar
 void NepomukTVShowEngine::init()
 {
     // set up the watcher for newly created TV Shows
-    Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
+    Nepomuk2::ResourceWatcher* watcher = new Nepomuk2::ResourceWatcher(this);
     watcher->addType(NMM::TVShow());
-    connect(watcher, SIGNAL(resourceCreated(Nepomuk::Resource,QList<QUrl>)),
-            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
-    connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk::Resource,Nepomuk::Types::Class)),
-            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
+    connect(watcher, SIGNAL(resourceCreated(Nepomuk2::Resource,QList<QUrl>)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk2::Resource)));
+    connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk2::Resource,Nepomuk2::Types::Class)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk2::Resource)));
     watcher->start();
 
     // set up the timer which will update the release grouping every 24 hours
@@ -70,7 +70,7 @@ void NepomukTVShowEngine::init()
     m_releaseGroupingTimer->start(QTime::currentTime().secsTo(QTime(23, 59, 59, 999))*1000);
 
     // update sources after a Nepomuk restart
-    connect(Nepomuk::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
+    connect(Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
             this, SLOT(updateSources()));
 }
 
@@ -79,7 +79,7 @@ QStringList NepomukTVShowEngine::sources() const
     // fetch all available series
     QStringList titles;
     Soprano::QueryResultIterator it
-            = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?t where { ?r a nmm:TVSeries ; nie:title ?t . }"),
+            = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?t where { ?r a nmm:TVSeries ; nie:title ?t . }"),
                                                                               Soprano::Query::QueryLanguageSparql);
     while(it.next()) {
         titles << it["t"].toString();
@@ -134,11 +134,11 @@ void NepomukTVShowEngine::slotMultipleSeriesResultsFound(const QList<Tvdb::Serie
     sender()->deleteLater();
 }
 
-void NepomukTVShowEngine::slotTVShowResourceCreated(const Nepomuk::Resource &res)
+void NepomukTVShowEngine::slotTVShowResourceCreated(const Nepomuk2::Resource &res)
 {
     // check the series to see if we have a to update the next episode
     Soprano::QueryResultIterator it
-            = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?t where { "
+            = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?t where { "
                                                                                                   "%1 nmm:series [ a nmm:TVSeries ; nie:title ?t ] } LIMIT 1")
                                                                               .arg(Soprano::Node::resourceToN3(res.resourceUri())),
                                                                               Soprano::Query::QueryLanguageSparql);
@@ -179,7 +179,7 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
 
     // get the latest episode we have
     Soprano::QueryResultIterator it
-            = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select max(1000*?sn + ?en) as ?last where { "
+            = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select max(1000*?sn + ?en) as ?last where { "
                                                                                                   "?e nmm:series [ a nmm:TVSeries ; nie:title %1 ] ; "
                                                                                                   "nmm:episodeNumber ?en ; "
                                                                                                   "nmm:season ?sn . }")
@@ -214,7 +214,7 @@ void NepomukTVShowEngine::updateSeries(const QString &name)
 
         // get a depiction in case we do not already have one. We prefere the wide banners
         if(!query(name).contains(i18n("Depiction"))) {
-            it = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
+            it = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
                                                                                                      "?r a nmm:TVSeries ; "
                                                                                                      "nie:title %1 ; "
                                                                                                      "nfo:depiction [ "

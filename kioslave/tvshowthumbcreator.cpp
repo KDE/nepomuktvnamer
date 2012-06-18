@@ -21,10 +21,10 @@
 
 #include "tvshowthumbcreator.h"
 
-#include <Nepomuk/ResourceManager>
-#include <Nepomuk/Vocabulary/NFO>
-#include <Nepomuk/Vocabulary/NMM>
-#include <Nepomuk/Vocabulary/NIE>
+#include <Nepomuk2/ResourceManager>
+#include <Nepomuk2/Vocabulary/NFO>
+#include <Nepomuk2/Vocabulary/NMM>
+#include <Nepomuk2/Vocabulary/NIE>
 
 #include <Soprano/QueryResultIterator>
 #include <Soprano/Node>
@@ -57,7 +57,7 @@ bool TVShowThumbCreator::create(const QString &path, int width, int height, QIma
         // we query the depiction which has the best aspect ratio: the rough heuristic is an image which is higher than it is wide
         const QString seriesName = pathTokens[0];
         Soprano::QueryResultIterator it
-                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
+                = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
                                                                                                       "?r a nmm:TVSeries ; "
                                                                                                       "nie:title %1 ; "
                                                                                                       "nfo:depiction ?d . "
@@ -78,7 +78,7 @@ bool TVShowThumbCreator::create(const QString &path, int width, int height, QIma
         const QString seriesName = pathTokens[0];
         const int season = pathTokens[1].mid(pathTokens[1].lastIndexOf(' ')+1).toInt();
         Soprano::QueryResultIterator it
-                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
+                = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
                                                                                                       "?r a nmm:TVSeries ; "
                                                                                                       "nie:title %1 . "
                                                                                                       "?r nmm:hasSeason ?s . "

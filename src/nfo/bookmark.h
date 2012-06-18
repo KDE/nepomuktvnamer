@@ -8,11 +8,11 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
 #include "nie/informationelement.h"
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NFO {
 /**
  * A bookmark of a webbrowser. Use nie:title for the name/label, 

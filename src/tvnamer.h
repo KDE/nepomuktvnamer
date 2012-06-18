@@ -31,7 +31,7 @@
 
 #include <tvdb/series.h>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
 class KJob;
 namespace Tvdb {
@@ -65,7 +65,7 @@ private:
      */
     bool checkSeries(const Tvdb::Series& series) const;
 
-    Nepomuk::SimpleResource createNepomukResource(const KUrl& url, int season, int episode, const Tvdb::Series& series);
+    Nepomuk2::SimpleResource createNepomukResource(const KUrl& url, int season, int episode, const Tvdb::Series& series);
 
     /**
      * Adds the banner folder to the indexer config.

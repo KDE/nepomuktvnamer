@@ -8,11 +8,11 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
 #include "nfo/filedataobject.h"
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NFO {
 /**
  * A local file data object which is stored on a local file system. 

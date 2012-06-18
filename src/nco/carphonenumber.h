@@ -8,11 +8,11 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
 #include "nco/voicephonenumber.h"
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NCO {
 /**
  * A car phone number. Inspired by the (TYPE=car) parameter of 

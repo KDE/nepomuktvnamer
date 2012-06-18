@@ -8,14 +8,14 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NCO {
 /**
  * Gender. Instances of this class may include male and female. 
  */
-class Gender : public virtual Nepomuk::SimpleResource
+class Gender : public virtual Nepomuk2::SimpleResource
 {
 public:
     Gender(const QUrl& uri = QUrl())

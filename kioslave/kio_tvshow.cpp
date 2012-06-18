@@ -20,15 +20,15 @@
 
 #include "kio_tvshow.h"
 
-#include <Nepomuk/ResourceManager>
-#include <Nepomuk/Vocabulary/NMM>
-#include <Nepomuk/Vocabulary/NIE>
-#include <Nepomuk/Vocabulary/NFO>
-#include <Nepomuk/Query/FileQuery>
-#include <Nepomuk/Query/ComparisonTerm>
-#include <Nepomuk/Query/ResourceTypeTerm>
-#include <Nepomuk/Query/LiteralTerm>
-#include <Nepomuk/Query/AndTerm>
+#include <Nepomuk2/ResourceManager>
+#include <Nepomuk2/Vocabulary/NMM>
+#include <Nepomuk2/Vocabulary/NIE>
+#include <Nepomuk2/Vocabulary/NFO>
+#include <Nepomuk2/Query/FileQuery>
+#include <Nepomuk2/Query/ComparisonTerm>
+#include <Nepomuk2/Query/ResourceTypeTerm>
+#include <Nepomuk2/Query/LiteralTerm>
+#include <Nepomuk2/Query/AndTerm>
 
 #include <KUrl>
 #include <kio/global.h>
@@ -50,7 +50,7 @@
 #include <QStringList>
 
 using namespace KIO;
-using namespace Nepomuk::Vocabulary;
+using namespace Nepomuk2::Vocabulary;
 using namespace Soprano::Vocabulary;
 
 
@@ -102,7 +102,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
     if(url.path().length() <= 1) {
         // list all tv shows including title, description, and an optional depiction (for now we simply take one of them)
         Soprano::QueryResultIterator it
-                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?r ?t ?d where { "
+                = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?r ?t ?d where { "
                                                                                                       "?r a %1 . "
                                                                                                       "?r %2 ?t . "
                                                                                                       "?r %3 ?d . "
@@ -140,7 +140,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
             // query the min episode which does not have any watched episode after it
             // TODO: find a way to also query the episode at the same time
             Soprano::QueryResultIterator it
-                    = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QLatin1String("select ?st ?series min(1000*?s+?e) as ?x where { "
+                    = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QLatin1String("select ?st ?series min(1000*?s+?e) as ?x where { "
                                                                                                     "?r a nmm:TVShow ; "
                                                                                                     "nmm:episodeNumber ?e ; "
                                                                                                     "nmm:season ?s ; "
@@ -162,7 +162,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
                 const int seasonNum = it["x"].literal().toInt() / 1000;
                 const int episodeNum = it["x"].literal().toInt() % 1000;
                 Soprano::QueryResultIterator it2
-                        = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?r ?url ?t where { "
+                        = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?r ?url ?t where { "
                                                                                                               "?r a nmm:TVShow ; "
                                                                                                               "nie:url ?url ; "
                                                                                                               "nie:title ?t ; "
@@ -202,7 +202,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
         if(pathTokens.count() == 1) {
             // list one TV Series: list seasons
             Soprano::QueryResultIterator it
-                    = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?s where { "
+                    = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct ?s where { "
                                                                                                           "?r nmm:series ?tv . "
                                                                                                           "?tv nie:title %1 . "
                                                                                                           "?r nmm:season ?s . "
@@ -225,7 +225,7 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
             const QString seriesTitle = pathTokens[0];
             const int season = pathTokens[1].mid(pathTokens[1].lastIndexOf(' ')+1).toInt();
             Soprano::QueryResultIterator it
-                    = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct * where { "
+                    = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct * where { "
                                                                                                           "?r a nmm:TVShow ; "
                                                                                                           "nmm:season %1 ; "
                                                                                                           "nmm:series [ nie:title %2 ] ; "
@@ -333,7 +333,7 @@ void Nepomuk::TvshowProtocol::stat( const KUrl& url )
     else if(pathTokens.count() == 1) {
         // stat series folder
         Soprano::QueryResultIterator it
-                = Nepomuk::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct * where { "
+                = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select distinct * where { "
                                                                                                       "?r a nmm:TVSeries ; "
                                                                                                       "nie:title %1 ; "
                                                                                                       "nao:created ?cd ; "

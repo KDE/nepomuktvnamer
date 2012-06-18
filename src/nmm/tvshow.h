@@ -8,11 +8,11 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
 #include "nfo/video.h"
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NMM {
 /**
  * A TV Show 

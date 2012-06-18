@@ -15,7 +15,6 @@ set(SDO_MIN_VERSION "0.8.53")
 find_package(SharedDesktopOntologies)
 
 include(KDE4Defaults)
-include(SopranoAddOntology)
 
 include_directories(
   ${QT_INCLUDES}
