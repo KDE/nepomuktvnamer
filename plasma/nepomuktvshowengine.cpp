@@ -28,7 +28,7 @@
 
 #include <Nepomuk2/Resource>
 #include <Nepomuk2/ResourceManager>
-#include <nepomuk2/resourcewatcher.h>
+#include <Nepomuk2/ResourceWatcher>
 
 #include <Nepomuk2/Vocabulary/NMM>
 
