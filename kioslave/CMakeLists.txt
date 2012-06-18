@@ -6,15 +6,14 @@ set(kio_tvshow_PART_SRCS
 kde4_add_plugin(kio_tvshow ${kio_tvshow_PART_SRCS})
 target_link_libraries(kio_tvshow
   ${KDE4_KIO_LIBS}
-  ${NEPOMUK_LIBRARIES}
-  ${NEPOMUK_QUERY_LIBRARIES}
+  ${NEPOMUK_CORE_LIBRARY}
   ${SOPRANO_LIBRARIES}
 )
 
 kde4_add_plugin(nepomuktvshowthumbnail tvshowthumbcreator.cpp)
 target_link_libraries(nepomuktvshowthumbnail
   ${KDE4_KIO_LIBS}
-  ${NEPOMUK_LIBRARIES}
+  ${NEPOMUK_CORE_LIBRARY}
   ${SOPRANO_LIBRARIES})
 
 install(TARGETS kio_tvshow nepomuktvshowthumbnail DESTINATION ${PLUGIN_INSTALL_DIR})
