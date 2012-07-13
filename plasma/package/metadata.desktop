@@ -2,6 +2,7 @@
 Comment=Plasmoid showing upcoming TV show releases
 Comment[da]=Plasmoid som viser kommende udsendelser af tv-serier
 Comment[et]=Eesseisvaid telesarjade osi näitav plasmoid
+Comment[fr]=Composant graphique affichant les prochaines émissions de télévision
 Comment[km]=Plasmoid បង្ហាញ​ការ​ចេញ​ផ្សាយ​ទូរទស្សន៍​ដែល​នឹង​ចេញ​មក​ឆាប់ៗ
 Comment[nl]=Plasmoid voor het tonen van aankomende tv-shows
 Comment[pl]=Plazmoid pokazujący nadchodzące wydania programów telewizyjnych
@@ -15,6 +16,7 @@ Keywords=
 Name=Nepomuk TV Shows
 Name[da]=Nepomuk tv-serier
 Name[et]=Nepomuki telesarjad
+Name[fr]=Émissions télévisées sous Nepomuk
 Name[km]=ការ​បង្ហាញ​ទូរទស្សន៍​របស់ Nepomuk
 Name[nl]=Nepomuk tv-shows
 Name[pl]=Programy telewizyjne Nepomuk
