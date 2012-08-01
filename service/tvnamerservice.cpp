@@ -21,11 +21,11 @@
 
 #include "tvnamerservice.h"
 
-#include <nepomuk/resourcewatcher.h>
-#include <Nepomuk/Vocabulary/NFO>
-#include <Nepomuk/Vocabulary/NMM>
-#include <Nepomuk/Vocabulary/NUAO>
-#include <Nepomuk/File>
+#include <Nepomuk2/ResourceWatcher>
+#include <Nepomuk2/Vocabulary/NFO>
+#include <Nepomuk2/Vocabulary/NMM>
+#include <Nepomuk2/Vocabulary/NUAO>
+#include <Nepomuk2/File>
 
 #include <Soprano/Model>
 #include <Soprano/QueryResultIterator>
@@ -38,33 +38,33 @@
 #include <KDebug>
 #include <KDirNotify>
 
-using namespace Nepomuk::Vocabulary;
+using namespace Nepomuk2::Vocabulary;
 
 TVNamerService::TVNamerService(QObject *parent, const QVariantList &)
-    : Nepomuk::Service(parent)
+    : Nepomuk2::Service(parent)
 {
     // set up the watcher for newly created nfo:Video resources
-    Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
+    Nepomuk2::ResourceWatcher* watcher = new Nepomuk2::ResourceWatcher(this);
     watcher->addType(NFO::Video());
-    connect(watcher, SIGNAL(resourceCreated(Nepomuk::Resource,QList<QUrl>)),
-            this, SLOT(slotVideoResourceCreated(Nepomuk::Resource,QList<QUrl>)));
+    connect(watcher, SIGNAL(resourceCreated(Nepomuk2::Resource,QList<QUrl>)),
+            this, SLOT(slotVideoResourceCreated(Nepomuk2::Resource,QList<QUrl>)));
     watcher->start();
 
     // set up the watcher for newly created TV Shows
-    watcher = new Nepomuk::ResourceWatcher(this);
+    watcher = new Nepomuk2::ResourceWatcher(this);
     watcher->addType(NMM::TVShow());
-    connect(watcher, SIGNAL(resourceCreated(Nepomuk::Resource,QList<QUrl>)),
-            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
-    connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk::Resource,Nepomuk::Types::Class)),
-            this, SLOT(slotTVShowResourceCreated(Nepomuk::Resource)));
+    connect(watcher, SIGNAL(resourceCreated(Nepomuk2::Resource,QList<QUrl>)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk2::Resource)));
+    connect(watcher, SIGNAL(resourceTypeAdded(Nepomuk2::Resource,Nepomuk2::Types::Class)),
+            this, SLOT(slotTVShowResourceCreated(Nepomuk2::Resource)));
     watcher->start();
 
     // set up the watcher for watched TV Shows
-    watcher = new Nepomuk::ResourceWatcher(this);
+    watcher = new Nepomuk2::ResourceWatcher(this);
     watcher->addType(NMM::TVShow());
     watcher->addProperty(NUAO::usageCount());
-    connect(watcher, SIGNAL(propertyAdded(Nepomuk::Resource,Nepomuk::Types::Property,QVariant)),
-            this, SLOT(slotTVShowUsageCountChanged(Nepomuk::Resource)));
+    connect(watcher, SIGNAL(propertyAdded(Nepomuk2::Resource,Nepomuk2::Types::Property,QVariant)),
+            this, SLOT(slotTVShowUsageCountChanged(Nepomuk2::Resource)));
     watcher->start();
 }
 
@@ -72,7 +72,7 @@ TVNamerService::~TVNamerService()
 {
 }
 
-void TVNamerService::slotVideoResourceCreated(const Nepomuk::Resource &res, const QList<QUrl> &types)
+void TVNamerService::slotVideoResourceCreated(const Nepomuk2::Resource &res, const QList<QUrl> &types)
 {
     // all we need to do is call the nepomuktvnamer executable on the newly created file
     if(res.isFile()) {
@@ -84,15 +84,15 @@ void TVNamerService::slotVideoResourceCreated(const Nepomuk::Resource &res, cons
     }
 }
 
-void TVNamerService::slotTVShowResourceCreated(const Nepomuk::Resource &res)
+void TVNamerService::slotTVShowResourceCreated(const Nepomuk2::Resource &res)
 {
-    kDebug() << res.resourceUri();
+    kDebug() << res.uri();
     // inform KIO about the change
     Soprano::QueryResultIterator it = mainModel()->executeQuery(QString::fromLatin1("select ?s ?t where { "
                                                                                     "%1 nmm:series [ nie:title ?t ] ; "
                                                                                     "nmm:isPartOfSeason [ nmm:seasonNumber ?s ] "
                                                                                     "} LIMIT 1")
-                                                                .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                                                .arg(Soprano::Node::resourceToN3(res.uri())),
                                                                 Soprano::Query::QueryLanguageSparql);
     if(it.next()) {
         kDebug() << QString::fromLatin1("tvshow:/%1/%1 - Season %2")
@@ -104,7 +104,7 @@ void TVNamerService::slotTVShowResourceCreated(const Nepomuk::Resource &res)
     }
 }
 
-void TVNamerService::slotTVShowUsageCountChanged(const Nepomuk::Resource &res)
+void TVNamerService::slotTVShowUsageCountChanged(const Nepomuk2::Resource &res)
 {
     // fetch the changed show's details and tell KIO to remove it in any case
     Soprano::QueryResultIterator it
@@ -113,7 +113,7 @@ void TVNamerService::slotTVShowUsageCountChanged(const Nepomuk::Resource &res)
                                                             "nmm:season ?s ; "
                                                             "nmm:series [ a nmm:TVSeries ; nie:title ?st ] ; "
                                                             "nie:title ?t . } LIMIT 1")
-                                        .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                        .arg(Soprano::Node::resourceToN3(res.uri())),
                                         Soprano::Query::QueryLanguageSparql);
     if(it.next()) {
         const QString title = i18n("Next episode of %1: %2x%3 - %4",

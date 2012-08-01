@@ -22,14 +22,14 @@
 #ifndef TVNAMERSERVICE_H
 #define TVNAMERSERVICE_H
 
-#include <Nepomuk/Service>
-#include <Nepomuk/Resource>
+#include <Nepomuk2/Service>
+#include <Nepomuk2/Resource>
 
 #include <QtCore/QList>
 #include <QtCore/QUrl>
 
 
-class TVNamerService : public Nepomuk::Service
+class TVNamerService : public Nepomuk2::Service
 {
     Q_OBJECT
 
@@ -38,9 +38,9 @@ public:
     ~TVNamerService();
 
 private Q_SLOTS:
-    void slotVideoResourceCreated(const Nepomuk::Resource& res, const QList<QUrl>& types);
-    void slotTVShowResourceCreated(const Nepomuk::Resource& res);
-    void slotTVShowUsageCountChanged(const Nepomuk::Resource& res);
+    void slotVideoResourceCreated(const Nepomuk2::Resource& res, const QList<QUrl>& types);
+    void slotTVShowResourceCreated(const Nepomuk2::Resource& res);
+    void slotTVShowUsageCountChanged(const Nepomuk2::Resource& res);
 };
 
 #endif // TVNAMERSERVICE_H

@@ -18,10 +18,7 @@ target_link_libraries(nepomuktvnamer
   ${KDE4_KIO_LIBS}
   ${SOPRANO_LIBRARIES}
   ${LIBTVDB_LIBRARIES}
-  ${NEPOMUK_LIBRARIES}
-  ${NEPOMUK_QUERY_LIBRARIES}
-  nepomukdatamanagement
-  #nepomukcore
+  ${NEPOMUK_CORE_LIBRARY}
 )
 
 install(TARGETS nepomuktvnamer ${INSTALL_TARGETS_DEFAULT_ARGS})

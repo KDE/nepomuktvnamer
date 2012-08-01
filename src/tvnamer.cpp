@@ -51,11 +51,11 @@
 #include <KConfigGroup>
 #include <KMimeType>
 
-#include <Nepomuk/Vocabulary/NMM>
-#include <nepomuk/simpleresource.h>
-#include <nepomuk/simpleresourcegraph.h>
-#include <nepomuk/datamanagement.h>
-#include <nepomuk/storeresourcesjob.h>
+#include <Nepomuk2/Vocabulary/NMM>
+#include <nepomuk2/simpleresource.h>
+#include <nepomuk2/simpleresourcegraph.h>
+#include <nepomuk2/datamanagement.h>
+#include <nepomuk2/storeresourcesjob.h>
 
 #include <Soprano/Vocabulary/RDFS>
 #include <Soprano/Vocabulary/NAO>
@@ -206,9 +206,9 @@ void TVNamer::decideFinalSeries()
     lookupSeries();
 }
 
-Nepomuk::SimpleResource TVNamer::createNepomukResource(const KUrl& url, int season, int episode, const Tvdb::Series &series)
+Nepomuk2::SimpleResource TVNamer::createNepomukResource(const KUrl& url, int season, int episode, const Tvdb::Series &series)
 {
-    Nepomuk::NMM::TVShow episodeRes(url);
+    Nepomuk2::NMM::TVShow episodeRes(url);
     episodeRes.setEpisodeNumber(episode);
     episodeRes.setSeason(season);
     episodeRes.setTitle(series[season][episode].name());
@@ -296,15 +296,15 @@ void TVNamer::saveToNepomuk()
             return;
         }
 
-        Nepomuk::SimpleResourceGraph graph;
+        Nepomuk2::SimpleResourceGraph graph;
 
         // get all the series information
-        Nepomuk::NMM::TVSeries seriesRes;
+        Nepomuk2::NMM::TVSeries seriesRes;
         seriesRes.setTitle(series.name());
         seriesRes.addDescription(series.overview());
         if(!series.imdbId().isEmpty()) {
             // TODO: this is not nice: the DMS does not allow to simply use an http URL as object
-            Nepomuk::NFO::WebDataObject imdbRes(series.imdbUrl());
+            Nepomuk2::NFO::WebDataObject imdbRes(series.imdbUrl());
             seriesRes.addProperty(RDFS::seeAlso(), imdbRes.uri());
             graph << imdbRes;
         }
@@ -316,7 +316,7 @@ void TVNamer::saveToNepomuk()
                     banner.language() == KGlobal::locale()->language())) {
                     const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
                     if(!localUrl.isEmpty()) {
-                        Nepomuk::NFO::Image banner(localUrl);
+                        Nepomuk2::NFO::Image banner(localUrl);
                         seriesRes.addDepiction(banner.uri());
                         graph << banner;
                         break;
@@ -326,16 +326,16 @@ void TVNamer::saveToNepomuk()
         }
 
         // create all the regular actor resources which we will add to all episodes
-        QList<Nepomuk::NCO::Contact> regularActors;
+        QList<Nepomuk2::NCO::Contact> regularActors;
         foreach(const QString& actor, series.actors()) {
-            Nepomuk::NCO::Contact contact;
+            Nepomuk2::NCO::Contact contact;
             contact.setFullname(actor);
             regularActors << contact;
             graph << contact;
         }
 
         // the seasons we store
-        QHash<int, Nepomuk::NMM::TVSeason> seasons;
+        QHash<int, Nepomuk2::NMM::TVSeason> seasons;
 
         // add all the episodes to the graph
         for(QHash<QString, TVShowFilenameAnalyzer::AnalysisResult>::const_iterator it = files.constBegin();
@@ -343,11 +343,11 @@ void TVNamer::saveToNepomuk()
             const Tvdb::Episode episode = series[it.value().season][it.value().episode];
 
             // create the basic episode
-            Nepomuk::NMM::TVShow episodeRes = createNepomukResource(QUrl::fromLocalFile(it.key()), it.value().season, it.value().episode, series);
+            Nepomuk2::NMM::TVShow episodeRes = createNepomukResource(QUrl::fromLocalFile(it.key()), it.value().season, it.value().episode, series);
 
             // add the season
             if(!seasons.contains(it.value().season)) {
-                Nepomuk::NMM::TVSeason seasonRes;
+                Nepomuk2::NMM::TVSeason seasonRes;
                 seasonRes.setSeasonNumber(it.value().season);
                 seasonRes.setSeasonOf(seriesRes.uri());
                 seriesRes.addSeason(seasonRes.uri());
@@ -357,7 +357,7 @@ void TVNamer::saveToNepomuk()
                        banner.language() == KGlobal::locale()->language()) {
                         const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
                         if(!localUrl.isEmpty()) {
-                            Nepomuk::NFO::Image banner(localUrl);
+                            Nepomuk2::NFO::Image banner(localUrl);
                             seasonRes.addDepiction(banner.uri());
                             graph << banner;
                             break;
@@ -374,26 +374,26 @@ void TVNamer::saveToNepomuk()
             episodeRes.addProperty(NAO::hasSubResource(), seasons[it.value().season].uri());
 
             // add all the actors
-            foreach(const Nepomuk::NCO::Contact& actor, regularActors) {
+            foreach(const Nepomuk2::NCO::Contact& actor, regularActors) {
                 episodeRes.addActor(actor.uri());
                 episodeRes.addProperty(NAO::hasSubResource(), actor.uri());
             }
             // add the guest stars
             foreach(const QString& guestStar, episode.guestStars()) {
-                Nepomuk::NCO::Contact contact;
+                Nepomuk2::NCO::Contact contact;
                 contact.setFullname(guestStar);
                 episodeRes.addActor(contact.uri());
                 episodeRes.addProperty(NAO::hasSubResource(), contact.uri());
                 graph << contact;
             }
             if(!episode.director().isEmpty()) {
-                Nepomuk::NCO::Contact contact;
+                Nepomuk2::NCO::Contact contact;
                 contact.setFullname(episode.director());
                 graph << contact;
                 episodeRes.addDirector(contact.uri());
             }
             foreach(const QString& writer, episode.writers()) {
-                Nepomuk::NCO::Contact contact;
+                Nepomuk2::NCO::Contact contact;
                 contact.setFullname(writer);
                 graph << contact;
                 episodeRes.addWriter(contact.uri());
@@ -405,14 +405,14 @@ void TVNamer::saveToNepomuk()
         }
 
         // add the seasons to the graph
-        foreach(const Nepomuk::NMM::TVSeason& season, seasons.values()) {
+        foreach(const Nepomuk2::NMM::TVSeason& season, seasons.values()) {
             graph << season;
         }
 
         // add the series to the graph (after the episodes)
         graph << seriesRes;
 
-        connect(Nepomuk::storeResources(graph, Nepomuk::IdentifyNew, Nepomuk::OverwriteProperties), SIGNAL(result(KJob*)),
+        connect(Nepomuk2::storeResources(graph, Nepomuk2::IdentifyNew, Nepomuk2::OverwriteProperties), SIGNAL(result(KJob*)),
                 this, SLOT(slotSaveToNepomukDone(KJob*)));
     }
     else {

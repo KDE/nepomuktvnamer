@@ -29,7 +29,7 @@
 #include <tvdb/series.h>
 
 class QTimer;
-namespace Nepomuk {
+namespace Nepomuk2 {
     class Resource;
 }
 
@@ -53,7 +53,7 @@ protected:
 private slots:
     void slotFinishedSeriesLookup( const Tvdb::Series& series );
     void slotMultipleSeriesResultsFound( const QList<Tvdb::Series>& series );
-    void slotTVShowResourceCreated(const Nepomuk::Resource& res);
+    void slotTVShowResourceCreated(const Nepomuk2::Resource& res);
     void updateAllReleaseGroupings();
     void updateSources();
 

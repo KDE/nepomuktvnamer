@@ -8,14 +8,14 @@
 #include <QtCore/QTime>
 #include <QtCore/QDateTime>
 
-#include <nepomuk/simpleresource.h>
+#include <nepomuk2/simpleresource.h>
 
-namespace Nepomuk {
+namespace Nepomuk2 {
 namespace NMM {
 /**
  * A season of a TV Show 
  */
-class TVSeason : public virtual Nepomuk::SimpleResource
+class TVSeason : public virtual Nepomuk2::SimpleResource
 {
 public:
     TVSeason(const QUrl& uri = QUrl())
