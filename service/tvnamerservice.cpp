@@ -86,13 +86,13 @@ void TVNamerService::slotVideoResourceCreated(const Nepomuk2::Resource &res, con
 
 void TVNamerService::slotTVShowResourceCreated(const Nepomuk2::Resource &res)
 {
-    kDebug() << res.resourceUri();
+    kDebug() << res.uri();
     // inform KIO about the change
     Soprano::QueryResultIterator it = mainModel()->executeQuery(QString::fromLatin1("select ?s ?t where { "
                                                                                     "%1 nmm:series [ nie:title ?t ] ; "
                                                                                     "nmm:isPartOfSeason [ nmm:seasonNumber ?s ] "
                                                                                     "} LIMIT 1")
-                                                                .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                                                .arg(Soprano::Node::resourceToN3(res.uri())),
                                                                 Soprano::Query::QueryLanguageSparql);
     if(it.next()) {
         kDebug() << QString::fromLatin1("tvshow:/%1/%1 - Season %2")
@@ -113,7 +113,7 @@ void TVNamerService::slotTVShowUsageCountChanged(const Nepomuk2::Resource &res)
                                                             "nmm:season ?s ; "
                                                             "nmm:series [ a nmm:TVSeries ; nie:title ?st ] ; "
                                                             "nie:title ?t . } LIMIT 1")
-                                        .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                        .arg(Soprano::Node::resourceToN3(res.uri())),
                                         Soprano::Query::QueryLanguageSparql);
     if(it.next()) {
         const QString title = i18n("Next episode of %1: %2x%3 - %4",

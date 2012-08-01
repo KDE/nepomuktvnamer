@@ -140,7 +140,7 @@ void NepomukTVShowEngine::slotTVShowResourceCreated(const Nepomuk2::Resource &re
     Soprano::QueryResultIterator it
             = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?t where { "
                                                                                                   "%1 nmm:series [ a nmm:TVSeries ; nie:title ?t ] } LIMIT 1")
-                                                                              .arg(Soprano::Node::resourceToN3(res.resourceUri())),
+                                                                              .arg(Soprano::Node::resourceToN3(res.uri())),
                                                                               Soprano::Query::QueryLanguageSparql);
     if(it.next()) {
         const QString name = it["t"].toString();
