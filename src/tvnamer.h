@@ -85,6 +85,8 @@ private:
     QHash<QString, Tvdb::Series> m_nameSeriesHash;
 
     QString m_currentlyLookedUpSeriesName;
+    QString m_currentlyLookedUpSeriesNormalizedName;
+    QString m_currentlyLookedUpSeriesYear;
 
     // the url we are looking up
     KUrl m_url;

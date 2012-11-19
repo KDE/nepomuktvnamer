@@ -150,6 +150,18 @@ void TVNamer::slotMultipleResultsFound(const QList<Tvdb::Series> &series)
 bool TVNamer::checkSeries(const Tvdb::Series &series) const
 {
     //
+    // We check if the year number matches
+    //
+    if(!m_currentlyLookedUpSeriesYear.isEmpty()) {
+        bool ok = false;
+        if(series.firstAired().year() != m_currentlyLookedUpSeriesYear.toInt(&ok)) {
+            if(ok) {
+                return false;
+            }
+        }
+    }
+
+    //
     // We check the series' episode numbers for all the files we look up
     //
     const QHash<QString, TVShowFilenameAnalyzer::AnalysisResult>& files = m_fileNameResults[m_currentlyLookedUpSeriesName];
@@ -269,7 +281,15 @@ void TVNamer::lookupSeries()
         it != m_fileNameResults.constEnd(); ++it) {
         if(!m_nameSeriesHash.contains(it.key())) {
             m_currentlyLookedUpSeriesName = it.key();
-            m_client->getSeriesByName(it.key());
+            m_currentlyLookedUpSeriesNormalizedName = it.key();
+            m_currentlyLookedUpSeriesYear.clear();
+            QRegExp yearRx("(.*) ([\\(]?\\d\\d\\d\\d[\\)]?)");
+            if(yearRx.exactMatch(m_currentlyLookedUpSeriesNormalizedName)) {
+                m_currentlyLookedUpSeriesNormalizedName = yearRx.cap(1);
+                m_currentlyLookedUpSeriesYear = yearRx.cap(2);
+            }
+            kDebug() << m_currentlyLookedUpSeriesNormalizedName << m_currentlyLookedUpSeriesYear;
+            m_client->getSeriesByName(m_currentlyLookedUpSeriesNormalizedName);
             return;
         }
     }
