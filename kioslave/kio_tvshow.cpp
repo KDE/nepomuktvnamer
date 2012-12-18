@@ -17,6 +17,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "kio_tvshow.h"
 
@@ -85,18 +87,18 @@ namespace {
 }
 
 
-Nepomuk::TvshowProtocol::TvshowProtocol( const QByteArray& poolSocket, const QByteArray& appSocket )
+Nepomuk2::TvshowProtocol::TvshowProtocol( const QByteArray& poolSocket, const QByteArray& appSocket )
     : KIO::SlaveBase( "tvshow", poolSocket, appSocket )
 {
 }
 
 
-Nepomuk::TvshowProtocol::~TvshowProtocol()
+Nepomuk2::TvshowProtocol::~TvshowProtocol()
 {
 }
 
 
-void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
+void Nepomuk2::TvshowProtocol::listDir( const KUrl& url )
 {
     // root folder
     if(url.path().length() <= 1) {
@@ -262,20 +264,20 @@ void Nepomuk::TvshowProtocol::listDir( const KUrl& url )
 }
 
 
-void Nepomuk::TvshowProtocol::mkdir( const KUrl &url, int permissions )
+void Nepomuk2::TvshowProtocol::mkdir( const KUrl &url, int permissions )
 {
     Q_UNUSED(permissions);
     error( ERR_UNSUPPORTED_ACTION, url.prettyUrl() );
 }
 
 
-void Nepomuk::TvshowProtocol::get( const KUrl& url )
+void Nepomuk2::TvshowProtocol::get( const KUrl& url )
 {
     error( ERR_UNSUPPORTED_ACTION, url.prettyUrl() );
 }
 
 
-void Nepomuk::TvshowProtocol::put( const KUrl& url, int permissions, KIO::JobFlags flags )
+void Nepomuk2::TvshowProtocol::put( const KUrl& url, int permissions, KIO::JobFlags flags )
 {
     Q_UNUSED(permissions);
     Q_UNUSED(flags);
@@ -284,7 +286,7 @@ void Nepomuk::TvshowProtocol::put( const KUrl& url, int permissions, KIO::JobFla
 }
 
 
-void Nepomuk::TvshowProtocol::copy( const KUrl& src, const KUrl& dest, int permissions, KIO::JobFlags flags )
+void Nepomuk2::TvshowProtocol::copy( const KUrl& src, const KUrl& dest, int permissions, KIO::JobFlags flags )
 {
     Q_UNUSED(src);
     Q_UNUSED(dest);
@@ -295,7 +297,7 @@ void Nepomuk::TvshowProtocol::copy( const KUrl& src, const KUrl& dest, int permi
 }
 
 
-void Nepomuk::TvshowProtocol::rename( const KUrl& src, const KUrl& dest, KIO::JobFlags flags )
+void Nepomuk2::TvshowProtocol::rename( const KUrl& src, const KUrl& dest, KIO::JobFlags flags )
 {
     Q_UNUSED(src);
     Q_UNUSED(dest);
@@ -305,21 +307,21 @@ void Nepomuk::TvshowProtocol::rename( const KUrl& src, const KUrl& dest, KIO::Jo
 }
 
 
-void Nepomuk::TvshowProtocol::del( const KUrl& url, bool isfile )
+void Nepomuk2::TvshowProtocol::del( const KUrl& url, bool isfile )
 {
     Q_UNUSED(isfile);
     error( ERR_UNSUPPORTED_ACTION, url.prettyUrl() );
 }
 
 
-void Nepomuk::TvshowProtocol::mimetype( const KUrl& url )
+void Nepomuk2::TvshowProtocol::mimetype( const KUrl& url )
 {
     // FIXME
     error( ERR_UNSUPPORTED_ACTION, url.prettyUrl() );
 }
 
 
-void Nepomuk::TvshowProtocol::stat( const KUrl& url )
+void Nepomuk2::TvshowProtocol::stat( const KUrl& url )
 {
     // for basic functionality we only need to stat the folders
     const QStringList pathTokens = url.path().split('/', QString::SkipEmptyParts);
@@ -383,7 +385,7 @@ extern "C"
             exit(-1);
         }
 
-        Nepomuk::TvshowProtocol slave(argv[2], argv[3]);
+        Nepomuk2::TvshowProtocol slave(argv[2], argv[3]);
         slave.dispatchLoop();
 
         kDebug(7102) << "Tvshow slave Done";

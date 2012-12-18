@@ -25,7 +25,7 @@
 
 #include <QtCore/QDate>
 
-namespace Nepomuk {
+namespace Nepomuk2 {
     class TvshowProtocol : public KIO::SlaveBase
     {
     public:
