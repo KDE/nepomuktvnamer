@@ -4,6 +4,7 @@ X-KDE-ServiceTypes=NepomukService
 X-KDE-Library=nepomuktvnamerservice
 X-KDE-Nepomuk-autostart=true
 Name=Nepomuk TV Namer Service
+Name[bs]=Servis Nepomuka za TV imena
 Name[da]=Nepomuk tv-navngivningstjeneste
 Name[es]=Servicio de nombres de TV para Nepomuk
 Name[et]=Nepomuki telesarjade nimetaja teenus
