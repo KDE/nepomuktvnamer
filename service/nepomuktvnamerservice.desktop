@@ -22,6 +22,7 @@ Name[uk]=Служба іменування телепередач Nepomuk
 Name[x-test]=xxNepomuk TV Namer Servicexx
 Comment=Nepomuk Service which automatically fetches information about TV show episodes
 Comment[da]=Nepomuk-tjeneste som automatisk henter information om afsnit af tv-serier
+Comment[de]=Ein Nepomukdienst, der automatisch Informationen über Episoden von TV-Serien abholt
 Comment[es]=Servicio de Nepomu que obtiene información automáticamente sobre episodios de series de TV
 Comment[et]=Nepomuki teenus, mis tõmbab automaatselt teavet telesarjade osade kohta
 Comment[fr]=Service Nepomuk extrayant automatiquement des informations à propos des épisodes des émissions de TV
