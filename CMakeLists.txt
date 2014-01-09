@@ -21,6 +21,7 @@ include_directories(
   ${KDE4_INCLUDES}
   ${SOPRANO_INCLUDE_DIR}
   ${NEPOMUK_CORE_INCLUDE_DIR}
+  ${LIBTVDB_INCLUDE_DIR}
 )
 
 add_subdirectory(src)
