@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=NepomukCleaningJob
+X-KDE-Library=nepomuktvseriesduplicatescleaner
+Name=Nepomuk TVSeries Duplicates Merger
+Comment=Nepomuk Cleaning Job which merges duplicate TV Series resources

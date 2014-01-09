@@ -3,7 +3,7 @@ project(nepomuktvnamer)
 ##################  Nepomuktvnamer version  ################################
 set(CMAKE_NEPOMUKTVNAMER_VERSION_MAJOR 0)
 set(CMAKE_NEPOMUKTVNAMER_VERSION_MINOR 2)
-set(CMAKE_NEPOMUKTVNAMER_VERSION_RELEASE 53)
+set(CMAKE_NEPOMUKTVNAMER_VERSION_RELEASE 54)
 set(CMAKE_NEPOMUKTVNAMER_VERSION "${CMAKE_NEPOMUKTVNAMER_VERSION_MAJOR}.${CMAKE_NEPOMUKTVNAMER_VERSION_MINOR}.${CMAKE_NEPOMUKTVNAMER_VERSION_RELEASE}")
 
 
@@ -28,3 +28,4 @@ add_subdirectory(service)
 add_subdirectory(kioslave)
 add_subdirectory(tools)
 add_subdirectory(plasma)
+add_subdirectory(cleaner)
