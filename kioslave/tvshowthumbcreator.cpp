@@ -79,15 +79,14 @@ bool TVShowThumbCreator::create(const QString &path, int width, int height, QIma
         const int season = pathTokens[1].mid(pathTokens[1].lastIndexOf(' ')+1).toInt();
         Soprano::QueryResultIterator it
                 = Nepomuk2::ResourceManager::instance()->mainModel()->executeQuery(QString::fromLatin1("select ?u where { "
-                                                                                                      "?r a nmm:TVSeries ; "
-                                                                                                      "nie:title %1 . "
-                                                                                                      "?r nmm:hasSeason ?s . "
-                                                                                                      "?s nmm:seasonNumber %2 ; "
-                                                                                                      "nfo:depiction ?d . "
-                                                                                                      "?d nie:url ?u ; "
-                                                                                                      "nfo:height ?h ; "
-                                                                                                      "nfo:width ?w . "
-                                                                                                      "} ORDER BY DESC(?h-?w) LIMIT 1")
+                                                                                                       "?r a nmm:TVSeason ; "
+                                                                                                       "nmm:seasonOf [ nie:title %1 ] ; "
+                                                                                                       "nmm:seasonNumber %2 ; "
+                                                                                                       "nfo:depiction ?d . "
+                                                                                                       "?d nie:url ?u ; "
+                                                                                                       "nfo:height ?h ; "
+                                                                                                       "nfo:width ?w . "
+                                                                                                       "} ORDER BY DESC(?h-?w) LIMIT 1")
                                                                                   .arg(Soprano::Node::literalToN3(seriesName))
                                                                                   .arg(season),
                                                                                   Soprano::Query::QueryLanguageSparql);
