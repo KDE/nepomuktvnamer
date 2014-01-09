@@ -73,6 +73,28 @@ TVNamer::TVNamer(QObject *parent)
     connect( m_client, SIGNAL( multipleResultsFound( QList<Tvdb::Series> ) ), SLOT( slotMultipleResultsFound( QList<Tvdb::Series> ) ) );
 }
 
+void TVNamer::extractTVShowInfoFromUrl(const KUrl& url)
+{
+    if(QFileInfo(url.toLocalFile()).isDir()) {
+        QDirIterator it(url.toLocalFile(), QDir::Files, QDirIterator::Subdirectories);
+        while(it.hasNext()) {
+            const QString path = it.next();
+            // only check videos. We do not want to mark archives or subtitles as tv shows
+            if(KMimeType::findByPath(path)->name().contains(QLatin1String("video"))) {
+                extractTVShowInfoFromUrl(path);
+            }
+        }
+    }
+    else {
+        const QString path(url.toLocalFile());
+        TVShowFilenameAnalyzer analyzer;
+        TVShowFilenameAnalyzer::AnalysisResult fileNameResult = analyzer.analyzeFilename(path);
+        if(fileNameResult.isValid()) {
+            m_fileNameResults[fileNameResult.name.toLower()].insert(path, fileNameResult);
+        }
+    }
+}
+
 void TVNamer::lookupFile(const KUrl &url)
 {
     if(QFileInfo(url.toLocalFile()).isDir()) {
@@ -97,20 +119,27 @@ void TVNamer::lookupFile(const KUrl &url)
     }
 }
 
+void TVNamer::lookupFiles(const KUrl::List& urls)
+{
+  foreach(const KUrl& url, urls) {
+      extractTVShowInfoFromUrl(url);
+  }
+
+  if(m_fileNameResults.isEmpty()) {
+      if(!m_quiet)
+          KMessageBox::sorry(0, i18nc("@info", "Could not find any file names which contained TV Show information."));
+      // not an error
+      qApp->exit(0);
+  }
+  else {
+      m_nameSeriesHash.clear();
+      lookupSeries();
+  }
+}
+
 void TVNamer::lookupFolder(const KUrl &folder)
 {
-    QDirIterator it(folder.toLocalFile(), QDir::Files, QDirIterator::Subdirectories);
-    while(it.hasNext()) {
-        const QString path = it.next();
-        // only check videos. We do not want to mark archives or subtitles as tv shows
-        if(KMimeType::findByPath(path)->name().contains(QLatin1String("video"))) {
-            TVShowFilenameAnalyzer analyzer;
-            TVShowFilenameAnalyzer::AnalysisResult fileNameResult = analyzer.analyzeFilename(path);
-            if(fileNameResult.isValid()) {
-                m_fileNameResults[fileNameResult.name.toLower()].insert(path, fileNameResult);
-            }
-        }
-    }
+    extractTVShowInfoFromUrl(folder);
 
     if(m_fileNameResults.isEmpty()) {
         if(!m_quiet)
@@ -336,9 +365,9 @@ void TVNamer::saveToNepomuk()
                     banner.language() == KGlobal::locale()->language())) {
                     const KUrl localUrl = downloadBanner(series.name(), banner.bannerUrl());
                     if(!localUrl.isEmpty()) {
-                        Nepomuk2::NFO::Image banner(localUrl);
-                        seriesRes.addDepiction(banner.uri());
-                        graph << banner;
+                        Nepomuk2::NFO::Image bannerRes(localUrl);
+                        seriesRes.addDepiction(bannerRes.uri());
+                        graph << bannerRes;
                         break;
                     }
                 }

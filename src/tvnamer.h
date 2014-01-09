@@ -48,6 +48,7 @@ public:
 public Q_SLOTS:
     void setQuiet(bool quiet) { m_quiet = quiet; }
     void lookupFile(const KUrl& url);
+    void lookupFiles(const KUrl::List& urls);
     void lookupFolder(const KUrl& folder);
 
 private Q_SLOTS:
@@ -60,6 +61,8 @@ private Q_SLOTS:
     void saveToNepomuk();
 
 private:
+    void extractTVShowInfoFromUrl(const KUrl& url);
+
     /**
      * Compare a series against m_fileNameResult to see if it is a candidate.
      */

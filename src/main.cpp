@@ -46,7 +46,7 @@ int main( int argc, char *argv[] )
     KCmdLineArgs::init( argc, argv, &aboutData );
     KCmdLineOptions options;
     options.add("quiet").add("q", ki18n("Try to be quiet by not showing any error message boxes to the user."));
-    options.add("+uri", ki18n("The URL to the video file(s) to annotate."));
+    options.add("+uri", ki18n("The URL(s) to the video file(s) to annotate."));
     KCmdLineArgs::addCmdLineOptions( options );
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
@@ -56,7 +56,10 @@ int main( int argc, char *argv[] )
     TVNamer tvnamer;
     tvnamer.setQuiet(args->isSet("quiet"));
     if ( args->count() ) {
-        QMetaObject::invokeMethod(&tvnamer, "lookupFile", Qt::QueuedConnection, Q_ARG(KUrl, args->url( 0 )));
+        KUrl::List urls;
+        for(int i = 0; i < args->count(); ++i)
+            urls << args->url(i);
+        QMetaObject::invokeMethod(&tvnamer, "lookupFiles", Qt::QueuedConnection, Q_ARG(KUrl::List, urls));
         return app.exec();
     }
     else {
