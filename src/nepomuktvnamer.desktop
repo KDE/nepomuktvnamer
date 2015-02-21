@@ -31,6 +31,7 @@ Icon=nepomuk
 
 [Desktop Action tvnamer]
 Name=Lookup TV Shows on thetvdb.com
+Name[bs]=Traži TV emisije na thetvdb.com
 Name[da]=Slå tv-serier op på thetvdb.com
 Name[de]=TV-Shows auf thetvdb.com nachschlagen
 Name[es]=Buscar series de TV en thevdb.com
