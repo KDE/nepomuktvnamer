@@ -4,6 +4,7 @@ X-KDE-ServiceTypes=KonqPopupMenu/Plugin
 MimeType=video/*;
 Actions=markAsWatched;markAsUnwatched;
 X-KDE-Submenu=Desktop Search
+X-KDE-Submenu[ast]=Gueta d'escritoriu
 X-KDE-Submenu[bs]=Pretraga površi
 X-KDE-Submenu[cs]=Vyhledávací služby
 X-KDE-Submenu[da]=Skrivebordssøgning
